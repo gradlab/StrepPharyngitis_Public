@@ -1,0 +1,1 @@
+# Geographic and temporal trends in Strep Pharyngitis in the United States
