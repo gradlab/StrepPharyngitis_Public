@@ -325,12 +325,6 @@ run;
 		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.PRIMARYCOND;
 	run;
 
-	* Get rid of "other";
-	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH PRIMARYCOND NVISITS);
-		set GeoVisits&year.;
-		if PRIMARYCOND<>"Other";
-	run;
-
 	* Sum cohort sizes;
 	proc sort data=GeoCohort&year.;
 		by STATE AGEGRP SEX;
@@ -344,109 +338,20 @@ run;
 		if last.STATE or last.AGEGRP or last.SEX;
 	run;
 
-	* Add month column to cohort sizes;
-	data GeoCohortM1&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=1;
-	run;
-	data GeoCohortM2&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=2;
-	run;
-	data GeoCohortM3&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=3;
-	run;
-	data GeoCohortM4&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=4;
-	run;
-	data GeoCohortM5&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=5;
-	run;
-	data GeoCohortM6&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=6;
-	run;
-	data GeoCohortM7&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=7;
-	run;
-	data GeoCohortM8&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=8;
-	run;
-	data GeoCohortM9&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=9;
-	run;
-	data GeoCohortM10&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=10;
-	run;
-	data GeoCohortM11&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=11;
-	run;
-	data GeoCohortM12&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set Geocohort&year.;
-		MONTH=12;
-	run;
-
-	data GeoCohort&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
-		set GeocohortM1&year.
-		    GeocohortM2&year.
-		    GeocohortM3&year.
-		    GeocohortM4&year.
-		    GeocohortM5&year.
-		    GeocohortM6&year.
-		    GeocohortM7&year.
-		    GeocohortM8&year.
-		    GeocohortM9&year.
-		    GeocohortM10&year.
-		    GeocohortM11&year.
-		    GeocohortM12&year.;
-	run;
-
-	proc delete data=GeoCohortM1&year.; run; 
-	proc delete data=GeoCohortM2&year.; run; 
-	proc delete data=GeoCohortM3&year.; run; 
-	proc delete data=GeoCohortM4&year.; run; 
-	proc delete data=GeoCohortM5&year.; run; 
-	proc delete data=GeoCohortM6&year.; run; 
-	proc delete data=GeoCohortM7&year.; run; 
-	proc delete data=GeoCohortM8&year.; run; 
-	proc delete data=GeoCohortM9&year.; run; 
-	proc delete data=GeoCohortM10&year.; run; 
-	proc delete data=GeoCohortM11&year.; run; 
-	proc delete data=GeoCohortM12&year.; run; 
-
-	* Join cohort sizes;
-	proc sort data=GeoCohort&year.;
-		by STATE AGEGRP SEX MONTH;
-	run;
-
-	data GeoTable&year.;
-		merge GeoVisits&year. (in=inleft)
-		GeoCohort&year. (in=inright);
-		by STATE AGEGRP SEX MONTH;
-		if inright;
-	run;
-
 	* Clean entries;
-	data GeoTable&year.;
-		set GeoTable&year.;
-		* if missing(NVISITS) then NVISITS=0;
+	data GeoVisits&year.;
+		set GeoVisits&year.;
+		if missing(NVISITS) then NVISITS=0;
 		if STATE="North Carolin" then STATE="North Carolina";
 		if STATE="South Carolin" then STATE="South Carolina";
 	run;
 
-%mend;
+	data GeoCohort&year.;
+		set GeoCohort&year.;
+		if STATE="North Carolin" then STATE="North Carolina";
+		if STATE="South Carolin" then STATE="South Carolina";
+	run;
 
-%macro cleanup(year=,yeartag=);
-	proc delete data=GeoCohort&year.; run; 
-	proc delete data=GeoVisits&year.; run; 
 %mend;
 
 * ============================================================================;
@@ -456,47 +361,38 @@ run;
 * %getcohort(year=10, yeartag=1sam); *1sam;
 * %getvisits_pre15(year=10, yeartag=1sam); *1sam;
 * %reducedata(year=10, yeartag=1sam); *1sam;
-* %cleanup(year=10, yeartag=1sam); *1sam;
 
 * %getcohort(year=11, yeartag=1sam); *1sam;
 * %getvisits_pre15(year=11, yeartag=1sam); *1sam;
 * %reducedata(year=11, yeartag=1sam); *1sam;
-* %cleanup(year=11, yeartag=1sam); *1sam;
 
 * %getcohort(year=12, yeartag=1sam); *1sam;
 * %getvisits_pre15(year=12, yeartag=1sam); *1sam;
 * %reducedata(year=12, yeartag=1sam); *1sam;
-* %cleanup(year=12, yeartag=1sam); *1sam;
 
 * %getcohort(year=13, yeartag=1sam); *1sam;
 * %getvisits_pre15(year=13, yeartag=1sam); *1sam;
 * %reducedata(year=13, yeartag=1sam); *1sam;
-* %cleanup(year=13, yeartag=1sam); *1sam;
 
 * %getcohort(year=14, yeartag=1sam); *1sam;
 * %getvisits_pre15(year=14, yeartag=1sam); *1sam;
 * %reducedata(year=14, yeartag=1sam); *1sam;
-* %cleanup(year=14, yeartag=1sam); *1sam;
 
 * %getcohort(year=15, yeartag=1sam); *1sam;
 * %getvisits(year=15, yeartag=1sam); *1sam;
 * %reducedata(year=15, yeartag=1sam); *1sam;
-* %cleanup(year=15, yeartag=1sam); *1sam;
 
 * %getcohort(year=16, yeartag=1sam); *1sam;
 * %getvisits(year=16, yeartag=1sam); *1sam;
 * %reducedata(year=16, yeartag=1sam); *1sam;
-* %cleanup(year=16, yeartag=1sam); *1sam;
 
 * %getcohort(year=17, yeartag=1sam); *1sam;
 * %getvisits(year=17, yeartag=1sam); *1sam;
 * %reducedata(year=17, yeartag=1sam); *1sam;
-* %cleanup(year=17, yeartag=1sam); *1sam;
 
 %getcohort(year=18, yeartag=1sam); *1sam;
 %getvisits(year=18, yeartag=1sam); *1sam;
 %reducedata(year=18, yeartag=1sam); *1sam;
-%cleanup(year=18, yeartag=1sam); *1sam;
 
 * proc export data=GeoTable10
 * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable10_2022-11-16.csv'
@@ -546,8 +442,14 @@ run;
 * 	replace;
 * run;
 
-proc export data=GeoTable18
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable18_2022-11-16.csv'
+proc export data=GeoVisits18
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits18_2022-11-16.csv'
+	dbms=csv
+	replace;
+run;
+
+proc export data=GeoCohort18
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
