@@ -211,6 +211,12 @@ run;
 		else PRIMARYCOND=COND2;
 	run;
 
+	* Add a Month column; 
+	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH PRIMARYCOND);
+		set GeoVisits&year.;
+		MONTH=month(SVCDATE);
+	run;
+
 	* Sort to prepare for summarizing prevalence;
 	proc sort data=GeoVisits&year.;
 		by ENROLID SVCDATE;
@@ -281,6 +287,12 @@ run;
 		else PRIMARYCOND=COND2;
 	run;
 
+	* Add a Month column; 
+	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH PRIMARYCOND);
+		set GeoVisits&year.;
+		MONTH=month(SVCDATE);
+	run;
+
 	* Sort to prepare for summarizing prevalence;
 	proc sort data=GeoVisits&year.;
 		by ENROLID SVCDATE;
@@ -292,8 +304,8 @@ run;
 %macro reducedata(year=,yeartag=);
 
 	* Append demographic data to visits;
-	data GeoVisits&year. (keep=STATE AGEGRP SEX PRIMARYCOND);
-		merge GeoVisits&year. (keep=ENROLID PRIMARYCOND in=inleft)
+	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH PRIMARYCOND);
+		merge GeoVisits&year. (keep=ENROLID PRIMARYCOND MONTH in=inleft)
 		GeoCohort&year. (keep=ENROLID STATE AGEGRP SEX in=inright);
 		by ENROLID;
 		if inleft;
@@ -301,16 +313,16 @@ run;
 
 	* Arrange visits;
 	proc sort data=GeoVisits&year.;
-		by STATE AGEGRP SEX PRIMARYCOND;
+		by STATE AGEGRP SEX MONTH PRIMARYCOND;
 	run;
 
 	* Sum visits by category;
-	data GeoVisits&year. (keep=STATE AGEGRP SEX PRIMARYCOND NVISITS);
+	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH PRIMARYCOND NVISITS);
 		set GeoVisits&year.;
 		NVISITS + 1;
 		by STATE AGEGRP SEX PRIMARYCOND;
-		if first.STATE or first.AGEGRP or first.SEX or first.PRIMARYCOND then NVISITS = 1;
-		if last.STATE or last.AGEGRP or last.SEX or last.PRIMARYCOND;
+		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.PRIMARYCOND then NVISITS = 1;
+		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.PRIMARYCOND;
 	run;
 
 	* Sum cohort sizes;
