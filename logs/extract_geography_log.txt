@@ -1,0 +1,1887 @@
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+8          
+9          * Set path for printing output;
+10         proc printto print="/home/kissler/StrepPharyngitis/logs/extract_geography_out.txt" new;
+11         run;
+2                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+NOTE: PROCEDURE PRINTTO used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.02 seconds
+      
+
+12         
+13         * Make sure there's nothing in the 'work' library;
+14         proc datasets lib=work nolist kill;
+14       !                                     quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+14       !                                           run;
+15         
+16         * Specify data and output libraries;
+17         libname out "/home/kissler/StrepPharyngitis/output/private/";
+NOTE: Libref OUT was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: /home/kissler/StrepPharyngitis/output/private
+18         libname dathome "/data/markscan_authorized/data";
+NOTE: Libref DATHOME was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: /data/markscan_authorized/data
+19         libname dat15 "/data/markscan_authorized/data/commercial/2015";
+NOTE: Libref DAT15 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: /data/markscan_authorized/data/commercial/2015
+20         libname dat16 "/data/markscan_authorized/data/commercial/2016";
+NOTE: Libref DAT16 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: /data/markscan_authorized/data/commercial/2016
+21         libname dat17 "/data/markscan_authorized/data/commercial/2017";
+NOTE: Libref DAT17 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: /data/markscan_authorized/data/commercial/2017
+22         libname dat18 "/data/markscan_authorized/data/commercial/2018";
+NOTE: Libref DAT18 was successfully assigned as follows: 
+      Engine:        V9 
+      Physical Name: /data/markscan_authorized/data/commercial/2018
+23         
+24         * Import and process table of days per month --------------------------------;
+25         proc import datafile="/home/kissler/StrepPharyngitis/data/dayspermonth.csv"
+26                 out=dayspermonth
+27                 dbms=csv
+28                 replace;
+29         run;
+
+30          /**********************************************************************
+31          *   PRODUCT:   SAS
+32          *   VERSION:   9.4
+33          *   CREATOR:   External File Interface
+34          *   DATE:      16NOV22
+35          *   DESC:      Generated SAS Datastep Code
+36          *   TEMPLATE SOURCE:  (None Specified.)
+3                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+37          ***********************************************************************/
+38             data WORK.DAYSPERMONTH    ;
+39             %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
+40             infile '/home/kissler/StrepPharyngitis/data/dayspermonth.csv' delimiter = ',' MISSOVER DSD lrecl=32767 firstobs=2 ;
+41                informat DT_MONTH best32. ;
+42                informat NDAYS best32. ;
+43                format DT_MONTH best12. ;
+44                format NDAYS best12. ;
+45             input
+46                         DT_MONTH
+47                         NDAYS
+48             ;
+49             if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
+50             run;
+
+NOTE: The infile '/home/kissler/StrepPharyngitis/data/dayspermonth.csv' is:
+      Filename=/home/kissler/StrepPharyngitis/data/dayspermonth.csv,
+      Owner Name=kissler,Group Name=users,
+      Access Permission=-rwx------,
+      Last Modified=16Nov2022:09:44:08,
+      File Size (bytes)=89
+
+NOTE: 12 records were read from the infile '/home/kissler/StrepPharyngitis/data/dayspermonth.csv'.
+      The minimum record length was 4.
+      The maximum record length was 5.
+NOTE: The data set WORK.DAYSPERMONTH has 12 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12 rows created in WORK.DAYSPERMONTH from /home/kissler/StrepPharyngitis/data/dayspermonth.csv.
+  
+  
+  
+NOTE: WORK.DAYSPERMONTH data set was successfully created.
+NOTE: The data set WORK.DAYSPERMONTH has 12 observations and 2 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.86 seconds
+      cpu time            0.06 seconds
+      
+
+51         
+52         proc sort data=dayspermonth;
+53         	by DT_MONTH;
+54         run;
+
+NOTE: There were 12 observations read from the data set WORK.DAYSPERMONTH.
+NOTE: The data set WORK.DAYSPERMONTH has 12 observations and 2 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+55         
+56         * Import and process table of US states --------------------------------------;
+57         proc import datafile="/home/kissler/StrepPharyngitis/data/EGEOLOClist_char.csv"
+58                 out=EGEOLOClist
+4                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+59                 dbms=csv
+60                 replace;
+61         run;
+
+62          /**********************************************************************
+63          *   PRODUCT:   SAS
+64          *   VERSION:   9.4
+65          *   CREATOR:   External File Interface
+66          *   DATE:      16NOV22
+67          *   DESC:      Generated SAS Datastep Code
+68          *   TEMPLATE SOURCE:  (None Specified.)
+69          ***********************************************************************/
+70             data WORK.EGEOLOCLIST    ;
+71             %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
+72             infile '/home/kissler/StrepPharyngitis/data/EGEOLOClist_char.csv' delimiter = ',' MISSOVER DSD lrecl=32767 firstobs=2
+72       !  ;
+73                informat EGEOLOC $4. ;
+74                informat STATE $13. ;
+75                format EGEOLOC $4. ;
+76                format STATE $13. ;
+77             input
+78                         EGEOLOC  $
+79                         STATE  $
+80             ;
+81             if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
+82             run;
+
+NOTE: The infile '/home/kissler/StrepPharyngitis/data/EGEOLOClist_char.csv' is:
+      Filename=/home/kissler/StrepPharyngitis/data/EGEOLOClist_char.csv,
+      Owner Name=kissler,Group Name=users,
+      Access Permission=-rwx------,
+      Last Modified=16Nov2022:09:44:08,
+      File Size (bytes)=805
+
+NOTE: 51 records were read from the infile '/home/kissler/StrepPharyngitis/data/EGEOLOClist_char.csv'.
+      The minimum record length was 9.
+      The maximum record length was 19.
+NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+51 rows created in WORK.EGEOLOCLIST from /home/kissler/StrepPharyngitis/data/EGEOLOClist_char.csv.
+  
+  
+  
+NOTE: WORK.EGEOLOCLIST data set was successfully created.
+NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 2 variables.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.03 seconds
+      
+
+83         
+84         * Make sure variable lengths are sufficient to avoid truncation:;
+85         data EGEOLOClist;
+86         	length STATE $30;
+5                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+87             set EGEOLOClist(rename=(STATE=STATE_orig));
+88             STATE=STATE_orig;
+89         run;
+
+NOTE: There were 51 observations read from the data set WORK.EGEOLOCLIST.
+NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+90         
+91         proc sort data=EGEOLOClist;
+92         	by EGEOLOC;
+93         run;
+
+NOTE: There were 51 observations read from the data set WORK.EGEOLOCLIST.
+NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+94         
+95         * Import and process table of medical conditions -----------------------------;
+96         proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_geography.csv"
+97                 out=ccs_map
+98                 dbms=csv
+99                 replace;
+100        run;
+
+ERROR: Physical file does not exist, /home/kissler/StrepPharyngitis/data/ccs_map_geography.csv. 
+ERROR: Import unsuccessful.  See SAS Log for details.
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE IMPORT used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.02 seconds
+      
+101        
+102        * Make sure variable lengths are sufficient to avoid truncation:;
+
+
+103        data ccs_map (keep=DX COND ICD PRIORITY);
+104        	length DX $30 COND $100;
+105            set ccs_map(rename=(DX=DX_orig COND=COND_orig));
+ERROR: File WORK.CCS_MAP.DATA does not exist.
+106            DX=DX_orig;
+107            COND=COND_orig;
+108        run;
+
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIORITY in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: Due to ERROR(s) above, SAS set option OBS=0, enabling syntax check mode. 
+      This prevents execution of subsequent data modification statements.
+WARNING: The data set WORK.CCS_MAP may be incomplete.  When this step was stopped there were 0 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+6                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+      cpu time            0.00 seconds
+      
+
+109        
+110        proc sort data=ccs_map;
+111        	by DX;
+112        run;
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+113        
+114        * ============================================================================;
+115        * Define extraction/reduction scripts;
+116        * ============================================================================;
+117        
+118        * Extract cohort of people who are represented for the entire year;
+119        %macro getcohort(year=,yeartag=);
+120        
+121        	* Initial import, ensuring we have RX data;
+122        	data GeoCohort&year. (keep=AGE DT_MONTH EGEOLOC ENROLID MEMDAYS SEX);
+123        		set dat&year..ccaet&year.&yeartag. (keep=AGE DTSTART EGEOLOC ENROLID MEMDAYS SEX);
+124        		DT_MONTH=month(DTSTART);
+125        	run;
+126        
+127        	* Restrict to valid states;
+128        	proc sort data=GeoCohort&year.;
+129        		by EGEOLOC;
+130        	run;
+131        
+132        	data GeoCohort&year. (keep=AGE DT_MONTH STATE ENROLID MEMDAYS SEX);
+133        		merge EGEOLOClist (in=inleft)
+134        		GeoCohort&year. (in=inright);
+135        		by EGEOLOC;
+136        		IF inleft & inright;
+137        	run;
+138        
+139        	* Restrict to those with complete coverage through the year;
+140        	proc sort data=GeoCohort&year.;
+141        		by DT_MONTH;
+142        	run;
+143        
+144        	data GeoCohort&year. (keep=AGE DT_MONTH STATE ENROLID MEMDAYS SEX NDAYS where=(MEMDAYS>=NDAYS));
+145        		merge dayspermonth (in=inleft)
+146        		GeoCohort&year. (in=inright);
+147        		by DT_MONTH;
+148        		IF inleft & inright;
+149        	run;
+150        
+151        	* Sort so that we extract age in January;
+152        	proc sort data=GeoCohort&year.;
+153        		by ENROLID descending DT_MONTH;
+154        	run;	
+155        
+156        	* Count months of enrollment and only keep those with 12;
+157        	* https://stats.idre.ucla.edu/sas/faq/how-can-i-create-an-enumeration-variable-by-groups/;
+7                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+158        	data GeoCohort&year. (keep=AGE DT_MONTH STATE ENROLID SEX COUNT where=(COUNT=12));
+159        		set GeoCohort&year.;
+160        		COUNT + 1;
+161        		by ENROLID;
+162        		if first.ENROLID then COUNT = 1;
+163        	run;
+164        
+165        	* Turn age into age groups;
+166        	data GeoCohort&year. (keep=AGEGRP STATE ENROLID SEX);
+167        		set GeoCohort&year.;
+168        		if AGE>=80 then AGEGRP="80plus";
+169        		else if AGE>=70 then AGEGRP="70_79";
+170        		else if AGE>=60 then AGEGRP="60_69";
+171        		else if AGE>=50 then AGEGRP="50_59";
+172        		else if AGE>=40 then AGEGRP="40_49";
+173        		else if AGE>=30 then AGEGRP="30_39";
+174        		else if AGE>=20 then AGEGRP="20_29";
+175        		else if AGE>=10 then AGEGRP="10_19";
+176        		else if AGE>=5 then AGEGRP="05_09";
+177        		else if AGE>=0 then AGEGRP="00_04";
+178        	run;
+179        
+180        	* Sort cohort table by ENROLID for joining later;
+181        	proc sort data=GeoCohort&year.;
+182        		by ENROLID;
+183        	run;
+184        
+185        %mend;
+186        
+187        
+188        %macro getvisits(year=,yeartag=);
+189        	
+190        	* Import 'o' (outpatient claims) and reduce to those in the cohort;
+191        	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE DXVER);
+192        		merge GeoCohort&year. (in=inleft)
+193        		dat&year..ccaeo&year.&yeartag. (in=inright keep=DX1 DX2 ENROLID SVCDATE DXVER);
+194        		by ENROLID;
+195        		IF inleft & inright;
+196        	run;
+197        
+198        	* Specify lengths for the diagnosis variables to avoid truncation;
+199        	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD);
+200        		rename DXVER=ICD;
+201        		length DX1 $30 DX2 $30;
+202        	    set GeoVisits&year.(rename=(DX1=DX1_orig DX2=DX2_orig));
+203        	    DX1=DX1_orig;
+204        	    DX2=DX2_orig;
+205        	run;
+206        
+207        	* Reduce to unique person-dates for outpatient visits;
+208        	proc sort data=GeoVisits&year. nodupkey;
+209        		by ENROLID SVCDATE;
+210        	run;
+211        
+212        	* Append conditions for DX1;
+213        	proc sort data=GeoVisits&year.;
+214        		by DX1 ICD;
+215        	run;
+8                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+216        
+217        	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1 PRIORITY1);
+218        		merge ccs_map (rename=(DX=DX1 COND=COND1 PRIORITY=PRIORITY1) in=inleft)
+219        		GeoVisits&year. (in=inright);
+220        		by DX1 ICD;
+221        		if inright;
+222        		if inleft then COND1=COND1;
+223        		else COND1="Other";
+224        		if inleft then PRIORITY1=PRIORITY1;
+225        		else PRIORITY1=1000000;
+226        	run;
+227        
+228        	* Append conditions for DX2;
+229        	proc sort data=GeoVisits&year.;
+230        		by DX2 ICD;
+231        	run;
+232        
+233        	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 PRIORITY1 COND2 PRIORITY2);
+234        		merge ccs_map (rename=(DX=DX2 COND=COND2 PRIORITY=PRIORITY2) in=inleft)
+235        		GeoVisits&year. (in=inright);
+236        		by DX2 ICD;
+237        		if inright;
+238        		if inleft then COND2=COND2;
+239        		else COND2="Other";
+240        		if inleft then PRIORITY2=PRIORITY2;
+241        		else PRIORITY2=1000000;
+242        	run;
+243        
+244        	* Identify the primary condition;
+245        	data GeoVisits&year. (keep=ENROLID SVCDATE PRIMARYCOND);
+246        		set GeoVisits&year.;
+247        		if PRIORITY1<=PRIORITY2 then PRIMARYCOND=COND1;
+248        		else PRIMARYCOND=COND2;
+249        	run;
+250        
+251        	* Sort to prepare for summarizing prevalence;
+252        	proc sort data=GeoVisits&year.;
+253        		by ENROLID SVCDATE;
+254        	run;
+255        
+256        %mend;
+257        
+258        
+259        %macro reducedata(year=,yeartag=);
+260        
+261        	* Append demographic data to visits;
+262        	data GeoVisits&year. (keep=STATE AGEGRP SEX PRIMARYCOND);
+263        		merge GeoVisits&year. (keep=ENROLID PRIMARYCOND in=inleft)
+264        		GeoCohort&year. (keep=ENROLID STATE AGEGRP SEX in=inright);
+265        		by ENROLID;
+266        		if inleft;
+267        	run;
+268        
+269        	* Arrange visits;
+270        	proc sort data=GeoVisits&year.;
+271        		by STATE AGEGRP SEX PRIMARYCOND;
+272        	run;
+273        
+9                                                          The SAS System                         09:48 Wednesday, November 16, 2022
+
+274        	* Sum visits by category;
+275        	data GeoVisits&year. (keep=STATE AGEGRP SEX PRIMARYCOND NVISITS);
+276        		set GeoVisits&year.;
+277        		NVISITS + 1;
+278        		by STATE AGEGRP SEX PRIMARYCOND;
+279        		if first.STATE or first.AGEGRP or first.SEX or first.PRIMARYCOND then NVISITS = 1;
+280        		if last.STATE or last.AGEGRP or last.SEX or last.PRIMARYCOND;
+281        	run;
+282        
+283        	* Sum cohort sizes;
+284        	proc sort data=GeoCohort&year.;
+285        		by STATE AGEGRP SEX;
+286        	run;
+287        
+288        	data GeoCohort&year. (keep=STATE AGEGRP SEX NMEMB);
+289        		set GeoCohort&year.;
+290        		NMEMB + 1;
+291        		by STATE AGEGRP SEX;
+292        		if first.STATE or first.AGEGRP or first.SEX then NMEMB = 1;
+293        		if last.STATE or last.AGEGRP or last.SEX;
+294        	run;
+295        
+296        	* Join cohort sizes;
+297        	data GeoTable&year.;
+298        		merge GeoVisits&year. (in=inleft)
+299        		GeoCohort&year. (in=inright);
+300        		by STATE AGEGRP SEX;
+301        		if inright;
+302        	run;
+303        
+304        	* Clean entries;
+305        	data GeoTable&year.;
+306        		set GeoTable&year.;
+307        		if missing(NVISITS) then NVISITS=0;
+308        		if STATE="North Carolin" then STATE="North Carolina";
+309        		if STATE="South Carolin" then STATE="South Carolina";
+310        	run;
+311        
+312        %mend;
+313        
+314        %macro cleanup(year=,yeartag=);
+315        	proc delete data=GeoCohort&year.; run;
+316        	proc delete data=GeoVisits&year.; run;
+317        %mend
+318        
+319        * ============================================================================;
+WARNING: Extraneous text on %MEND statement ignored for macro definition CLEANUP.
+320        * Do the reduction;
+321        * ============================================================================;
+322        
+323        %getcohort(year=15, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOCOHORT15 has 0 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOCOHORT15 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT15 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT15 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOCOHORT15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT15 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOCOHORT15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+11                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+324        %getvisits(year=15, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOVISITS15 has 0 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOVISITS15 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      324:40   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS15 may be incomplete.  When this step was stopped there were 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+12                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      324:213   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable COND1 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIORITY1 in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS15 may be incomplete.  When this step was stopped there were 0 observations and 4 variables.
+WARNING: Data set WORK.GEOVISITS15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+NOTE: The data set WORK.GEOVISITS15 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOVISITS15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+325        %reducedata(year=15, yeartag=1sam); *1sam;
+ERROR: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOVISITS15.
+ERROR: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOCOHORT15.
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS15 may be incomplete.  When this step was stopped there were 0 observations and 0 variables.
+WARNING: Data set WORK.GEOVISITS15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+ERROR: Variable SEX not found.
+ERROR: Variable PRIMARYCOND not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+13                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOVISITS15 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOVISITS15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT15 has 0 observations and 2 variables.
+WARNING: Data set WORK.GEOCOHORT15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE15 has 0 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE15 has 0 observations and 12 variables.
+WARNING: Data set WORK.GEOTABLE15 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+326        %cleanup(year=15, yeartag=1sam); *1sam;
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE DELETE used (Total process time):
+14                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+327        
+328        %getcohort(year=16, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOCOHORT16 has 0 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOCOHORT16 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT16 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.02 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT16 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOCOHORT16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+15                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT16 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOCOHORT16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+329        %getvisits(year=16, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOVISITS16 has 0 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOVISITS16 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      329:40   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS16 may be incomplete.  When this step was stopped there were 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+16                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      329:213   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable COND1 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIORITY1 in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS16 may be incomplete.  When this step was stopped there were 0 observations and 4 variables.
+WARNING: Data set WORK.GEOVISITS16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+NOTE: The data set WORK.GEOVISITS16 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOVISITS16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+330        %reducedata(year=16, yeartag=1sam); *1sam;
+ERROR: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOVISITS16.
+ERROR: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOCOHORT16.
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS16 may be incomplete.  When this step was stopped there were 0 observations and 0 variables.
+WARNING: Data set WORK.GEOVISITS16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+17                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+ERROR: Variable SEX not found.
+ERROR: Variable PRIMARYCOND not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOVISITS16 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOVISITS16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT16 has 0 observations and 2 variables.
+WARNING: Data set WORK.GEOCOHORT16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE16 has 0 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE16 has 0 observations and 12 variables.
+WARNING: Data set WORK.GEOTABLE16 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+18                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+331        %cleanup(year=16, yeartag=1sam); *1sam;
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+332        
+333        %getcohort(year=17, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+19                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+334        %getvisits(year=17, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOVISITS17 has 0 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOVISITS17 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+20                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      334:40   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS17 may be incomplete.  When this step was stopped there were 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      334:213   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable COND1 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIORITY1 in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS17 may be incomplete.  When this step was stopped there were 0 observations and 4 variables.
+WARNING: Data set WORK.GEOVISITS17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+NOTE: The data set WORK.GEOVISITS17 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOVISITS17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+335        %reducedata(year=17, yeartag=1sam); *1sam;
+ERROR: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOVISITS17.
+21                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+ERROR: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOCOHORT17.
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS17 may be incomplete.  When this step was stopped there were 0 observations and 0 variables.
+WARNING: Data set WORK.GEOVISITS17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+ERROR: Variable SEX not found.
+ERROR: Variable PRIMARYCOND not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOVISITS17 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOVISITS17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 2 variables.
+WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+22                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      
+
+
+NOTE: The data set WORK.GEOTABLE17 has 0 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE17 has 0 observations and 12 variables.
+WARNING: Data set WORK.GEOTABLE17 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+336        %cleanup(year=17, yeartag=1sam); *1sam;
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+337        
+338        %getcohort(year=18, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOCOHORT18 has 0 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOCOHORT18 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+23                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT18 has 0 observations and 6 variables.
+WARNING: Data set WORK.GEOCOHORT18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT18 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOCOHORT18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT18 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOCOHORT18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+339        %getvisits(year=18, yeartag=1sam); *1sam;
+
+NOTE: The data set WORK.GEOVISITS18 has 0 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOVISITS18 has 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+24                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      339:40   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS18 may be incomplete.  When this step was stopped there were 0 observations and 5 variables.
+WARNING: Data set WORK.GEOVISITS18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      339:213   
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable COND1 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIORITY1 in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS18 may be incomplete.  When this step was stopped there were 0 observations and 4 variables.
+WARNING: Data set WORK.GEOVISITS18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+NOTE: The data set WORK.GEOVISITS18 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOVISITS18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+25                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+340        %reducedata(year=18, yeartag=1sam); *1sam;
+ERROR: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOVISITS18.
+ERROR: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOCOHORT18.
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS18 may be incomplete.  When this step was stopped there were 0 observations and 0 variables.
+WARNING: Data set WORK.GEOVISITS18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+ERROR: Variable SEX not found.
+ERROR: Variable PRIMARYCOND not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOVISITS18 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOVISITS18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+26                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT18 has 0 observations and 2 variables.
+WARNING: Data set WORK.GEOCOHORT18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE18 has 0 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE18 has 0 observations and 12 variables.
+WARNING: Data set WORK.GEOTABLE18 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+341        %cleanup(year=18, yeartag=1sam); *1sam;
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+342        
+343        %getcohort(year=19, yeartag=1sam); *1sam;
+ERROR: Libref DAT19 is not assigned.
+
+WARNING: The variable AGE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable EGEOLOC in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable MEMDAYS in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOCOHORT19 may be incomplete.  When this step was stopped there were 0 observations and 1 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+27                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+
+ERROR: Variable EGEOLOC not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable AGE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable MEMDAYS in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT19 has 0 observations and 2 variables.
+WARNING: Data set WORK.GEOCOHORT19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable AGE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable MEMDAYS in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Variable MEMDAYS is not on file WORK.GEOCOHORT19.
+NOTE: The data set WORK.GEOCOHORT19 has 0 observations and 2 variables.
+WARNING: Data set WORK.GEOCOHORT19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable ENROLID not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable AGE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT19 has 0 observations and 2 variables.
+WARNING: Data set WORK.GEOCOHORT19 was not replaced because this step was stopped.
+28                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT19 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOCOHORT19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable ENROLID not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+344        %getvisits(year=19, yeartag=1sam); *1sam;
+
+
+ERROR: Libref DAT19 is not assigned.
+
+WARNING: The variable DX1 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable DX2 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SVCDATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable DXVER in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS19 may be incomplete.  When this step was stopped there were 0 observations and 0 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+ERROR: Variable DX1 is not on file WORK.GEOVISITS19.
+ERROR: Variable DX2 is not on file WORK.GEOVISITS19.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOVISITS19.
+
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SVCDATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable DXVER in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS19 may be incomplete.  When this step was stopped there were 0 observations and 2 variables.
+WARNING: Data set WORK.GEOVISITS19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+29                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+ERROR: Variable ENROLID not found.
+ERROR: Variable SVCDATE not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable DX1 not found.
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      344:40   
+WARNING: The variable DX2 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SVCDATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS19 may be incomplete.  When this step was stopped there were 0 observations and 2 variables.
+WARNING: Data set WORK.GEOVISITS19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+
+ERROR: Variable DX2 not found.
+ERROR: Variable ICD not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+ERROR: Variable PRIORITY is not on file WORK.CCS_MAP.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.CCS_MAP.
+
+NOTE: Character values have been converted to numeric values at the places given by: (Line):(Column).
+      344:213   
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SVCDATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable ICD in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable COND1 in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIORITY1 in the DROP, KEEP, or RENAME list has never been referenced.
+30                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS19 may be incomplete.  When this step was stopped there were 0 observations and 2 variables.
+WARNING: Data set WORK.GEOVISITS19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SVCDATE in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOVISITS19 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOVISITS19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable ENROLID not found.
+ERROR: Variable SVCDATE not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+345        %reducedata(year=19, yeartag=1sam); *1sam;
+
+
+ERROR: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOVISITS19.
+ERROR: The variable ENROLID in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+ERROR: Invalid DROP, KEEP, or RENAME option on file WORK.GEOCOHORT19.
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The SAS System stopped processing this step because of errors.
+WARNING: The data set WORK.GEOVISITS19 may be incomplete.  When this step was stopped there were 0 observations and 0 variables.
+WARNING: Data set WORK.GEOVISITS19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+ERROR: Variable SEX not found.
+ERROR: Variable PRIMARYCOND not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+31                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable PRIMARYCOND in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOVISITS19 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOVISITS19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+ERROR: Variable STATE not found.
+ERROR: Variable AGEGRP not found.
+ERROR: Variable SEX not found.
+
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+
+WARNING: The variable STATE in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable AGEGRP in the DROP, KEEP, or RENAME list has never been referenced.
+WARNING: The variable SEX in the DROP, KEEP, or RENAME list has never been referenced.
+NOTE: The data set WORK.GEOCOHORT19 has 0 observations and 1 variables.
+WARNING: Data set WORK.GEOCOHORT19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE19 has 0 observations and 1 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: The data set WORK.GEOTABLE19 has 0 observations and 3 variables.
+WARNING: Data set WORK.GEOTABLE19 was not replaced because this step was stopped.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+346        %cleanup(year=19, yeartag=1sam); *1sam;
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+32                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+      cpu time            0.00 seconds
+      
+
+
+NOTE: PROCEDURE DELETE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+347        
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The SAS System stopped processing this step because of errors.
+348        proc export data=GeoTable15
+349        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable15_2022-11-16.csv'
+350        	dbms=csv
+351        	replace;
+352        run;
+353        
+
+
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The SAS System stopped processing this step because of errors.
+354        proc export data=GeoTable16
+355        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable16_2022-11-16.csv'
+356        	dbms=csv
+357        	replace;
+358        run;
+359        
+
+
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The SAS System stopped processing this step because of errors.
+360        proc export data=GeoTable17
+361        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable17_2022-11-16.csv'
+362        	dbms=csv
+363        	replace;
+364        run;
+365        
+
+
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The SAS System stopped processing this step because of errors.
+366        proc export data=GeoTable18
+367        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable18_2022-11-16.csv'
+368        	dbms=csv
+369        	replace;
+33                                                         The SAS System                         09:48 Wednesday, November 16, 2022
+
+370        run;
+371        
+
+
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+NOTE: The SAS System stopped processing this step because of errors.
+372        proc export data=GeoTable19
+373        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable19_2022-11-16.csv'
+374        	dbms=csv
+375        	replace;
+376        run;
+
+
