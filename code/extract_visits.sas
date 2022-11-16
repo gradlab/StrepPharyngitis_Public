@@ -51,7 +51,7 @@ proc sort data=EGEOLOClist;
 run;
 
 * Import and process table of medical conditions -----------------------------;
-proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_geography.csv"
+proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map.csv"
         out=ccs_map
         dbms=csv
         replace;
