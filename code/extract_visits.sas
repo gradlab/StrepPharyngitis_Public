@@ -358,41 +358,41 @@ run;
 * Do the reduction;
 * ============================================================================;
 
-%getcohort(year=10, yeartag=1sam); *1sam;
-%getvisits_pre15(year=10, yeartag=1sam); *1sam;
-%reducedata(year=10, yeartag=1sam); *1sam;
+%getcohort(year=10, yeartag=1); *1sam;
+%getvisits_pre15(year=10, yeartag=1); *1sam;
+%reducedata(year=10, yeartag=1); *1sam;
 
-%getcohort(year=11, yeartag=1sam); *1sam;
-%getvisits_pre15(year=11, yeartag=1sam); *1sam;
-%reducedata(year=11, yeartag=1sam); *1sam;
+%getcohort(year=11, yeartag=1); *1sam;
+%getvisits_pre15(year=11, yeartag=1); *1sam;
+%reducedata(year=11, yeartag=1); *1sam;
 
-%getcohort(year=12, yeartag=1sam); *1sam;
-%getvisits_pre15(year=12, yeartag=1sam); *1sam;
-%reducedata(year=12, yeartag=1sam); *1sam;
+%getcohort(year=12, yeartag=1); *1sam;
+%getvisits_pre15(year=12, yeartag=1); *1sam;
+%reducedata(year=12, yeartag=1); *1sam;
 
-%getcohort(year=13, yeartag=1sam); *1sam;
-%getvisits_pre15(year=13, yeartag=1sam); *1sam;
-%reducedata(year=13, yeartag=1sam); *1sam;
+%getcohort(year=13, yeartag=1); *1sam;
+%getvisits_pre15(year=13, yeartag=1); *1sam;
+%reducedata(year=13, yeartag=1); *1sam;
 
-%getcohort(year=14, yeartag=1sam); *1sam;
-%getvisits_pre15(year=14, yeartag=1sam); *1sam;
-%reducedata(year=14, yeartag=1sam); *1sam;
+%getcohort(year=14, yeartag=1); *1sam;
+%getvisits_pre15(year=14, yeartag=1); *1sam;
+%reducedata(year=14, yeartag=1); *1sam;
 
-%getcohort(year=15, yeartag=1sam); *1sam;
-%getvisits(year=15, yeartag=1sam); *1sam;
-%reducedata(year=15, yeartag=1sam); *1sam;
+%getcohort(year=15, yeartag=1); *1sam;
+%getvisits(year=15, yeartag=1); *1sam;
+%reducedata(year=15, yeartag=1); *1sam;
 
-%getcohort(year=16, yeartag=1sam); *1sam;
-%getvisits(year=16, yeartag=1sam); *1sam;
-%reducedata(year=16, yeartag=1sam); *1sam;
+%getcohort(year=16, yeartag=1); *1sam;
+%getvisits(year=16, yeartag=1); *1sam;
+%reducedata(year=16, yeartag=1); *1sam;
 
-%getcohort(year=17, yeartag=1sam); *1sam;
-%getvisits(year=17, yeartag=1sam); *1sam;
-%reducedata(year=17, yeartag=1sam); *1sam;
+%getcohort(year=17, yeartag=1); *1sam;
+%getvisits(year=17, yeartag=1); *1sam;
+%reducedata(year=17, yeartag=1); *1sam;
 
-%getcohort(year=18, yeartag=1sam); *1sam;
-%getvisits(year=18, yeartag=1sam); *1sam;
-%reducedata(year=18, yeartag=1sam); *1sam;
+%getcohort(year=18, yeartag=1); *1sam;
+%getvisits(year=18, yeartag=1); *1sam;
+%reducedata(year=18, yeartag=1); *1sam;
 
 proc export data=GeoVisits10
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits10_2022-11-16.csv'
