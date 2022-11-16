@@ -287,6 +287,12 @@ run;
 		else PRIMARYCOND=COND2;
 	run;
 
+	* Exclude any rows where "other" is the category; 
+	data GeoVisits&year. (keep=ENROLID SVCDATE PRIMARYCOND);
+		set GeoVisits&year.;
+		if PRIMARYCOND!="Other";
+	run;
+
 	* Add a Month column; 
 	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH PRIMARYCOND);
 		set GeoVisits&year.;
