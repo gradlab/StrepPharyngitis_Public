@@ -298,11 +298,6 @@ run;
 %reducedata(year=18, yeartag=1sam); *1sam;
 %cleanup(year=18, yeartag=1sam); *1sam;
 
-%getcohort(year=19, yeartag=1sam); *1sam;
-%getvisits(year=19, yeartag=1sam); *1sam;
-%reducedata(year=19, yeartag=1sam); *1sam;
-%cleanup(year=19, yeartag=1sam); *1sam;
-
 proc export data=GeoTable15
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable15_2022-11-16.csv'
 	dbms=csv
@@ -327,8 +322,3 @@ proc export data=GeoTable18
 	replace;
 run;
 
-proc export data=GeoTable19
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable19_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
