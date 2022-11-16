@@ -338,11 +338,93 @@ run;
 		if last.STATE or last.AGEGRP or last.SEX;
 	run;
 
+	* Add month column to cohort sizes;
+	data GeoCohortM1&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=1;
+	run;
+	data GeoCohortM2&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=2;
+	run;
+	data GeoCohortM3&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=3;
+	run;
+	data GeoCohortM4&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=4;
+	run;
+	data GeoCohortM5&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=5;
+	run;
+	data GeoCohortM6&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=6;
+	run;
+	data GeoCohortM7&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=7;
+	run;
+	data GeoCohortM8&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=8;
+	run;
+	data GeoCohortM9&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=9;
+	run;
+	data GeoCohortM10&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=10;
+	run;
+	data GeoCohortM11&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=11;
+	run;
+	data GeoCohortM12&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set Geocohort&year.;
+		MONTH=12;
+	run;
+
+	data GeoCohort&year.(keep=STATE AGEGRP SEX MONTH NMEMB);
+		set GeocohortM1&year.
+		    GeocohortM2&year.
+		    GeocohortM3&year.
+		    GeocohortM4&year.
+		    GeocohortM5&year.
+		    GeocohortM6&year.
+		    GeocohortM7&year.
+		    GeocohortM8&year.
+		    GeocohortM9&year.
+		    GeocohortM10&year.
+		    GeocohortM11&year.
+		    GeocohortM12&year.;
+	run;
+
+	proc delete data=GeoCohortM1&year.; run; 
+	proc delete data=GeoCohortM2&year.; run; 
+	proc delete data=GeoCohortM3&year.; run; 
+	proc delete data=GeoCohortM4&year.; run; 
+	proc delete data=GeoCohortM5&year.; run; 
+	proc delete data=GeoCohortM6&year.; run; 
+	proc delete data=GeoCohortM7&year.; run; 
+	proc delete data=GeoCohortM8&year.; run; 
+	proc delete data=GeoCohortM9&year.; run; 
+	proc delete data=GeoCohortM10&year.; run; 
+	proc delete data=GeoCohortM11&year.; run; 
+	proc delete data=GeoCohortM12&year.; run; 
+
 	* Join cohort sizes;
+	proc sort data=GeoCohort&year.;
+		by STATE AGEGRP SEX MONTH;
+	run;
+
 	data GeoTable&year.;
 		merge GeoVisits&year. (in=inleft)
 		GeoCohort&year. (in=inright);
-		by STATE AGEGRP SEX;
+		by STATE AGEGRP SEX MONTH;
 		if inright;
 	run;
 
