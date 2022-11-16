@@ -431,7 +431,7 @@ run;
 	* Clean entries;
 	data GeoTable&year.;
 		set GeoTable&year.;
-		if missing(NVISITS) then NVISITS=0;
+		* if missing(NVISITS) then NVISITS=0;
 		if STATE="North Carolin" then STATE="North Carolina";
 		if STATE="South Carolin" then STATE="South Carolina";
 	run;
@@ -447,98 +447,98 @@ run;
 * Do the reduction;
 * ============================================================================;
 
-%getcohort(year=10, yeartag=1sam); *1sam;
-%getvisits_pre15(year=10, yeartag=1sam); *1sam;
-%reducedata(year=10, yeartag=1sam); *1sam;
-%cleanup(year=10, yeartag=1sam); *1sam;
+* %getcohort(year=10, yeartag=1sam); *1sam;
+* %getvisits_pre15(year=10, yeartag=1sam); *1sam;
+* %reducedata(year=10, yeartag=1sam); *1sam;
+* %cleanup(year=10, yeartag=1sam); *1sam;
 
-%getcohort(year=11, yeartag=1sam); *1sam;
-%getvisits_pre15(year=11, yeartag=1sam); *1sam;
-%reducedata(year=11, yeartag=1sam); *1sam;
-%cleanup(year=11, yeartag=1sam); *1sam;
+* %getcohort(year=11, yeartag=1sam); *1sam;
+* %getvisits_pre15(year=11, yeartag=1sam); *1sam;
+* %reducedata(year=11, yeartag=1sam); *1sam;
+* %cleanup(year=11, yeartag=1sam); *1sam;
 
-%getcohort(year=12, yeartag=1sam); *1sam;
-%getvisits_pre15(year=12, yeartag=1sam); *1sam;
-%reducedata(year=12, yeartag=1sam); *1sam;
-%cleanup(year=12, yeartag=1sam); *1sam;
+* %getcohort(year=12, yeartag=1sam); *1sam;
+* %getvisits_pre15(year=12, yeartag=1sam); *1sam;
+* %reducedata(year=12, yeartag=1sam); *1sam;
+* %cleanup(year=12, yeartag=1sam); *1sam;
 
-%getcohort(year=13, yeartag=1sam); *1sam;
-%getvisits_pre15(year=13, yeartag=1sam); *1sam;
-%reducedata(year=13, yeartag=1sam); *1sam;
-%cleanup(year=13, yeartag=1sam); *1sam;
+* %getcohort(year=13, yeartag=1sam); *1sam;
+* %getvisits_pre15(year=13, yeartag=1sam); *1sam;
+* %reducedata(year=13, yeartag=1sam); *1sam;
+* %cleanup(year=13, yeartag=1sam); *1sam;
 
-%getcohort(year=14, yeartag=1sam); *1sam;
-%getvisits_pre15(year=14, yeartag=1sam); *1sam;
-%reducedata(year=14, yeartag=1sam); *1sam;
-%cleanup(year=14, yeartag=1sam); *1sam;
+* %getcohort(year=14, yeartag=1sam); *1sam;
+* %getvisits_pre15(year=14, yeartag=1sam); *1sam;
+* %reducedata(year=14, yeartag=1sam); *1sam;
+* %cleanup(year=14, yeartag=1sam); *1sam;
 
-%getcohort(year=15, yeartag=1sam); *1sam;
-%getvisits(year=15, yeartag=1sam); *1sam;
-%reducedata(year=15, yeartag=1sam); *1sam;
-%cleanup(year=15, yeartag=1sam); *1sam;
+* %getcohort(year=15, yeartag=1sam); *1sam;
+* %getvisits(year=15, yeartag=1sam); *1sam;
+* %reducedata(year=15, yeartag=1sam); *1sam;
+* %cleanup(year=15, yeartag=1sam); *1sam;
 
-%getcohort(year=16, yeartag=1sam); *1sam;
-%getvisits(year=16, yeartag=1sam); *1sam;
-%reducedata(year=16, yeartag=1sam); *1sam;
-%cleanup(year=16, yeartag=1sam); *1sam;
+* %getcohort(year=16, yeartag=1sam); *1sam;
+* %getvisits(year=16, yeartag=1sam); *1sam;
+* %reducedata(year=16, yeartag=1sam); *1sam;
+* %cleanup(year=16, yeartag=1sam); *1sam;
 
-%getcohort(year=17, yeartag=1sam); *1sam;
-%getvisits(year=17, yeartag=1sam); *1sam;
-%reducedata(year=17, yeartag=1sam); *1sam;
-%cleanup(year=17, yeartag=1sam); *1sam;
+* %getcohort(year=17, yeartag=1sam); *1sam;
+* %getvisits(year=17, yeartag=1sam); *1sam;
+* %reducedata(year=17, yeartag=1sam); *1sam;
+* %cleanup(year=17, yeartag=1sam); *1sam;
 
 %getcohort(year=18, yeartag=1sam); *1sam;
 %getvisits(year=18, yeartag=1sam); *1sam;
 %reducedata(year=18, yeartag=1sam); *1sam;
 %cleanup(year=18, yeartag=1sam); *1sam;
 
-proc export data=GeoTable10
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable10_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable10
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable10_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoTable11
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable11_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable11
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable11_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoTable12
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable12_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable12
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable12_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoTable13
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable13_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable13
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable13_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoTable14
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable14_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable14
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable14_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoTable15
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable15_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable15
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable15_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoTable16
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable16_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable16
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable16_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoTable17
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable17_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoTable17
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable17_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
 proc export data=GeoTable18
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoTable18_2022-11-16.csv'
