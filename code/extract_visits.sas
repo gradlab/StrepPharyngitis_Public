@@ -325,6 +325,12 @@ run;
 		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.PRIMARYCOND;
 	run;
 
+	* Get rid of "other";
+	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH PRIMARYCOND NVISITS);
+		set GeoVisits&year.;
+		if PRIMARYCOND<>"Other";
+	run;
+
 	* Sum cohort sizes;
 	proc sort data=GeoCohort&year.;
 		by STATE AGEGRP SEX;
