@@ -320,7 +320,7 @@ run;
 	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH PRIMARYCOND NVISITS);
 		set GeoVisits&year.;
 		NVISITS + 1;
-		by STATE AGEGRP SEX PRIMARYCOND;
+		by STATE AGEGRP SEX MONTH PRIMARYCOND;
 		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.PRIMARYCOND then NVISITS = 1;
 		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.PRIMARYCOND;
 	run;
@@ -359,7 +359,7 @@ run;
 %macro cleanup(year=,yeartag=);
 	proc delete data=GeoCohort&year.; run; 
 	proc delete data=GeoVisits&year.; run; 
-%mend
+%mend;
 
 * ============================================================================;
 * Do the reduction;
