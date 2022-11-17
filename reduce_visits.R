@@ -1,0 +1,22 @@
+library(tidyverse) 
+
+GeoCohort10 <- read_csv("output/GeoCohort10.csv")
+GeoCohort11 <- read_csv("output/GeoCohort11.csv")
+GeoCohort12 <- read_csv("output/GeoCohort12.csv")
+GeoCohort13 <- read_csv("output/GeoCohort13.csv")
+GeoCohort14 <- read_csv("output/GeoCohort14.csv")
+GeoCohort15 <- read_csv("output/GeoCohort15.csv")
+GeoCohort16 <- read_csv("output/GeoCohort16.csv")
+GeoCohort17 <- read_csv("output/GeoCohort17.csv")
+GeoCohort18 <- read_csv("output/GeoCohort18.csv")
+
+GeoVisits10 <- read_csv("output/GeoVisits10.csv")
+GeoVisits11 <- read_csv("output/GeoVisits11.csv")
+GeoVisits12 <- read_csv("output/GeoVisits12.csv")
+GeoVisits13 <- read_csv("output/GeoVisits13.csv")
+GeoVisits14 <- read_csv("output/GeoVisits14.csv")
+GeoVisits15 <- read_csv("output/GeoVisits15.csv")
+GeoVisits16 <- read_csv("output/GeoVisits16.csv")
+GeoVisits17 <- read_csv("output/GeoVisits17.csv")
+GeoVisits18 <- read_csv("output/GeoVisits18.csv")
+
