@@ -26,3 +26,4 @@ Got the full pull finished, I think. It took about six hours, which surprised me
 I also wrote an R script to reduce the data from SAS into more user-friendly files, one for cohort population sizes and one for strep pharyngitis visit counts. 
 
 I haven't done any qualtiy control on these - no plotting or anything - but so far things seem to be working as I hoped. 
+
