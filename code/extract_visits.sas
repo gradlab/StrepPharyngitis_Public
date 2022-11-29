@@ -56,7 +56,12 @@ proc sort data=EGEOLOClist;
 run;
 
 * Import and process table of medical conditions -----------------------------;
-proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map.csv"
+* proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map.csv"
+*         out=ccs_map
+*         dbms=csv
+*         replace;
+* run;
+proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_flu.csv"
         out=ccs_map
         dbms=csv
         replace;
@@ -395,109 +400,109 @@ run;
 %reducedata(year=18, yeartag=1); *1sam;
 
 proc export data=GeoVisits10
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits10_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits10flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort10
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits11
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits11_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits11flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort11
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits12
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits12_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits12flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort12
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits13
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits13_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits13flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort13
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits14
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits14_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits14flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort14
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits15
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits15_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits15flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort15
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits16
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits16_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits16flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort16
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits17
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits17flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort17
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisits18
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits18_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits18flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort18
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18flu_2022-11-16.csv'
 	dbms=csv
 	replace;
 run;
