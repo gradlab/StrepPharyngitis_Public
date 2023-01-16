@@ -1,0 +1,595 @@
+COND,DX,ICD,PRIORITY
+Otitis media,38200,9,1
+Otitis media,38201,9,1
+Otitis media,38202,9,1
+Otitis media,3824,9,1
+Otitis media,3829,9,1
+Bacterial pneumonia,322,9,1
+Bacterial pneumonia,203,9,1
+Bacterial pneumonia,204,9,1
+Bacterial pneumonia,205,9,1
+Bacterial pneumonia,212,9,1
+Bacterial pneumonia,221,9,1
+Bacterial pneumonia,310,9,1
+Bacterial pneumonia,391,9,1
+Viral pneumonia,521,9,1
+Viral pneumonia,551,9,1
+Bacterial pneumonia,730,9,1
+Bacterial pneumonia,830,9,1
+Fungal pneumonia,1124,9,1
+Fungal pneumonia,1140,9,1
+Fungal pneumonia,1144,9,1
+Fungal pneumonia,1145,9,1
+Fungal pneumonia,11505,9,1
+Fungal pneumonia,11515,9,1
+Fungal pneumonia,11595,9,1
+Fungal pneumonia,1363,9,1
+Viral pneumonia,4800,9,1
+Viral pneumonia,4801,9,1
+Viral pneumonia,4802,9,1
+Viral pneumonia,4803,9,1
+Viral pneumonia,4808,9,1
+Viral pneumonia,4809,9,1
+Bacterial pneumonia,481,9,1
+Bacterial pneumonia,4820,9,1
+Bacterial pneumonia,4821,9,1
+Bacterial pneumonia,4822,9,1
+Bacterial pneumonia,4823,9,1
+Bacterial pneumonia,48230,9,1
+Bacterial pneumonia,48231,9,1
+Bacterial pneumonia,48232,9,1
+Bacterial pneumonia,48239,9,1
+Bacterial pneumonia,4824,9,1
+Bacterial pneumonia,48240,9,1
+Bacterial pneumonia,48241,9,1
+Bacterial pneumonia,48242,9,1
+Bacterial pneumonia,48249,9,1
+Bacterial pneumonia,4828,9,1
+Bacterial pneumonia,48281,9,1
+Bacterial pneumonia,48282,9,1
+Bacterial pneumonia,48283,9,1
+Bacterial pneumonia,48284,9,1
+Bacterial pneumonia,48289,9,1
+Bacterial pneumonia,4829,9,1
+Bacterial pneumonia,483,9,1
+Bacterial pneumonia,4830,9,1
+Bacterial pneumonia,4831,9,1
+Bacterial pneumonia,4838,9,1
+Viral pneumonia,4841,9,1
+Bacterial pneumonia,4843,9,1
+Bacterial pneumonia,4845,9,1
+Fungal pneumonia,4846,9,1
+Fungal pneumonia,4847,9,1
+Bacterial pneumonia,4848,9,1
+Bacterial pneumonia,485,9,1
+Bacterial pneumonia,486,9,1
+Bacterial pneumonia,5130,9,1
+Viral pneumonia,4870,9,1
+Influenza,4871,9,1
+Influenza,4878,9,1
+Influenza,488,9,1
+Influenza,4880,9,1
+Influenza,48801,9,1
+Influenza,48802,9,1
+Influenza,48809,9,1
+Influenza,4881,9,1
+Influenza,48811,9,1
+Influenza,48812,9,1
+Influenza,48819,9,1
+Influenza,48881,9,1
+Influenza,48882,9,1
+Influenza,48889,9,1
+Strep pharyngitis,340,9,1
+Other pharyngitis,460,9,1
+Acute sinusitis,4610,9,1
+Acute sinusitis,4611,9,1
+Acute sinusitis,4612,9,1
+Acute sinusitis,4613,9,1
+Acute sinusitis,4618,9,1
+Acute sinusitis,4619,9,1
+Other pharyngitis,462,9,1
+Other pharyngitis,4650,9,1
+GI infections,10,9,1
+GI infections,11,9,1
+GI infections,19,9,1
+GI infections,20,9,1
+GI infections,21,9,1
+GI infections,22,9,1
+GI infections,23,9,1
+GI infections,29,9,1
+GI infections,30,9,1
+GI infections,320,9,1
+GI infections,329,9,1
+GI infections,38,9,1
+GI infections,39,9,1
+GI infections,40,9,1
+GI infections,41,9,1
+GI infections,42,9,1
+GI infections,43,9,1
+GI infections,48,9,1
+GI infections,49,9,1
+GI infections,50,9,1
+GI infections,51,9,1
+GI infections,52,9,1
+GI infections,53,9,1
+GI infections,54,9,1
+GI infections,58,9,1
+GI infections,581,9,1
+GI infections,589,9,1
+GI infections,59,9,1
+GI infections,60,9,1
+GI infections,61,9,1
+GI infections,62,9,1
+GI infections,63,9,1
+GI infections,64,9,1
+GI infections,65,9,1
+GI infections,66,9,1
+GI infections,68,9,1
+GI infections,69,9,1
+GI infections,70,9,1
+GI infections,71,9,1
+GI infections,72,9,1
+GI infections,73,9,1
+GI infections,74,9,1
+GI infections,75,9,1
+GI infections,78,9,1
+GI infections,79,9,1
+GI infections,80,9,1
+GI infections,800,9,1
+GI infections,801,9,1
+GI infections,802,9,1
+GI infections,803,9,1
+GI infections,804,9,1
+GI infections,809,9,1
+GI infections,81,9,1
+GI infections,82,9,1
+GI infections,83,9,1
+GI infections,841,9,1
+GI infections,842,9,1
+GI infections,843,9,1
+GI infections,844,9,1
+GI infections,845,9,1
+GI infections,846,9,1
+GI infections,847,9,1
+GI infections,849,9,1
+GI infections,85,9,1
+GI infections,86,9,1
+GI infections,861,9,1
+GI infections,862,9,1
+GI infections,863,9,1
+GI infections,864,9,1
+GI infections,865,9,1
+GI infections,866,9,1
+GI infections,867,9,1
+GI infections,869,9,1
+GI infections,88,9,1
+GI infections,90,9,1
+GI infections,91,9,1
+GI infections,92,9,1
+GI infections,93,9,1
+GI infections,211,9,1
+GI infections,222,9,1
+UTIs,3284,9,1
+UTIs,59000,9,1
+UTIs,59001,9,1
+UTIs,59010,9,1
+UTIs,59011,9,1
+UTIs,5902,9,1
+UTIs,5903,9,1
+UTIs,59080,9,1
+UTIs,59081,9,1
+UTIs,5909,9,1
+UTIs,5950,9,1
+UTIs,5951,9,1
+UTIs,5953,9,1
+UTIs,5954,9,1
+UTIs,59589,9,1
+UTIs,5959,9,1
+UTIs,5970,9,1
+UTIs,59780,9,1
+UTIs,59781,9,1
+UTIs,59789,9,1
+UTIs,59800,9,1
+UTIs,59801,9,1
+UTIs,5990,9,1
+SSTIs,201,9,1
+SSTIs,210,9,1
+SSTIs,220,9,1
+SSTIs,311,9,1
+SSTIs,3285,9,1
+SSTIs,35,9,1
+SSTIs,390,9,1
+SSTIs,6800,9,1
+SSTIs,6801,9,1
+SSTIs,6802,9,1
+SSTIs,6803,9,1
+SSTIs,6804,9,1
+SSTIs,6805,9,1
+SSTIs,6806,9,1
+SSTIs,6807,9,1
+SSTIs,6808,9,1
+SSTIs,6809,9,1
+SSTIs,68100,9,1
+SSTIs,68101,9,1
+SSTIs,68102,9,1
+SSTIs,68110,9,1
+SSTIs,68111,9,1
+SSTIs,6819,9,1
+SSTIs,6820,9,1
+SSTIs,6821,9,1
+SSTIs,6822,9,1
+SSTIs,6823,9,1
+SSTIs,6824,9,1
+SSTIs,6825,9,1
+SSTIs,6826,9,1
+SSTIs,6827,9,1
+SSTIs,6828,9,1
+SSTIs,6829,9,1
+SSTIs,684,9,1
+SSTIs,6850,9,1
+SSTIs,6851,9,1
+SSTIs,6860,9,1
+SSTIs,68600,9,1
+SSTIs,68609,9,1
+SSTIs,6868,9,1
+SSTIs,6869,9,1
+GI infections,A000,0,1
+GI infections,A001,0,1
+GI infections,A009,0,1
+GI infections,A0100,0,1
+Bacterial pneumonia,A0103,0,1
+GI infections,A0109,0,1
+GI infections,A011,0,1
+GI infections,A012,0,1
+GI infections,A013,0,1
+GI infections,A014,0,1
+GI infections,A020,0,1
+Bacterial pneumonia,A0222,0,1
+UTIs,A0225,0,1
+GI infections,A0229,0,1
+GI infections,A029,0,1
+GI infections,A030,0,1
+GI infections,A031,0,1
+GI infections,A032,0,1
+GI infections,A033,0,1
+GI infections,A038,0,1
+GI infections,A039,0,1
+GI infections,A040,0,1
+GI infections,A041,0,1
+GI infections,A042,0,1
+GI infections,A043,0,1
+GI infections,A044,0,1
+GI infections,A045,0,1
+GI infections,A046,0,1
+GI infections,A047,0,1
+GI infections,A0471,0,1
+GI infections,A0472,0,1
+GI infections,A048,0,1
+GI infections,A049,0,1
+GI infections,A060,0,1
+GI infections,A061,0,1
+GI infections,A062,0,1
+GI infections,A063,0,1
+GI infections,A064,0,1
+GI infections,A069,0,1
+GI infections,A070,0,1
+GI infections,A071,0,1
+GI infections,A072,0,1
+GI infections,A073,0,1
+GI infections,A074,0,1
+GI infections,A078,0,1
+GI infections,A079,0,1
+GI infections,A080,0,1
+GI infections,A0811,0,1
+GI infections,A0819,0,1
+GI infections,A082,0,1
+GI infections,A0831,0,1
+GI infections,A0832,0,1
+GI infections,A0839,0,1
+GI infections,A084,0,1
+GI infections,A088,0,1
+GI infections,A09,0,1
+GI infections,A1832,0,1
+SSTIs,A201,0,1
+Bacterial pneumonia,A202,0,1
+SSTIs,A210,0,1
+Bacterial pneumonia,A212,0,1
+GI infections,A213,0,1
+SSTIs,A220,0,1
+Bacterial pneumonia,A221,0,1
+GI infections,A222,0,1
+Bacterial pneumonia,A310,0,1
+SSTIs,A311,0,1
+SSTIs,A363,0,1
+UTIs,A3685,0,1
+Bacterial pneumonia,A3791,0,1
+Bacterial pneumonia,A430,0,1
+SSTIs,A431,0,1
+SSTIs,A46,0,1
+Bacterial pneumonia,A481,0,1
+Viral pneumonia,B012,0,1
+Viral pneumonia,B052,0,1
+Viral pneumonia,B0681,0,1
+Viral pneumonia,B250,0,1
+Fungal pneumonia,B371,0,1
+UTIs,B3741,0,1
+UTIs,B3749,0,1
+GI infections,B3782,0,1
+Fungal pneumonia,B380,0,1
+Fungal pneumonia,B381,0,1
+Fungal pneumonia,B382,0,1
+Fungal pneumonia,B390,0,1
+Fungal pneumonia,B391,0,1
+Fungal pneumonia,B392,0,1
+Fungal pneumonia,B59,0,1
+Otitis media,H66001,0,1
+Otitis media,H66002,0,1
+Otitis media,H66003,0,1
+Otitis media,H66004,0,1
+Otitis media,H66005,0,1
+Otitis media,H66006,0,1
+Otitis media,H66007,0,1
+Otitis media,H66009,0,1
+Otitis media,H66011,0,1
+Otitis media,H66012,0,1
+Otitis media,H66013,0,1
+Otitis media,H66014,0,1
+Otitis media,H66015,0,1
+Otitis media,H66016,0,1
+Otitis media,H66017,0,1
+Otitis media,H66019,0,1
+Otitis media,H6640,0,1
+Otitis media,H6641,0,1
+Otitis media,H6642,0,1
+Otitis media,H6643,0,1
+Otitis media,H6690,0,1
+Otitis media,H6691,0,1
+Otitis media,H6692,0,1
+Otitis media,H6693,0,1
+Other pharyngitis,J00,0,1
+Acute sinusitis,J0100,0,1
+Acute sinusitis,J0101,0,1
+Acute sinusitis,J0110,0,1
+Acute sinusitis,J0111,0,1
+Acute sinusitis,J0120,0,1
+Acute sinusitis,J0121,0,1
+Acute sinusitis,J0130,0,1
+Acute sinusitis,J0131,0,1
+Acute sinusitis,J0140,0,1
+Acute sinusitis,J0141,0,1
+Acute sinusitis,J0180,0,1
+Acute sinusitis,J0181,0,1
+Acute sinusitis,J0190,0,1
+Acute sinusitis,J0191,0,1
+Strep pharyngitis,J020,0,1
+Other pharyngitis,J028,0,1
+Other pharyngitis,J029,0,1
+Other pharyngitis,J060,0,1
+Viral pneumonia,J09X1,0,1
+Influenza,J09X2,0,1
+Influenza,J09X3,0,1
+Influenza,J09X9,0,1
+Viral pneumonia,J1000,0,1
+Viral pneumonia,J1001,0,1
+Viral pneumonia,J1008,0,1
+Influenza,J101,0,1
+Influenza,J102,0,1
+Influenza,J1081,0,1
+Influenza,J1082,0,1
+Influenza,J1083,0,1
+Influenza,J1089,0,1
+Viral pneumonia,J1100,0,1
+Viral pneumonia,J1108,0,1
+Influenza,J111,0,1
+Influenza,J112,0,1
+Influenza,J1181,0,1
+Influenza,J1182,0,1
+Influenza,J1183,0,1
+Influenza,J1189,0,1
+Viral pneumonia,J120,0,1
+Viral pneumonia,J121,0,1
+Viral pneumonia,J122,0,1
+Viral pneumonia,J123,0,1
+Viral pneumonia,J1281,0,1
+Viral pneumonia,J1289,0,1
+Viral pneumonia,J129,0,1
+Bacterial pneumonia,J13,0,1
+Bacterial pneumonia,J14,0,1
+Bacterial pneumonia,J150,0,1
+Bacterial pneumonia,J151,0,1
+Bacterial pneumonia,J1520,0,1
+Bacterial pneumonia,J15211,0,1
+Bacterial pneumonia,J15212,0,1
+Bacterial pneumonia,J1529,0,1
+Bacterial pneumonia,J153,0,1
+Bacterial pneumonia,J154,0,1
+Bacterial pneumonia,J155,0,1
+Bacterial pneumonia,J156,0,1
+Bacterial pneumonia,J157,0,1
+Bacterial pneumonia,J158,0,1
+Bacterial pneumonia,J159,0,1
+Bacterial pneumonia,J160,0,1
+Bacterial pneumonia,J168,0,1
+Bacterial pneumonia,J180,0,1
+Bacterial pneumonia,J181,0,1
+Bacterial pneumonia,J188,0,1
+Bacterial pneumonia,J189,0,1
+Bacterial pneumonia,J851,0,1
+SSTIs,L00,0,1
+SSTIs,L0100,0,1
+SSTIs,L0101,0,1
+SSTIs,L0102,0,1
+SSTIs,L0103,0,1
+SSTIs,L0109,0,1
+SSTIs,L011,0,1
+SSTIs,L0201,0,1
+SSTIs,L0202,0,1
+SSTIs,L0203,0,1
+SSTIs,L0211,0,1
+SSTIs,L0212,0,1
+SSTIs,L0213,0,1
+SSTIs,L02211,0,1
+SSTIs,L02212,0,1
+SSTIs,L02213,0,1
+SSTIs,L02214,0,1
+SSTIs,L02215,0,1
+SSTIs,L02216,0,1
+SSTIs,L02219,0,1
+SSTIs,L02221,0,1
+SSTIs,L02222,0,1
+SSTIs,L02223,0,1
+SSTIs,L02224,0,1
+SSTIs,L02225,0,1
+SSTIs,L02226,0,1
+SSTIs,L02229,0,1
+SSTIs,L02231,0,1
+SSTIs,L02232,0,1
+SSTIs,L02233,0,1
+SSTIs,L02234,0,1
+SSTIs,L02235,0,1
+SSTIs,L02236,0,1
+SSTIs,L02239,0,1
+SSTIs,L0231,0,1
+SSTIs,L0232,0,1
+SSTIs,L0233,0,1
+SSTIs,L02411,0,1
+SSTIs,L02412,0,1
+SSTIs,L02413,0,1
+SSTIs,L02414,0,1
+SSTIs,L02415,0,1
+SSTIs,L02416,0,1
+SSTIs,L02419,0,1
+SSTIs,L02421,0,1
+SSTIs,L02422,0,1
+SSTIs,L02423,0,1
+SSTIs,L02424,0,1
+SSTIs,L02425,0,1
+SSTIs,L02426,0,1
+SSTIs,L02429,0,1
+SSTIs,L02431,0,1
+SSTIs,L02432,0,1
+SSTIs,L02433,0,1
+SSTIs,L02434,0,1
+SSTIs,L02435,0,1
+SSTIs,L02436,0,1
+SSTIs,L02439,0,1
+SSTIs,L02511,0,1
+SSTIs,L02512,0,1
+SSTIs,L02519,0,1
+SSTIs,L02521,0,1
+SSTIs,L02522,0,1
+SSTIs,L02529,0,1
+SSTIs,L02531,0,1
+SSTIs,L02532,0,1
+SSTIs,L02539,0,1
+SSTIs,L02611,0,1
+SSTIs,L02612,0,1
+SSTIs,L02619,0,1
+SSTIs,L02621,0,1
+SSTIs,L02622,0,1
+SSTIs,L02629,0,1
+SSTIs,L02631,0,1
+SSTIs,L02632,0,1
+SSTIs,L02639,0,1
+SSTIs,L02811,0,1
+SSTIs,L02818,0,1
+SSTIs,L02821,0,1
+SSTIs,L02828,0,1
+SSTIs,L02831,0,1
+SSTIs,L02838,0,1
+SSTIs,L0291,0,1
+SSTIs,L0292,0,1
+SSTIs,L0293,0,1
+SSTIs,L03011,0,1
+SSTIs,L03012,0,1
+SSTIs,L03019,0,1
+SSTIs,L03021,0,1
+SSTIs,L03022,0,1
+SSTIs,L03029,0,1
+SSTIs,L03031,0,1
+SSTIs,L03032,0,1
+SSTIs,L03039,0,1
+SSTIs,L03041,0,1
+SSTIs,L03042,0,1
+SSTIs,L03049,0,1
+SSTIs,L03111,0,1
+SSTIs,L03112,0,1
+SSTIs,L03113,0,1
+SSTIs,L03114,0,1
+SSTIs,L03115,0,1
+SSTIs,L03116,0,1
+SSTIs,L03119,0,1
+SSTIs,L03121,0,1
+SSTIs,L03122,0,1
+SSTIs,L03123,0,1
+SSTIs,L03124,0,1
+SSTIs,L03125,0,1
+SSTIs,L03126,0,1
+SSTIs,L03129,0,1
+SSTIs,L03211,0,1
+SSTIs,L03212,0,1
+SSTIs,L03213,0,1
+SSTIs,L03221,0,1
+SSTIs,L03222,0,1
+SSTIs,L03311,0,1
+SSTIs,L03312,0,1
+SSTIs,L03313,0,1
+SSTIs,L03314,0,1
+SSTIs,L03315,0,1
+SSTIs,L03316,0,1
+SSTIs,L03317,0,1
+SSTIs,L03319,0,1
+SSTIs,L03321,0,1
+SSTIs,L03322,0,1
+SSTIs,L03323,0,1
+SSTIs,L03324,0,1
+SSTIs,L03325,0,1
+SSTIs,L03326,0,1
+SSTIs,L03327,0,1
+SSTIs,L03329,0,1
+SSTIs,L03811,0,1
+SSTIs,L03818,0,1
+SSTIs,L03891,0,1
+SSTIs,L03898,0,1
+SSTIs,L0390,0,1
+SSTIs,L0391,0,1
+SSTIs,L040,0,1
+SSTIs,L041,0,1
+SSTIs,L042,0,1
+SSTIs,L043,0,1
+SSTIs,L048,0,1
+SSTIs,L049,0,1
+SSTIs,L0501,0,1
+SSTIs,L0502,0,1
+SSTIs,L0591,0,1
+SSTIs,L0592,0,1
+SSTIs,L080,0,1
+SSTIs,L081,0,1
+SSTIs,L0881,0,1
+SSTIs,L0882,0,1
+SSTIs,L0889,0,1
+SSTIs,L089,0,1
+SSTIs,L303,0,1
+UTIs,N10,0,1
+UTIs,N110,0,1
+UTIs,N111,0,1
+UTIs,N118,0,1
+UTIs,N119,0,1
+UTIs,N12,0,1
+UTIs,N136,0,1
+UTIs,N151,0,1
+UTIs,N3000,0,1
+UTIs,N3001,0,1
+UTIs,N3020,0,1
+UTIs,N3021,0,1
+UTIs,N3030,0,1
+UTIs,N3031,0,1
+UTIs,N3080,0,1
+UTIs,N3081,0,1
+UTIs,N3090,0,1
+UTIs,N3091,0,1
+UTIs,N340,0,1
+UTIs,N341,0,1
+UTIs,N342,0,1
+UTIs,N343,0,1
+UTIs,N390,0,1
