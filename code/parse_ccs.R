@@ -12,6 +12,10 @@
 # DXCCSR_v2023-1.csv (ICD-10 CCS):
 #   https://www.hcup-us.ahrq.gov/toolssoftware/ccsr/dxccsr.jsp
 
+# =============================================================================
+# Import
+# =============================================================================
+
 library(tidyverse)
 
 ccs9 <- read_csv("data/dxref2015formatted.csv", 
@@ -24,6 +28,8 @@ ccs9 <- read_csv("data/dxref2015formatted.csv",
 		col_character(),
 		col_character()
 		))
+names(ccs9) <- c("ICD9","CCS","CCSDESC","ICD9DESC","CCSOPT","CCSOPTDESC")
+
 
 ccs10 <- read_csv("data/DXCCSR_v2023-1formatted.csv",
 	quote="\'", 
@@ -47,109 +53,58 @@ ccs10 <- read_csv("data/DXCCSR_v2023-1formatted.csv",
 		col_character(),
 		col_character()
 	))
+names(ccs10) <- c("ICD10","ICD10DESC","CCS","CCSDESC","CCSOP","CCSOPDESC","CCS1","CCS1DESC","CCS2","CCS2DESC","CCS3","CCS3DESC","CCS4","CCS4DESC","CCS5","CCS5DESC","CCS6","CCS6DESC")
 
+# =============================================================================
+# ICD9 mappings
+# =============================================================================
 
-ccs9 %>%
-	group_by(`CCS CATEGORY DESCRIPTION`) %>% 
-	summarise() %>% 
-	print(n=Inf)
+ccs9 <- ccs9 %>% 
+	mutate(COND=NA_character_) %>% 
+	mutate(COND=case_when(
+		CCS==126 & grepl("^461",ICD9) ~ "Acute sinusitis",
+		CCS==126 & ICD9=="460" ~ "Other pharyngitis",
+		CCS==126 & ICD9=="462" ~ "Other pharyngitis",
+		CCS==126 & ICD9=="4650" ~ "Other pharyngitis",
+		CCS==126 & ICD9=="340" ~ "Strep pharyngitis",
+		CCS==123 & !(ICD9=="4870") ~ "Influenza",
+		CCS==92 & grepl("^382",ICD9) & !(ICD9 %in% c("3821","3822","3823")) ~ "Otitis media",
+		CCS==122 & (ICD9%in%c("1124","1140","1144","1145","11505","11515","11595","1363","4846","4847")) ~ "Fungal pneumonia",
+		CCS==122 & (ICD9%in%c("521","551","4800","4801","4802","4803","4808","4809","4841")) ~ "Viral pneumonia",
+		CCS==123 & ICD9=="4870" ~ "Viral pneumonia",
+		CCS==122 & !(ICD9%in%c("1124","1140","1144","1145","11505","11515","11595","1363","4846","4847")) & !(ICD9%in%c("521","551","4800","4801","4802","4803","4808","4809","4841")) & !(ICD9%in%c("5171","1304")) ~ "Bacterial pneumonia",
+		CCS==197 & !(ICD9%in%c("68601","6861")) ~ "SSTIs",
+		CCS==159 & !(ICD9%in%c("5952","59581","59582")) ~ "UTIs",
+		CCS==135 ~ "GI infections"
+		))
 
-
-ccs9 %>% 
-	filter(`CCS CATEGORY`==92) %>% 
-	select(`ICD-9-CM CODE`,`ICD-9-CM CODE DESCRIPTION`) %>% 
-	print(n=Inf)
-
-
-ccs9: 
-122: Pneumonia
-126: Other upper respiratory infections
-92: Otitis media and related conditions
-197: Skin and subcutaneous tissue infections
-159: urinary tract infections
-135: Intestinal infections
-
-Sinusitis
-	126 | 461* (Acute sinusitis)
-Pharyngitis
-	126 | 460 (Acute nasopharyngitis)
-	126 | 462 (Acute pharyngitis)
-	126 | 4650 (Acute laryngopharyngitis)
-Strep Pharyngitis
-	126 | 340 (Strep sore throat)
-Influenza
-	All 123 except 4870 (Influenza with pneumonia)
-Otitis media
-	92 | 382* (Suppurative and unspecified otitis media)
-Bacterial Pneumonia:
-	All 122 not in Viral Pneumonia
-Viral Pneumonia: 	
-	122 | 521  VARICELLA PNEUMONITIS
-	122 | 551  POSTMEASLES PNEUMONIA
-	122	| 4800 ADENOVIRAL PNEUMONIA
-	122	| 4801 RESP SYNCYT VIRAL PNEUM
-	122	| 4802 PARINFLUENZA VIRAL PNEUM
-	122	| 4803 PNEUMONIA DUE TO SARS-ASSOCIATED CORONAVIRUS (Begin 2003)
-	122	| 4808 VIRAL PNEUMONIA NEC
-	122	| 4809 VIRAL PNEUMONIA NOS
-	123 | 4870 INFLUENZA WITH PNEUMONIA
-SSTIs:
-	All 197
-UTIs
-	All 159
-GI infections
-	All 135
+ccs10 <- ccs10 %>% 
+	mutate(COND=NA_character_) %>% 
+	mutate(COND=case_when(
+		CCS=="RSP001" & grepl("^J01",ICD10) ~ "Acute sinusitis",
+		CCS=="RSP006" & ICD10=="J00" ~ "Other pharyngitis",
+		CCS=="RSP006" & ICD10=="J028" ~ "Other pharyngitis",
+		CCS=="RSP006" & ICD10=="J029" ~ "Other pharyngitis",
+		CCS=="RSP006" & ICD10=="J060" ~ "Other pharyngitis",
+		CCS=="RSP006" & ICD10=="J020" ~ "Strep pharyngitis",
+		CCS=="RSP003" & !(ICD10%in%c("J09X1","J1000","J1001","J1008","J1108","J1100")) ~ "Influenza",
+		CCS=="EAR001" & grepl("^H660",ICD10) ~ "Otitis media",
+		CCS=="EAR001" & grepl("^H664",ICD10) ~ "Otitis media",
+		CCS=="EAR001" & grepl("^H669",ICD10) ~ "Otitis media",
+		CCS=="RSP002" & grepl("^B3",ICD10) ~ "Fungal pneumonia",
+		CCS=="RSP002" & ICD10=="B59" ~ "Fungal pneumonia",
+		CCS=="RSP002" & ICD10%in%c("B012","B052","J120","J121","J122","J123","J1281","J1289","B0681","B250","J129") ~ "Viral pneumonia",
+		CCS=="RSP003" & ICD10%in%c("J09X1","J1000","J1001","J1008","J1108","J1100") ~ "Viral pneumonia",
+		CCS=="RSP002" & !(grepl("^B3",ICD10)) & !(ICD10=="B59") & !(ICD10%in%c("B012","B052","J120","J121","J122","J123","J1281","J1289","B0681","B250","J129")) & !(ICD10%in%c("B583","B7781")) ~ "Bacterial pneumonia", 
+		CCS=="SKN001" ~ "SSTIs",
+		CCS=="GEN004" & !(ICD10%in%c("N3010","N3011","N3040","N3041")) ~ "UTIs",
+		CCS=="DIG001" ~ "GI infections"
+		))
 
 
 
-ccs10: 
 
 
-ccs10 %>% 
-	group_by(`Default CCSR CATEGORY IP`) %>% 
-	slice(1) %>% 
-	select(CCS=`Default CCSR CATEGORY IP`, CCSDESC=`Default CCSR CATEGORY DESCRIPTION IP`) %>% 
-	print(n=Inf)
 
-ccs10 %>% 
-	filter(`Default CCSR CATEGORY IP`=="RSP003") %>% 
-	select(ICD=`ICD-10-CM CODE`,ICDDESC=`ICD-10-CM CODE DESCRIPTION`) %>% 
-	print(n=Inf)
 
-Sinusitis
-	RSP001 | J01* (Acute sinusitis)
-Pharyngitis
-	RSP006 | J00 (Acute nasopharyngitis)
-	RSP006 | J028 (Acute pharyngitis due to other specified organisms)
-	RSP006 | J029 (Acute pharyngitis unspecified)
-	RSP006 | J060 (Acute laryngopharyngitis)
-Strep Pharyngitis
-	RSP006 | J020 (Streptococcal pharyngitis)
-Influenza
-	RSP003 Except [J09X1 J1000 J1001 J1008 J1108]
-Otitis media
-	EAR001 | H660* (Acute suppurative otitis media)
-Bacterial Pneumonia:
-	All RSP002 not in Viral Pneumonia
-Viral Pneumonia: 	
-	RSP002 | B012 (Varicella pneumonia)
-	RSP002 | B052 (Measles complicated by pneumonia)
-	RSP002 | J120 (Adenoviral pneumonia)
-	RSP002 | J121 (RSV pneumonia)
-	RSP002 | J122 (Parainfluenza virus pneumonia)
-	RSP002 | J123 (Human metapneumovirus pneumonia)
-	RSP002 | J1281 (Pneumonia due to SARS-associated coronavirus)
-	RSP002 | J1289 (Other viral pneumonia)
-	RSP002 | J129 (Viral pneumonia unspecified)
-	RSP003 | J09X1 (Influenza A with pneumonia)
-	RSP003 | J1000 (Other influenza with pneumonia)
-	RSP003 | J1001 (Other influenza with pneumonia)
-	RSP003 | J1008 (Other influenza with pneumonia)
-	RSP003 | J1108 (Other influenza with pneumonia)
-SSTIs:
-	All SKN001
-UTIs
-	All GEN004
-GI infections
-	All DIG001
 
