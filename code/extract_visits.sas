@@ -3,11 +3,11 @@
 * ============================================================================;
 
 * Set path for log; 
-proc printto log="/home/kissler/StrepPharyngitis/logs/extract_geography_log.txt" new;
+proc printto log="/home/kissler/StrepPharyngitis/logs/extract_visits_log.txt" new;
 run;
 
 * Set path for printing output;
-proc printto print="/home/kissler/StrepPharyngitis/logs/extract_geography_out.txt" new;
+proc printto print="/home/kissler/StrepPharyngitis/logs/extract_visits_out.txt" new;
 run;
 
 * Make sure there's nothing in the 'work' library;
@@ -61,14 +61,19 @@ run;
 *         dbms=csv
 *         replace;
 * run;
-proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_flu.csv"
+* proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_flu.csv"
+*         out=ccs_map
+*         dbms=csv
+*         replace;
+* run;
+proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_full.csv"
         out=ccs_map
         dbms=csv
         replace;
 run;
 
 * Make sure variable lengths are sufficient to avoid truncation:;
-data ccs_map (keep=DX COND ICD PRIORITY);
+data ccs_map (keep=DX COND ICD);
 	length DX $30 COND $100;
     set ccs_map(rename=(DX=DX_orig COND=COND_orig));
     DX=DX_orig;
@@ -182,15 +187,13 @@ run;
 		by DX1 ICD;
 	run;
 
-	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1 PRIORITY1);
-		merge ccs_map (rename=(DX=DX1 COND=COND1 PRIORITY=PRIORITY1) in=inleft)
+	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1);
+		merge ccs_map (rename=(DX=DX1 COND=COND1) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX1 ICD;
 		if inright;
 		if inleft then COND1=COND1;
-		else COND1="Other";
-		if inleft then PRIORITY1=PRIORITY1;
-		else PRIORITY1=1000000;
+		else COND1="Other/None";
 	run;
 
 	* Append conditions for DX2;
@@ -198,26 +201,23 @@ run;
 		by DX2 ICD;
 	run;
 
-	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 PRIORITY1 COND2 PRIORITY2);
-		merge ccs_map (rename=(DX=DX2 COND=COND2 PRIORITY=PRIORITY2) in=inleft)
+	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+		merge ccs_map (rename=(DX=DX2 COND=COND2) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX2 ICD;
 		if inright;
 		if inleft then COND2=COND2;
-		else COND2="Other";
-		if inleft then PRIORITY2=PRIORITY2;
-		else PRIORITY2=1000000;
+		else COND2="Other/None";
 	run;
 
-	* Identify the primary condition; 
-	data GeoVisits&year. (keep=ENROLID SVCDATE PRIMARYCOND);
+	* Make sure that a given condition is only counted once per visit;
+	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
 		set GeoVisits&year.;
-		if PRIORITY1<=PRIORITY2 then PRIMARYCOND=COND1;
-		else PRIMARYCOND=COND2;
+		if COND1=COND2 then COND2="Other/None";
 	run;
 
 	* Add a Month column; 
-	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH PRIMARYCOND);
+	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
 		set GeoVisits&year.;
 		MONTH=month(SVCDATE);
 	run;
@@ -258,15 +258,13 @@ run;
 		by DX1 ICD;
 	run;
 
-	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1 PRIORITY1);
-		merge ccs_map (rename=(DX=DX1 COND=COND1 PRIORITY=PRIORITY1) in=inleft)
+	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1);
+		merge ccs_map (rename=(DX=DX1 COND=COND1) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX1 ICD;
 		if inright;
 		if inleft then COND1=COND1;
-		else COND1="Other";
-		if inleft then PRIORITY1=PRIORITY1;
-		else PRIORITY1=1000000;
+		else COND1="Other/None";
 	run;
 
 	* Append conditions for DX2;
@@ -274,26 +272,23 @@ run;
 		by DX2 ICD;
 	run;
 
-	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 PRIORITY1 COND2 PRIORITY2);
-		merge ccs_map (rename=(DX=DX2 COND=COND2 PRIORITY=PRIORITY2) in=inleft)
+	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+		merge ccs_map (rename=(DX=DX2 COND=COND2) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX2 ICD;
 		if inright;
 		if inleft then COND2=COND2;
-		else COND2="Other";
-		if inleft then PRIORITY2=PRIORITY2;
-		else PRIORITY2=1000000;
+		else COND2="Other/None";
 	run;
 
-	* Identify the primary condition; 
-	data GeoVisits&year. (keep=ENROLID SVCDATE PRIMARYCOND);
+	* Make sure that a given condition is only counted once per visit;
+	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
 		set GeoVisits&year.;
-		if PRIORITY1<=PRIORITY2 then PRIMARYCOND=COND1;
-		else PRIMARYCOND=COND2;
+		if COND1=COND2 then COND2="Other/None";
 	run;
 
 	* Add a Month column; 
-	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH PRIMARYCOND);
+	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
 		set GeoVisits&year.;
 		MONTH=month(SVCDATE);
 	run;
@@ -309,8 +304,8 @@ run;
 %macro reducedata(year=,yeartag=);
 
 	* Append demographic data to visits;
-	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH PRIMARYCOND);
-		merge GeoVisits&year. (keep=ENROLID PRIMARYCOND MONTH in=inleft)
+	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH COND1 COND2);
+		merge GeoVisits&year. (keep=ENROLID COND1 COND2 MONTH in=inleft)
 		GeoCohort&year. (keep=ENROLID STATE AGEGRP SEX in=inright);
 		by ENROLID;
 		if inleft;
@@ -318,16 +313,25 @@ run;
 
 	* Arrange visits;
 	proc sort data=GeoVisits&year.;
-		by STATE AGEGRP SEX MONTH PRIMARYCOND;
+		by STATE AGEGRP SEX MONTH COND1 COND2;
 	run;
 
-	* Sum visits by category;
-	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH PRIMARYCOND NVISITS);
+	* Sum visits by condition 1;
+	data GeoVisitsc1&year. (keep=STATE AGEGRP SEX MONTH COND1 NVISITS);
 		set GeoVisits&year.;
 		NVISITS + 1;
-		by STATE AGEGRP SEX MONTH PRIMARYCOND;
-		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.PRIMARYCOND then NVISITS = 1;
-		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.PRIMARYCOND;
+		by STATE AGEGRP SEX MONTH COND1;
+		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.COND1 then NVISITS = 1;
+		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.COND1;
+	run;
+
+	* Sum visits by condition 2;
+	data GeoVisitsc2&year. (keep=STATE AGEGRP SEX MONTH COND2 NVISITS);
+		set GeoVisits&year.;
+		NVISITS + 1;
+		by STATE AGEGRP SEX MONTH COND2;
+		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.COND2 then NVISITS = 1;
+		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.COND2;
 	run;
 
 	* Sum cohort sizes;
@@ -344,8 +348,15 @@ run;
 	run;
 
 	* Clean entries;
-	data GeoVisits&year.;
-		set GeoVisits&year.;
+	data GeoVisitsc1&year.;
+		set GeoVisitsc1&year.;
+		if missing(NVISITS) then NVISITS=0;
+		if STATE="North Carolin" then STATE="North Carolina";
+		if STATE="South Carolin" then STATE="South Carolina";
+	run;
+
+	data GeoVisitsc2&year.;
+		set GeoVisitsc2&year.;
 		if missing(NVISITS) then NVISITS=0;
 		if STATE="North Carolin" then STATE="North Carolina";
 		if STATE="South Carolin" then STATE="South Carolina";
@@ -363,147 +374,159 @@ run;
 * Do the reduction;
 * ============================================================================;
 
-%getcohort(year=10, yeartag=1); *1sam;
-%getvisits_pre15(year=10, yeartag=1); *1sam;
-%reducedata(year=10, yeartag=1); *1sam;
+* %getcohort(year=10, yeartag=1); *1sam;
+* %getvisits_pre15(year=10, yeartag=1); *1sam;
+* %reducedata(year=10, yeartag=1); *1sam;
 
-%getcohort(year=11, yeartag=1); *1sam;
-%getvisits_pre15(year=11, yeartag=1); *1sam;
-%reducedata(year=11, yeartag=1); *1sam;
+* %getcohort(year=11, yeartag=1); *1sam;
+* %getvisits_pre15(year=11, yeartag=1); *1sam;
+* %reducedata(year=11, yeartag=1); *1sam;
 
-%getcohort(year=12, yeartag=1); *1sam;
-%getvisits_pre15(year=12, yeartag=1); *1sam;
-%reducedata(year=12, yeartag=1); *1sam;
+* %getcohort(year=12, yeartag=1); *1sam;
+* %getvisits_pre15(year=12, yeartag=1); *1sam;
+* %reducedata(year=12, yeartag=1); *1sam;
 
-%getcohort(year=13, yeartag=1); *1sam;
-%getvisits_pre15(year=13, yeartag=1); *1sam;
-%reducedata(year=13, yeartag=1); *1sam;
+* %getcohort(year=13, yeartag=1); *1sam;
+* %getvisits_pre15(year=13, yeartag=1); *1sam;
+* %reducedata(year=13, yeartag=1); *1sam;
 
-%getcohort(year=14, yeartag=1); *1sam;
-%getvisits_pre15(year=14, yeartag=1); *1sam;
-%reducedata(year=14, yeartag=1); *1sam;
+* %getcohort(year=14, yeartag=1); *1sam;
+* %getvisits_pre15(year=14, yeartag=1); *1sam;
+* %reducedata(year=14, yeartag=1); *1sam;
 
-%getcohort(year=15, yeartag=1); *1sam;
-%getvisits(year=15, yeartag=1); *1sam;
-%reducedata(year=15, yeartag=1); *1sam;
+* %getcohort(year=15, yeartag=1); *1sam;
+* %getvisits(year=15, yeartag=1); *1sam;
+* %reducedata(year=15, yeartag=1); *1sam;
 
-%getcohort(year=16, yeartag=1); *1sam;
-%getvisits(year=16, yeartag=1); *1sam;
-%reducedata(year=16, yeartag=1); *1sam;
+* %getcohort(year=16, yeartag=1); *1sam;
+* %getvisits(year=16, yeartag=1); *1sam;
+* %reducedata(year=16, yeartag=1); *1sam;
 
-%getcohort(year=17, yeartag=1); *1sam;
-%getvisits(year=17, yeartag=1); *1sam;
-%reducedata(year=17, yeartag=1); *1sam;
+%getcohort(year=17, yeartag=1sam); *1sam;
+%getvisits(year=17, yeartag=1sam); *1sam;
+%reducedata(year=17, yeartag=1sam); *1sam;
 
-%getcohort(year=18, yeartag=1); *1sam;
-%getvisits(year=18, yeartag=1); *1sam;
-%reducedata(year=18, yeartag=1); *1sam;
+* %getcohort(year=18, yeartag=1); *1sam;
+* %getvisits(year=18, yeartag=1); *1sam;
+* %reducedata(year=18, yeartag=1); *1sam;
 
-proc export data=GeoVisits10
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits10flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits10
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits10flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort10
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort10
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoVisits11
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits11flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits11
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits11flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort11
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort11
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoVisits12
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits12flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits12
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits12flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort12
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort12
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoVisits13
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits13flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits13
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits13flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort13
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort13
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoVisits14
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits14flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits14
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits14flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort14
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort14
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoVisits15
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits15flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits15
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits15flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort15
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort15
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoVisits16
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits16flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits16
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits16flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort16
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort16
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
 proc export data=GeoVisits17
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits17flu_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv'
+	dbms=csv
+	replace;
+run;
+
+proc export data=GeoVisitsc117
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv'
+	dbms=csv
+	replace;
+run;
+
+proc export data=GeoVisitsc217
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort17
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17flu_2022-11-16.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv'
 	dbms=csv
 	replace;
 run;
 
-proc export data=GeoVisits18
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits18flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoVisits18
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits18flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
-proc export data=GeoCohort18
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18flu_2022-11-16.csv'
-	dbms=csv
-	replace;
-run;
+* proc export data=GeoCohort18
+* 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18flu_2022-11-16.csv'
+* 	dbms=csv
+* 	replace;
+* run;
 
