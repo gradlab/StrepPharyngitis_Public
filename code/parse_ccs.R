@@ -102,24 +102,20 @@ ccs10 <- ccs10 %>%
 		))
 
 
-
 ccsmap9 <- ccs9 %>% 
 	filter(!is.na(COND)) %>% 
 	select(COND, DX=ICD9) %>%
 	mutate(ICD="9") %>% 
-	mutate(PRIORITY=1) %>% 
-	select(COND, DX, ICD, PRIORITY) 
+	select(COND, DX, ICD) 
 
 ccsmap10 <- ccs10 %>% 
 	filter(!is.na(COND)) %>% 
 	select(COND, DX=ICD10) %>%
 	mutate(ICD="0") %>% 
-	mutate(PRIORITY=1) %>% 
-	select(COND, DX, ICD, PRIORITY) 
+	select(COND, DX, ICD) 
 
 
 ccsmap <- bind_rows(ccsmap9, ccsmap10) 
 
-write_csv(ccsmap, file="data/ccs_map_full.csv")
-
+write_csv(ccsmap, file="data/ccs_map_full.csv", quote="all")
 
