@@ -321,7 +321,7 @@ run;
 
 	* Arrange visits;
 	proc sort data=GeoVisits&year.;
-		by STATE AGEGRP SEX MONTH COND1 COND2;
+		by STATE AGEGRP SEX MONTH COND1;
 	run;
 
 	* Sum visits by condition 1;
@@ -331,6 +331,10 @@ run;
 		by STATE AGEGRP SEX MONTH COND1;
 		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.COND1 then NVISITS = 1;
 		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.COND1;
+	run;
+
+	proc sort data=GeoVisits&year.;
+		by STATE AGEGRP SEX MONTH COND2;
 	run;
 
 	* Sum visits by condition 2;
