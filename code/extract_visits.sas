@@ -210,6 +210,10 @@ run;
 		else COND2="Other/None";
 	run;
 
+	proc sort data=GeoVisits&year.;
+		by COND1 COND2;
+	run;
+
 	* Make sure that a given condition is only counted once per visit;
 	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
 		set GeoVisits&year.;
@@ -279,6 +283,10 @@ run;
 		if inright;
 		if inleft then COND2=COND2;
 		else COND2="Other/None";
+	run;
+
+	proc sort data=GeoVisits&year.;
+		by COND1 COND2;
 	run;
 
 	* Make sure that a given condition is only counted once per visit;
