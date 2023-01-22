@@ -7,12 +7,12 @@ NOTE: PROCEDURE PRINTTO used (Total process time):
 9          * Set path for printing output;
 10         proc printto print="/home/kissler/StrepPharyngitis/logs/extract_visits_out.txt" new;
 11         run;
-2                                                          The SAS System                           10:42 Thursday, January 19, 2023
+2                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
 
 NOTE: PROCEDURE PRINTTO used (Total process time):
       real time           0.02 seconds
-      cpu time            0.02 seconds
+      cpu time            0.01 seconds
       
 
 12         
@@ -22,7 +22,7 @@ NOTE: PROCEDURE PRINTTO used (Total process time):
 
 NOTE: PROCEDURE DATASETS used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 14       !                                           run;
@@ -67,7 +67,7 @@ NOTE: Libref DAT16 was successfully assigned as follows:
 26         libname dat17 "/data/markscan_authorized/data/commercial/2017";
 NOTE: Libref DAT17 was successfully assigned as follows: 
       Engine:        V9 
-3                                                          The SAS System                           10:42 Thursday, January 19, 2023
+3                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
       Physical Name: /data/markscan_authorized/data/commercial/2017
 27         libname dat18 "/data/markscan_authorized/data/commercial/2018";
@@ -86,7 +86,7 @@ NOTE: Libref DAT18 was successfully assigned as follows:
 36          *   PRODUCT:   SAS
 37          *   VERSION:   9.4
 38          *   CREATOR:   External File Interface
-39          *   DATE:      19JAN23
+39          *   DATE:      22JAN23
 40          *   DESC:      Generated SAS Datastep Code
 41          *   TEMPLATE SOURCE:  (None Specified.)
 42          ***********************************************************************/
@@ -127,10 +127,10 @@ NOTE: DATA statement used (Total process time):
 NOTE: WORK.DAYSPERMONTH data set was successfully created.
 NOTE: The data set WORK.DAYSPERMONTH has 12 observations and 2 variables.
 NOTE: PROCEDURE IMPORT used (Total process time):
-4                                                          The SAS System                           10:42 Thursday, January 19, 2023
+4                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
-      real time           0.69 seconds
-      cpu time            0.06 seconds
+      real time           0.36 seconds
+      cpu time            0.05 seconds
       
 
 56         
@@ -157,7 +157,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 68          *   PRODUCT:   SAS
 69          *   VERSION:   9.4
 70          *   CREATOR:   External File Interface
-71          *   DATE:      19JAN23
+71          *   DATE:      22JAN23
 72          *   DESC:      Generated SAS Datastep Code
 73          *   TEMPLATE SOURCE:  (None Specified.)
 74          ***********************************************************************/
@@ -187,7 +187,7 @@ NOTE: 51 records were read from the infile '/home/kissler/StrepPharyngitis/data/
       The minimum record length was 9.
       The maximum record length was 19.
 NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 2 variables.
-5                                                          The SAS System                           10:42 Thursday, January 19, 2023
+5                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
@@ -201,7 +201,7 @@ NOTE: DATA statement used (Total process time):
 NOTE: WORK.EGEOLOCLIST data set was successfully created.
 NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 2 variables.
 NOTE: PROCEDURE IMPORT used (Total process time):
-      real time           0.11 seconds
+      real time           0.07 seconds
       cpu time            0.04 seconds
       
 
@@ -247,7 +247,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 111        proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_full.csv"
 112                out=ccs_map
 113                dbms=csv
-6                                                          The SAS System                           10:42 Thursday, January 19, 2023
+6                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
 114                replace;
 115        run;
@@ -256,7 +256,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 117         *   PRODUCT:   SAS
 118         *   VERSION:   9.4
 119         *   CREATOR:   External File Interface
-120         *   DATE:      19JAN23
+120         *   DATE:      22JAN23
 121         *   DESC:      Generated SAS Datastep Code
 122         *   TEMPLATE SOURCE:  (None Specified.)
 123         ***********************************************************************/
@@ -307,7 +307,7 @@ NOTE: PROCEDURE IMPORT used (Total process time):
 140        
 141        * Make sure variable lengths are sufficient to avoid truncation:;
 142        data ccs_map (keep=DX COND ICD);
-7                                                          The SAS System                           10:42 Thursday, January 19, 2023
+7                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
 143        	length DX $30 COND $100;
 144            set ccs_map(rename=(DX=DX_orig COND=COND_orig));
@@ -367,7 +367,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 182        
 183        	data GeoCohort&year. (keep=AGE DT_MONTH STATE ENROLID MEMDAYS SEX NDAYS where=(MEMDAYS>=NDAYS));
 184        		merge dayspermonth (in=inleft)
-8                                                          The SAS System                           10:42 Thursday, January 19, 2023
+8                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
 185        		GeoCohort&year. (in=inright);
 186        		by DT_MONTH;
@@ -427,7 +427,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 240        	    set GeoVisits&year.(rename=(DX1=DX1_orig DX2=DX2_orig));
 241        	    ICD="9";
 242        	    DX1=DX1_orig;
-9                                                          The SAS System                           10:42 Thursday, January 19, 2023
+9                                                          The SAS System                             14:51 Sunday, January 22, 2023
 
 243        	    DX2=DX2_orig;
 244        	run;
@@ -487,7 +487,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 298        %macro getvisits(year=,yeartag=);
 299        	
 300        	* Import 'o' (outpatient claims) and reduce to those in the cohort;
-10                                                         The SAS System                           10:42 Thursday, January 19, 2023
+10                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 301        	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE DXVER);
 302        		merge GeoCohort&year. (in=inleft)
@@ -547,7 +547,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 356        	* Add a Month column;
 357        	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
 358        		set GeoVisits&year.;
-11                                                         The SAS System                           10:42 Thursday, January 19, 2023
+11                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 359        		MONTH=month(SVCDATE);
 360        	run;
@@ -607,7 +607,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 414        	run;
 415        
 416        	* Clean entries;
-12                                                         The SAS System                           10:42 Thursday, January 19, 2023
+12                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 417        	data GeoVisitsc1&year.;
 418        		set GeoVisitsc1&year.;
@@ -667,19 +667,19 @@ NOTE: PROCEDURE SORT used (Total process time):
 
 NOTE: There were 4142848 observations read from the data set DAT17.CCAET171SAM.
 NOTE: The data set WORK.GEOCOHORT17 has 4142848 observations and 6 variables.
-13                                                         The SAS System                           10:42 Thursday, January 19, 2023
+13                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 NOTE: DATA statement used (Total process time):
-      real time           0.66 seconds
-      cpu time            0.61 seconds
+      real time           0.65 seconds
+      cpu time            0.56 seconds
       
 
 
 NOTE: There were 4142848 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 4142848 observations and 6 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.45 seconds
-      cpu time            1.48 seconds
+      real time           0.44 seconds
+      cpu time            1.41 seconds
       
 
 
@@ -687,16 +687,16 @@ NOTE: There were 51 observations read from the data set WORK.EGEOLOCLIST.
 NOTE: There were 4142848 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 3714026 observations and 6 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.72 seconds
-      cpu time            0.71 seconds
+      real time           0.62 seconds
+      cpu time            0.62 seconds
       
 
 
 NOTE: There were 3714026 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 3714026 observations and 6 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.66 seconds
-      cpu time            2.03 seconds
+      real time           0.51 seconds
+      cpu time            1.68 seconds
       
 
 
@@ -704,34 +704,34 @@ NOTE: There were 12 observations read from the data set WORK.DAYSPERMONTH.
 NOTE: There were 3714026 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 3713153 observations and 7 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.96 seconds
-      cpu time            0.95 seconds
+      real time           0.91 seconds
+      cpu time            0.92 seconds
       
 
 
 NOTE: There were 3713153 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 3713153 observations and 7 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.65 seconds
-      cpu time            1.74 seconds
+      real time           0.54 seconds
+      cpu time            1.49 seconds
       
 
 
 NOTE: There were 3713153 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 284118 observations and 6 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.67 seconds
-      cpu time            0.66 seconds
+      real time           0.65 seconds
+      cpu time            0.65 seconds
       
 
 
 NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 284118 observations and 4 variables.
-14                                                         The SAS System                           10:42 Thursday, January 19, 2023
+14                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 NOTE: DATA statement used (Total process time):
       real time           0.04 seconds
-      cpu time            0.04 seconds
+      cpu time            0.03 seconds
       
 
 
@@ -739,7 +739,7 @@ NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 284118 observations and 4 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.05 seconds
-      cpu time            0.11 seconds
+      cpu time            0.12 seconds
       
 
 472        %getvisits(year=17, yeartag=1sam); *1sam;
@@ -748,16 +748,16 @@ NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: There were 9203939 observations read from the data set DAT17.CCAEO171SAM.
 NOTE: The data set WORK.GEOVISITS17 has 7459812 observations and 5 variables.
 NOTE: DATA statement used (Total process time):
-      real time           2.02 seconds
-      cpu time            1.97 seconds
+      real time           1.88 seconds
+      cpu time            1.75 seconds
       
 
 
 NOTE: There were 7459812 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 7459812 observations and 5 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.91 seconds
-      cpu time            0.88 seconds
+      real time           0.78 seconds
+      cpu time            0.78 seconds
       
 
 
@@ -765,51 +765,51 @@ NOTE: There were 7459812 observations read from the data set WORK.GEOVISITS17.
 NOTE: 5083599 observations with duplicate key values were deleted.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           1.28 seconds
-      cpu time            2.91 seconds
+      real time           1.10 seconds
+      cpu time            2.63 seconds
       
 
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.65 seconds
-      cpu time            1.60 seconds
+      real time           0.62 seconds
+      cpu time            1.54 seconds
       
 
 
 NOTE: There were 594 observations read from the data set WORK.CCS_MAP.
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.60 seconds
+      cpu time            0.60 seconds
+      
+
+
+15                                                         The SAS System                             14:51 Sunday, January 22, 2023
+
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.66 seconds
+      cpu time            1.64 seconds
+      
+
+
+NOTE: There were 594 observations read from the data set WORK.CCS_MAP.
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           1.04 seconds
+      cpu time            1.04 seconds
+      
+
+
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.62 seconds
-      cpu time            0.61 seconds
-      
-
-
-15                                                         The SAS System                           10:42 Thursday, January 19, 2023
-
-NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
-NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.71 seconds
-      cpu time            1.72 seconds
-      
-
-
-NOTE: There were 594 observations read from the data set WORK.CCS_MAP.
-NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
-NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
-NOTE: DATA statement used (Total process time):
-      real time           1.06 seconds
-      cpu time            1.06 seconds
-      
-
-
-NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
-NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.63 seconds
       cpu time            0.63 seconds
       
 
@@ -825,8 +825,8 @@ NOTE: DATA statement used (Total process time):
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.91 seconds
-      cpu time            1.96 seconds
+      real time           0.78 seconds
+      cpu time            1.75 seconds
       
 
 473        %reducedata(year=17, yeartag=1sam); *1sam;
@@ -835,19 +835,19 @@ NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 6 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.83 seconds
-      cpu time            0.84 seconds
+      real time           0.85 seconds
+      cpu time            0.85 seconds
       
 
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 6 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           1.62 seconds
-      cpu time            3.53 seconds
+      real time           1.60 seconds
+      cpu time            3.47 seconds
       
 
-16                                                         The SAS System                           10:42 Thursday, January 19, 2023
+16                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
@@ -867,7 +867,7 @@ NOTE: Due to ERROR(s) above, SAS set option OBS=0, enabling syntax check mode.
 NOTE: There were 3 observations read from the data set WORK.GEOVISITS17.
 WARNING: The data set WORK.GEOVISITSC217 may be incomplete.  When this step was stopped there were 1 observations and 6 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
+      real time           0.03 seconds
       cpu time            0.00 seconds
       
 
@@ -907,7 +907,7 @@ NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 4 variables.
 WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-17                                                         The SAS System                           10:42 Thursday, January 19, 2023
+17                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
       cpu time            0.00 seconds
       
@@ -967,7 +967,7 @@ NOTE: DATA statement used (Total process time):
 526        
 527        * proc export data=GeoVisits14
 528        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits14flu_2022-11-16.csv'
-18                                                         The SAS System                           10:42 Thursday, January 19, 2023
+18                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 529        * 	dbms=csv
 530        * 	replace;
@@ -1027,7 +1027,7 @@ NOTE: The SAS System stopped processing this step because of errors.
 572        	replace;
 573        run;
 574        
-19                                                         The SAS System                           10:42 Thursday, January 19, 2023
+19                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 
 
