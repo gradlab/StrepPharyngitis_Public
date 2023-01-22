@@ -1,9 +1,9 @@
-1                                                          The SAS System                           16:37 Tuesday, November 29, 2022
+1                                                          The SAS System                           10:42 Thursday, January 19, 2023
 
 NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
 NOTE: SAS (r) Proprietary Software 9.4 (TS1M7) 
       Licensed to HARVARD UNIVERSITY - SFA T&R, Site 70106881.
-NOTE: This session is executing on the Linux 4.18.0-372.32.1.el8_6.x86_64 (LIN X64) platform.
+NOTE: This session is executing on the Linux 4.18.0-425.3.1.el8.x86_64 (LIN X64) platform.
 
 
 
@@ -17,7 +17,7 @@ NOTE: Analytical products:
 
 NOTE: Additional host information:
 
- Linux LIN X64 4.18.0-372.32.1.el8_6.x86_64 #1 SMP Fri Oct 7 12:35:10 EDT 2022 x86_64 Red Hat Enterprise Linux release 8.6 (Ootpa) 
+ Linux LIN X64 4.18.0-425.3.1.el8.x86_64 #1 SMP Fri Sep 30 11:45:06 EDT 2022 x86_64 Red Hat Enterprise Linux release 8.7 (Ootpa) 
 
 You are running SAS 9. Some SAS 8 files will be automatically converted 
 by the V9 engine; others are incompatible.  Please see 
@@ -38,19 +38,21 @@ The command line option "-nonews" will prevent this display.
 
 
 NOTE: SAS initialization used:
-      real time           0.37 seconds
-      cpu time            0.04 seconds
+      real time           0.12 seconds
+      cpu time            0.03 seconds
       
 1          * ============================================================================;
 2          * Setup;
 3          * ============================================================================;
 4          
 5          * Set path for log;
-6          proc printto log="/home/kissler/StrepPharyngitis/logs/extract_geography_log.txt" new;
+6          proc printto log="/home/kissler/StrepPharyngitis/logs/extract_visits_log.txt" new;
 7          run;
+
+ERROR: Errors printed on page 16.
 
 NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
 NOTE: The SAS System used:
-      real time           6:45:29.16
-      cpu time            9:02:41.84
+      real time           18.68 seconds
+      cpu time            27.55 seconds
       
