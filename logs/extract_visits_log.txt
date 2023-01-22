@@ -7,12 +7,12 @@ NOTE: PROCEDURE PRINTTO used (Total process time):
 9          * Set path for printing output;
 10         proc printto print="/home/kissler/StrepPharyngitis/logs/extract_visits_out.txt" new;
 11         run;
-2                                                          The SAS System                             14:51 Sunday, January 22, 2023
+2                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
 
 NOTE: PROCEDURE PRINTTO used (Total process time):
       real time           0.02 seconds
-      cpu time            0.01 seconds
+      cpu time            0.02 seconds
       
 
 12         
@@ -22,7 +22,7 @@ NOTE: PROCEDURE PRINTTO used (Total process time):
 
 NOTE: PROCEDURE DATASETS used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
 14       !                                           run;
@@ -67,7 +67,7 @@ NOTE: Libref DAT16 was successfully assigned as follows:
 26         libname dat17 "/data/markscan_authorized/data/commercial/2017";
 NOTE: Libref DAT17 was successfully assigned as follows: 
       Engine:        V9 
-3                                                          The SAS System                             14:51 Sunday, January 22, 2023
+3                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
       Physical Name: /data/markscan_authorized/data/commercial/2017
 27         libname dat18 "/data/markscan_authorized/data/commercial/2018";
@@ -116,8 +116,8 @@ NOTE: 12 records were read from the infile '/home/kissler/StrepPharyngitis/data/
       The maximum record length was 5.
 NOTE: The data set WORK.DAYSPERMONTH has 12 observations and 2 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.02 seconds
-      cpu time            0.00 seconds
+      real time           0.00 seconds
+      cpu time            0.01 seconds
       
 
 12 rows created in WORK.DAYSPERMONTH from /home/kissler/StrepPharyngitis/data/dayspermonth.csv.
@@ -127,9 +127,9 @@ NOTE: DATA statement used (Total process time):
 NOTE: WORK.DAYSPERMONTH data set was successfully created.
 NOTE: The data set WORK.DAYSPERMONTH has 12 observations and 2 variables.
 NOTE: PROCEDURE IMPORT used (Total process time):
-4                                                          The SAS System                             14:51 Sunday, January 22, 2023
+4                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
-      real time           0.36 seconds
+      real time           0.07 seconds
       cpu time            0.05 seconds
       
 
@@ -142,7 +142,7 @@ NOTE: There were 12 observations read from the data set WORK.DAYSPERMONTH.
 NOTE: The data set WORK.DAYSPERMONTH has 12 observations and 2 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
 60         
@@ -187,11 +187,11 @@ NOTE: 51 records were read from the infile '/home/kissler/StrepPharyngitis/data/
       The minimum record length was 9.
       The maximum record length was 19.
 NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 2 variables.
-5                                                          The SAS System                             14:51 Sunday, January 22, 2023
+5                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 51 rows created in WORK.EGEOLOCLIST from /home/kissler/StrepPharyngitis/data/EGEOLOClist_char.csv.
@@ -201,7 +201,7 @@ NOTE: DATA statement used (Total process time):
 NOTE: WORK.EGEOLOCLIST data set was successfully created.
 NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 2 variables.
 NOTE: PROCEDURE IMPORT used (Total process time):
-      real time           0.07 seconds
+      real time           0.05 seconds
       cpu time            0.04 seconds
       
 
@@ -229,7 +229,7 @@ NOTE: There were 51 observations read from the data set WORK.EGEOLOCLIST.
 NOTE: The data set WORK.EGEOLOCLIST has 51 observations and 3 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 99         
@@ -247,7 +247,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 111        proc import datafile="/home/kissler/StrepPharyngitis/data/ccs_map_full.csv"
 112                out=ccs_map
 113                dbms=csv
-6                                                          The SAS System                             14:51 Sunday, January 22, 2023
+6                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
 114                replace;
 115        run;
@@ -307,7 +307,7 @@ NOTE: PROCEDURE IMPORT used (Total process time):
 140        
 141        * Make sure variable lengths are sufficient to avoid truncation:;
 142        data ccs_map (keep=DX COND ICD);
-7                                                          The SAS System                             14:51 Sunday, January 22, 2023
+7                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
 143        	length DX $30 COND $100;
 144            set ccs_map(rename=(DX=DX_orig COND=COND_orig));
@@ -319,7 +319,7 @@ NOTE: There were 594 observations read from the data set WORK.CCS_MAP.
 NOTE: The data set WORK.CCS_MAP has 594 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 148        
@@ -331,7 +331,7 @@ NOTE: There were 594 observations read from the data set WORK.CCS_MAP.
 NOTE: The data set WORK.CCS_MAP has 594 observations and 3 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
 152        
@@ -367,7 +367,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 182        
 183        	data GeoCohort&year. (keep=AGE DT_MONTH STATE ENROLID MEMDAYS SEX NDAYS where=(MEMDAYS>=NDAYS));
 184        		merge dayspermonth (in=inleft)
-8                                                          The SAS System                             14:51 Sunday, January 22, 2023
+8                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
 185        		GeoCohort&year. (in=inright);
 186        		by DT_MONTH;
@@ -427,7 +427,7 @@ NOTE: PROCEDURE SORT used (Total process time):
 240        	    set GeoVisits&year.(rename=(DX1=DX1_orig DX2=DX2_orig));
 241        	    ICD="9";
 242        	    DX1=DX1_orig;
-9                                                          The SAS System                             14:51 Sunday, January 22, 2023
+9                                                          The SAS System                             15:08 Sunday, January 22, 2023
 
 243        	    DX2=DX2_orig;
 244        	run;
@@ -465,213 +465,225 @@ NOTE: PROCEDURE SORT used (Total process time):
 276        		else COND2="Other/None";
 277        	run;
 278        
-279        	* Make sure that a given condition is only counted once per visit;
-280        	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
-281        		set GeoVisits&year.;
-282        		if COND1=COND2 then COND2="Other/None";
-283        	run;
-284        
-285        	* Add a Month column;
-286        	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
-287        		set GeoVisits&year.;
-288        		MONTH=month(SVCDATE);
-289        	run;
-290        
-291        	* Sort to prepare for summarizing prevalence;
-292        	proc sort data=GeoVisits&year.;
-293        		by ENROLID SVCDATE;
-294        	run;
-295        
-296        %mend;
-297        
-298        %macro getvisits(year=,yeartag=);
-299        	
-300        	* Import 'o' (outpatient claims) and reduce to those in the cohort;
-10                                                         The SAS System                             14:51 Sunday, January 22, 2023
+279        	proc sort data=GeoVisits&year.;
+280        		by COND1 COND2;
+281        	run;
+282        
+283        	* Make sure that a given condition is only counted once per visit;
+284        	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+285        		set GeoVisits&year.;
+286        		if COND1=COND2 then COND2="Other/None";
+287        	run;
+288        
+289        	* Add a Month column;
+290        	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
+291        		set GeoVisits&year.;
+292        		MONTH=month(SVCDATE);
+293        	run;
+294        
+295        	* Sort to prepare for summarizing prevalence;
+296        	proc sort data=GeoVisits&year.;
+297        		by ENROLID SVCDATE;
+298        	run;
+299        
+300        %mend;
+10                                                         The SAS System                             15:08 Sunday, January 22, 2023
 
-301        	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE DXVER);
-302        		merge GeoCohort&year. (in=inleft)
-303        		dat&year..ccaeo&year.&yeartag. (in=inright keep=DX1 DX2 ENROLID SVCDATE DXVER);
-304        		by ENROLID;
-305        		IF inleft & inright;
-306        	run;
-307        
-308        	* Specify lengths for the diagnosis variables to avoid truncation;
-309        	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD);
-310        		rename DXVER=ICD;
-311        		length DX1 $30 DX2 $30;
-312        	    set GeoVisits&year.(rename=(DX1=DX1_orig DX2=DX2_orig));
-313        	    DX1=DX1_orig;
-314        	    DX2=DX2_orig;
-315        	run;
-316        
-317        	* Reduce to unique person-dates for outpatient visits;
-318        	proc sort data=GeoVisits&year. nodupkey;
-319        		by ENROLID SVCDATE;
-320        	run;
-321        
-322        	* Append conditions for DX1;
-323        	proc sort data=GeoVisits&year.;
-324        		by DX1 ICD;
-325        	run;
-326        
-327        	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1);
-328        		merge ccs_map (rename=(DX=DX1 COND=COND1) in=inleft)
-329        		GeoVisits&year. (in=inright);
-330        		by DX1 ICD;
-331        		if inright;
-332        		if inleft then COND1=COND1;
-333        		else COND1="Other/None";
-334        	run;
-335        
-336        	* Append conditions for DX2;
-337        	proc sort data=GeoVisits&year.;
-338        		by DX2 ICD;
-339        	run;
-340        
-341        	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
-342        		merge ccs_map (rename=(DX=DX2 COND=COND2) in=inleft)
-343        		GeoVisits&year. (in=inright);
-344        		by DX2 ICD;
-345        		if inright;
-346        		if inleft then COND2=COND2;
-347        		else COND2="Other/None";
-348        	run;
-349        
-350        	* Make sure that a given condition is only counted once per visit;
-351        	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
-352        		set GeoVisits&year.;
-353        		if COND1=COND2 then COND2="Other/None";
-354        	run;
-355        
-356        	* Add a Month column;
-357        	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
-358        		set GeoVisits&year.;
-11                                                         The SAS System                             14:51 Sunday, January 22, 2023
+301        
+302        %macro getvisits(year=,yeartag=);
+303        	
+304        	* Import 'o' (outpatient claims) and reduce to those in the cohort;
+305        	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE DXVER);
+306        		merge GeoCohort&year. (in=inleft)
+307        		dat&year..ccaeo&year.&yeartag. (in=inright keep=DX1 DX2 ENROLID SVCDATE DXVER);
+308        		by ENROLID;
+309        		IF inleft & inright;
+310        	run;
+311        
+312        	* Specify lengths for the diagnosis variables to avoid truncation;
+313        	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD);
+314        		rename DXVER=ICD;
+315        		length DX1 $30 DX2 $30;
+316        	    set GeoVisits&year.(rename=(DX1=DX1_orig DX2=DX2_orig));
+317        	    DX1=DX1_orig;
+318        	    DX2=DX2_orig;
+319        	run;
+320        
+321        	* Reduce to unique person-dates for outpatient visits;
+322        	proc sort data=GeoVisits&year. nodupkey;
+323        		by ENROLID SVCDATE;
+324        	run;
+325        
+326        	* Append conditions for DX1;
+327        	proc sort data=GeoVisits&year.;
+328        		by DX1 ICD;
+329        	run;
+330        
+331        	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1);
+332        		merge ccs_map (rename=(DX=DX1 COND=COND1) in=inleft)
+333        		GeoVisits&year. (in=inright);
+334        		by DX1 ICD;
+335        		if inright;
+336        		if inleft then COND1=COND1;
+337        		else COND1="Other/None";
+338        	run;
+339        
+340        	* Append conditions for DX2;
+341        	proc sort data=GeoVisits&year.;
+342        		by DX2 ICD;
+343        	run;
+344        
+345        	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+346        		merge ccs_map (rename=(DX=DX2 COND=COND2) in=inleft)
+347        		GeoVisits&year. (in=inright);
+348        		by DX2 ICD;
+349        		if inright;
+350        		if inleft then COND2=COND2;
+351        		else COND2="Other/None";
+352        	run;
+353        
+354        	proc sort data=GeoVisits&year.;
+355        		by COND1 COND2;
+356        	run;
+357        
+358        	* Make sure that a given condition is only counted once per visit;
+11                                                         The SAS System                             15:08 Sunday, January 22, 2023
 
-359        		MONTH=month(SVCDATE);
-360        	run;
-361        
-362        	* Sort to prepare for summarizing prevalence;
-363        	proc sort data=GeoVisits&year.;
-364        		by ENROLID SVCDATE;
-365        	run;
-366        
-367        %mend;
-368        
+359        	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+360        		set GeoVisits&year.;
+361        		if COND1=COND2 then COND2="Other/None";
+362        	run;
+363        
+364        	* Add a Month column;
+365        	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
+366        		set GeoVisits&year.;
+367        		MONTH=month(SVCDATE);
+368        	run;
 369        
-370        %macro reducedata(year=,yeartag=);
-371        
-372        	* Append demographic data to visits;
-373        	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH COND1 COND2);
-374        		merge GeoVisits&year. (keep=ENROLID COND1 COND2 MONTH in=inleft)
-375        		GeoCohort&year. (keep=ENROLID STATE AGEGRP SEX in=inright);
-376        		by ENROLID;
-377        		if inleft;
-378        	run;
+370        	* Sort to prepare for summarizing prevalence;
+371        	proc sort data=GeoVisits&year.;
+372        		by ENROLID SVCDATE;
+373        	run;
+374        
+375        %mend;
+376        
+377        
+378        %macro reducedata(year=,yeartag=);
 379        
-380        	* Arrange visits;
-381        	proc sort data=GeoVisits&year.;
-382        		by STATE AGEGRP SEX MONTH COND1 COND2;
-383        	run;
-384        
-385        	* Sum visits by condition 1;
-386        	data GeoVisitsc1&year. (keep=STATE AGEGRP SEX MONTH COND1 NVISITS);
-387        		set GeoVisits&year.;
-388        		NVISITS + 1;
-389        		by STATE AGEGRP SEX MONTH COND1;
-390        		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.COND1 then NVISITS = 1;
-391        		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.COND1;
-392        	run;
-393        
-394        	* Sum visits by condition 2;
-395        	data GeoVisitsc2&year. (keep=STATE AGEGRP SEX MONTH COND2 NVISITS);
-396        		set GeoVisits&year.;
-397        		NVISITS + 1;
-398        		by STATE AGEGRP SEX MONTH COND2;
-399        		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.COND2 then NVISITS = 1;
-400        		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.COND2;
-401        	run;
-402        
-403        	* Sum cohort sizes;
-404        	proc sort data=GeoCohort&year.;
-405        		by STATE AGEGRP SEX;
-406        	run;
-407        
-408        	data GeoCohort&year. (keep=STATE AGEGRP SEX NMEMB);
-409        		set GeoCohort&year.;
-410        		NMEMB + 1;
-411        		by STATE AGEGRP SEX;
-412        		if first.STATE or first.AGEGRP or first.SEX then NMEMB = 1;
-413        		if last.STATE or last.AGEGRP or last.SEX;
-414        	run;
-415        
-416        	* Clean entries;
-12                                                         The SAS System                             14:51 Sunday, January 22, 2023
+380        	* Append demographic data to visits;
+381        	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH COND1 COND2);
+382        		merge GeoVisits&year. (keep=ENROLID COND1 COND2 MONTH in=inleft)
+383        		GeoCohort&year. (keep=ENROLID STATE AGEGRP SEX in=inright);
+384        		by ENROLID;
+385        		if inleft;
+386        	run;
+387        
+388        	* Arrange visits;
+389        	proc sort data=GeoVisits&year.;
+390        		by STATE AGEGRP SEX MONTH COND1;
+391        	run;
+392        
+393        	* Sum visits by condition 1;
+394        	data GeoVisitsc1&year. (keep=STATE AGEGRP SEX MONTH COND1 NVISITS);
+395        		set GeoVisits&year.;
+396        		NVISITS + 1;
+397        		by STATE AGEGRP SEX MONTH COND1;
+398        		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.COND1 then NVISITS = 1;
+399        		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.COND1;
+400        	run;
+401        
+402        	proc sort data=GeoVisits&year.;
+403        		by STATE AGEGRP SEX MONTH COND2;
+404        	run;
+405        
+406        	* Sum visits by condition 2;
+407        	data GeoVisitsc2&year. (keep=STATE AGEGRP SEX MONTH COND2 NVISITS);
+408        		set GeoVisits&year.;
+409        		NVISITS + 1;
+410        		by STATE AGEGRP SEX MONTH COND2;
+411        		if first.STATE or first.AGEGRP or first.SEX or first.MONTH or first.COND2 then NVISITS = 1;
+412        		if last.STATE or last.AGEGRP or last.SEX or last.MONTH or last.COND2;
+413        	run;
+414        
+415        	* Sum cohort sizes;
+416        	proc sort data=GeoCohort&year.;
+12                                                         The SAS System                             15:08 Sunday, January 22, 2023
 
-417        	data GeoVisitsc1&year.;
-418        		set GeoVisitsc1&year.;
-419        		if missing(NVISITS) then NVISITS=0;
-420        		if STATE="North Carolin" then STATE="North Carolina";
-421        		if STATE="South Carolin" then STATE="South Carolina";
-422        	run;
-423        
-424        	data GeoVisitsc2&year.;
-425        		set GeoVisitsc2&year.;
-426        		if missing(NVISITS) then NVISITS=0;
-427        		if STATE="North Carolin" then STATE="North Carolina";
-428        		if STATE="South Carolin" then STATE="South Carolina";
-429        	run;
-430        
-431        	data GeoCohort&year.;
-432        		set GeoCohort&year.;
-433        		if STATE="North Carolin" then STATE="North Carolina";
-434        		if STATE="South Carolin" then STATE="South Carolina";
-435        	run;
-436        
-437        %mend;
-438        
-439        * ============================================================================;
-440        * Do the reduction;
-441        * ============================================================================;
+417        		by STATE AGEGRP SEX;
+418        	run;
+419        
+420        	data GeoCohort&year. (keep=STATE AGEGRP SEX NMEMB);
+421        		set GeoCohort&year.;
+422        		NMEMB + 1;
+423        		by STATE AGEGRP SEX;
+424        		if first.STATE or first.AGEGRP or first.SEX then NMEMB = 1;
+425        		if last.STATE or last.AGEGRP or last.SEX;
+426        	run;
+427        
+428        	* Clean entries;
+429        	data GeoVisitsc1&year.;
+430        		set GeoVisitsc1&year.;
+431        		if missing(NVISITS) then NVISITS=0;
+432        		if STATE="North Carolin" then STATE="North Carolina";
+433        		if STATE="South Carolin" then STATE="South Carolina";
+434        	run;
+435        
+436        	data GeoVisitsc2&year.;
+437        		set GeoVisitsc2&year.;
+438        		if missing(NVISITS) then NVISITS=0;
+439        		if STATE="North Carolin" then STATE="North Carolina";
+440        		if STATE="South Carolin" then STATE="South Carolina";
+441        	run;
 442        
-443        * %getcohort(year=10, yeartag=1); *1sam;
-444        * %getvisits_pre15(year=10, yeartag=1); *1sam;
-445        * %reducedata(year=10, yeartag=1); *1sam;
-446        
-447        * %getcohort(year=11, yeartag=1); *1sam;
-448        * %getvisits_pre15(year=11, yeartag=1); *1sam;
-449        * %reducedata(year=11, yeartag=1); *1sam;
+443        	data GeoCohort&year.;
+444        		set GeoCohort&year.;
+445        		if STATE="North Carolin" then STATE="North Carolina";
+446        		if STATE="South Carolin" then STATE="South Carolina";
+447        	run;
+448        
+449        %mend;
 450        
-451        * %getcohort(year=12, yeartag=1); *1sam;
-452        * %getvisits_pre15(year=12, yeartag=1); *1sam;
-453        * %reducedata(year=12, yeartag=1); *1sam;
+451        * ============================================================================;
+452        * Do the reduction;
+453        * ============================================================================;
 454        
-455        * %getcohort(year=13, yeartag=1); *1sam;
-456        * %getvisits_pre15(year=13, yeartag=1); *1sam;
-457        * %reducedata(year=13, yeartag=1); *1sam;
+455        * %getcohort(year=10, yeartag=1); *1sam;
+456        * %getvisits_pre15(year=10, yeartag=1); *1sam;
+457        * %reducedata(year=10, yeartag=1); *1sam;
 458        
-459        * %getcohort(year=14, yeartag=1); *1sam;
-460        * %getvisits_pre15(year=14, yeartag=1); *1sam;
-461        * %reducedata(year=14, yeartag=1); *1sam;
+459        * %getcohort(year=11, yeartag=1); *1sam;
+460        * %getvisits_pre15(year=11, yeartag=1); *1sam;
+461        * %reducedata(year=11, yeartag=1); *1sam;
 462        
-463        * %getcohort(year=15, yeartag=1); *1sam;
-464        * %getvisits(year=15, yeartag=1); *1sam;
-465        * %reducedata(year=15, yeartag=1); *1sam;
+463        * %getcohort(year=12, yeartag=1); *1sam;
+464        * %getvisits_pre15(year=12, yeartag=1); *1sam;
+465        * %reducedata(year=12, yeartag=1); *1sam;
 466        
-467        * %getcohort(year=16, yeartag=1); *1sam;
-468        * %getvisits(year=16, yeartag=1); *1sam;
-469        * %reducedata(year=16, yeartag=1); *1sam;
+467        * %getcohort(year=13, yeartag=1); *1sam;
+468        * %getvisits_pre15(year=13, yeartag=1); *1sam;
+469        * %reducedata(year=13, yeartag=1); *1sam;
 470        
-471        %getcohort(year=17, yeartag=1sam); *1sam;
+471        * %getcohort(year=14, yeartag=1); *1sam;
+472        * %getvisits_pre15(year=14, yeartag=1); *1sam;
+473        * %reducedata(year=14, yeartag=1); *1sam;
+474        
+13                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+475        * %getcohort(year=15, yeartag=1); *1sam;
+476        * %getvisits(year=15, yeartag=1); *1sam;
+477        * %reducedata(year=15, yeartag=1); *1sam;
+478        
+479        * %getcohort(year=16, yeartag=1); *1sam;
+480        * %getvisits(year=16, yeartag=1); *1sam;
+481        * %reducedata(year=16, yeartag=1); *1sam;
+482        
+483        %getcohort(year=17, yeartag=1sam); *1sam;
 
 NOTE: There were 4142848 observations read from the data set DAT17.CCAET171SAM.
 NOTE: The data set WORK.GEOCOHORT17 has 4142848 observations and 6 variables.
-13                                                         The SAS System                             14:51 Sunday, January 22, 2023
-
 NOTE: DATA statement used (Total process time):
-      real time           0.65 seconds
-      cpu time            0.56 seconds
+      real time           0.55 seconds
+      cpu time            0.55 seconds
       
 
 
@@ -679,7 +691,7 @@ NOTE: There were 4142848 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 4142848 observations and 6 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.44 seconds
-      cpu time            1.41 seconds
+      cpu time            1.42 seconds
       
 
 
@@ -688,14 +700,14 @@ NOTE: There were 4142848 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 3714026 observations and 6 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.62 seconds
-      cpu time            0.62 seconds
+      cpu time            0.61 seconds
       
 
 
 NOTE: There were 3714026 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 3714026 observations and 6 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.51 seconds
+      real time           0.49 seconds
       cpu time            1.68 seconds
       
 
@@ -704,7 +716,7 @@ NOTE: There were 12 observations read from the data set WORK.DAYSPERMONTH.
 NOTE: There were 3714026 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 3713153 observations and 7 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.91 seconds
+      real time           0.93 seconds
       cpu time            0.92 seconds
       
 
@@ -715,6 +727,8 @@ NOTE: PROCEDURE SORT used (Total process time):
       real time           0.54 seconds
       cpu time            1.49 seconds
       
+14                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
 
 
 NOTE: There were 3713153 observations read from the data set WORK.GEOCOHORT17.
@@ -727,11 +741,9 @@ NOTE: DATA statement used (Total process time):
 
 NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 284118 observations and 4 variables.
-14                                                         The SAS System                             14:51 Sunday, January 22, 2023
-
 NOTE: DATA statement used (Total process time):
-      real time           0.04 seconds
-      cpu time            0.03 seconds
+      real time           0.03 seconds
+      cpu time            0.04 seconds
       
 
 
@@ -739,24 +751,24 @@ NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOCOHORT17 has 284118 observations and 4 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.05 seconds
-      cpu time            0.12 seconds
+      cpu time            0.11 seconds
       
 
-472        %getvisits(year=17, yeartag=1sam); *1sam;
+484        %getvisits(year=17, yeartag=1sam); *1sam;
 
 NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: There were 9203939 observations read from the data set DAT17.CCAEO171SAM.
 NOTE: The data set WORK.GEOVISITS17 has 7459812 observations and 5 variables.
 NOTE: DATA statement used (Total process time):
-      real time           1.88 seconds
-      cpu time            1.75 seconds
+      real time           1.66 seconds
+      cpu time            1.65 seconds
       
 
 
 NOTE: There were 7459812 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 7459812 observations and 5 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.78 seconds
+      real time           0.77 seconds
       cpu time            0.78 seconds
       
 
@@ -765,16 +777,18 @@ NOTE: There were 7459812 observations read from the data set WORK.GEOVISITS17.
 NOTE: 5083599 observations with duplicate key values were deleted.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           1.10 seconds
-      cpu time            2.63 seconds
+      real time           1.11 seconds
+      cpu time            2.64 seconds
       
 
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.62 seconds
-      cpu time            1.54 seconds
+      real time           0.59 seconds
+      cpu time            1.49 seconds
+15                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
       
 
 
@@ -782,18 +796,16 @@ NOTE: There were 594 observations read from the data set WORK.CCS_MAP.
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.60 seconds
+      real time           0.61 seconds
       cpu time            0.60 seconds
       
 
 
-15                                                         The SAS System                             14:51 Sunday, January 22, 2023
-
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.66 seconds
-      cpu time            1.64 seconds
+      real time           0.65 seconds
+      cpu time            1.62 seconds
       
 
 
@@ -801,53 +813,61 @@ NOTE: There were 594 observations read from the data set WORK.CCS_MAP.
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: DATA statement used (Total process time):
-      real time           1.04 seconds
-      cpu time            1.04 seconds
-      
-
-
-NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
-NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.62 seconds
-      cpu time            0.63 seconds
-      
-
-
-NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
-NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.75 seconds
-      cpu time            0.75 seconds
+      real time           1.07 seconds
+      cpu time            1.06 seconds
       
 
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.78 seconds
-      cpu time            1.75 seconds
+      real time           1.21 seconds
+      cpu time            2.92 seconds
       
 
-473        %reducedata(year=17, yeartag=1sam); *1sam;
+
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.63 seconds
+      cpu time            0.62 seconds
+      
+
+
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.76 seconds
+      cpu time            0.76 seconds
+      
+
+
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.79 seconds
+      cpu time            1.76 seconds
+16                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+      
+
+485        %reducedata(year=17, yeartag=1sam); *1sam;
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 6 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.85 seconds
-      cpu time            0.85 seconds
+      real time           0.82 seconds
+      cpu time            0.81 seconds
       
 
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
 NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 6 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           1.60 seconds
-      cpu time            3.47 seconds
+      real time           1.22 seconds
+      cpu time            2.77 seconds
       
-
-16                                                         The SAS System                             14:51 Sunday, January 22, 2023
 
 
 NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
@@ -858,214 +878,492 @@ NOTE: DATA statement used (Total process time):
       
 
 
-ERROR: BY variables are not properly sorted on data set WORK.GEOVISITS17.
-COND2=Otitis media COND1=Acute sinusitis MONTH=1 STATE=Alabama SEX=1 AGEGRP=00_04 NVISITS=1 FIRST.STATE=1 LAST.STATE=0
-FIRST.AGEGRP=1 LAST.AGEGRP=0 FIRST.SEX=1 LAST.SEX=0 FIRST.MONTH=1 LAST.MONTH=0 FIRST.COND2=1 LAST.COND2=1 _ERROR_=1 _N_=2
-NOTE: The SAS System stopped processing this step because of errors.
-NOTE: Due to ERROR(s) above, SAS set option OBS=0, enabling syntax check mode. 
-      This prevents execution of subsequent data modification statements.
-NOTE: There were 3 observations read from the data set WORK.GEOVISITS17.
-WARNING: The data set WORK.GEOVISITSC217 may be incomplete.  When this step was stopped there were 1 observations and 6 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.00 seconds
-      
-
-
-
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITS17 has 2376213 observations and 6 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.00 seconds
+      real time           1.11 seconds
+      cpu time            2.43 seconds
+      
+
+
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: The data set WORK.GEOVISITSC217 has 25924 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.48 seconds
+      cpu time            0.48 seconds
+      
+
+
+NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
+NOTE: The data set WORK.GEOCOHORT17 has 284118 observations and 4 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.20 seconds
+      
+
+
+NOTE: There were 284118 observations read from the data set WORK.GEOCOHORT17.
+NOTE: The data set WORK.GEOCOHORT17 has 811 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+17                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+      
+
+
+NOTE: There were 42224 observations read from the data set WORK.GEOVISITSC117.
+NOTE: The data set WORK.GEOVISITSC117 has 42224 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
       cpu time            0.00 seconds
       
 
 
-NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 4 variables.
-WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
+NOTE: There were 25924 observations read from the data set WORK.GEOVISITSC217.
+NOTE: The data set WORK.GEOVISITSC217 has 25924 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 811 observations read from the data set WORK.GEOCOHORT17.
+NOTE: The data set WORK.GEOCOHORT17 has 811 observations and 4 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
       cpu time            0.00 seconds
       
 
-
-NOTE: The data set WORK.GEOVISITSC117 has 0 observations and 6 variables.
-WARNING: Data set WORK.GEOVISITSC117 was not replaced because this step was stopped.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-
-NOTE: The data set WORK.GEOVISITSC217 has 0 observations and 6 variables.
-WARNING: Data set WORK.GEOVISITSC217 was not replaced because this step was stopped.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-
-NOTE: The data set WORK.GEOCOHORT17 has 0 observations and 4 variables.
-WARNING: Data set WORK.GEOCOHORT17 was not replaced because this step was stopped.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-17                                                         The SAS System                             14:51 Sunday, January 22, 2023
-
-      cpu time            0.00 seconds
-      
-
-474        
-475        * %getcohort(year=18, yeartag=1); *1sam;
-476        * %getvisits(year=18, yeartag=1); *1sam;
-477        * %reducedata(year=18, yeartag=1); *1sam;
-478        
-479        * proc export data=GeoVisits10
-480        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits10flu_2022-11-16.csv'
-481        * 	dbms=csv
-482        * 	replace;
-483        * run;
-484        
-485        * proc export data=GeoCohort10
-486        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10flu_2022-11-16.csv'
-487        * 	dbms=csv
-488        * 	replace;
-489        * run;
+486        
+487        * %getcohort(year=18, yeartag=1); *1sam;
+488        * %getvisits(year=18, yeartag=1); *1sam;
+489        * %reducedata(year=18, yeartag=1); *1sam;
 490        
-491        * proc export data=GeoVisits11
-492        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits11flu_2022-11-16.csv'
+491        * proc export data=GeoVisits10
+492        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits10flu_2022-11-16.csv'
 493        * 	dbms=csv
 494        * 	replace;
 495        * run;
 496        
-497        * proc export data=GeoCohort11
-498        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11flu_2022-11-16.csv'
+497        * proc export data=GeoCohort10
+498        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10flu_2022-11-16.csv'
 499        * 	dbms=csv
 500        * 	replace;
 501        * run;
 502        
-503        * proc export data=GeoVisits12
-504        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits12flu_2022-11-16.csv'
+503        * proc export data=GeoVisits11
+504        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits11flu_2022-11-16.csv'
 505        * 	dbms=csv
 506        * 	replace;
 507        * run;
 508        
-509        * proc export data=GeoCohort12
-510        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12flu_2022-11-16.csv'
+509        * proc export data=GeoCohort11
+510        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11flu_2022-11-16.csv'
 511        * 	dbms=csv
 512        * 	replace;
 513        * run;
 514        
-515        * proc export data=GeoVisits13
-516        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits13flu_2022-11-16.csv'
+515        * proc export data=GeoVisits12
+516        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits12flu_2022-11-16.csv'
 517        * 	dbms=csv
+18                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
 518        * 	replace;
 519        * run;
 520        
-521        * proc export data=GeoCohort13
-522        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13flu_2022-11-16.csv'
+521        * proc export data=GeoCohort12
+522        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12flu_2022-11-16.csv'
 523        * 	dbms=csv
 524        * 	replace;
 525        * run;
 526        
-527        * proc export data=GeoVisits14
-528        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits14flu_2022-11-16.csv'
-18                                                         The SAS System                             14:51 Sunday, January 22, 2023
-
+527        * proc export data=GeoVisits13
+528        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits13flu_2022-11-16.csv'
 529        * 	dbms=csv
 530        * 	replace;
 531        * run;
 532        
-533        * proc export data=GeoCohort14
-534        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14flu_2022-11-16.csv'
+533        * proc export data=GeoCohort13
+534        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13flu_2022-11-16.csv'
 535        * 	dbms=csv
 536        * 	replace;
 537        * run;
 538        
-539        * proc export data=GeoVisits15
-540        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits15flu_2022-11-16.csv'
+539        * proc export data=GeoVisits14
+540        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits14flu_2022-11-16.csv'
 541        * 	dbms=csv
 542        * 	replace;
 543        * run;
 544        
-545        * proc export data=GeoCohort15
-546        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15flu_2022-11-16.csv'
+545        * proc export data=GeoCohort14
+546        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14flu_2022-11-16.csv'
 547        * 	dbms=csv
 548        * 	replace;
 549        * run;
 550        
-551        * proc export data=GeoVisits16
-552        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits16flu_2022-11-16.csv'
+551        * proc export data=GeoVisits15
+552        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits15flu_2022-11-16.csv'
 553        * 	dbms=csv
 554        * 	replace;
 555        * run;
 556        
-557        * proc export data=GeoCohort16
-558        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16flu_2022-11-16.csv'
+557        * proc export data=GeoCohort15
+558        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15flu_2022-11-16.csv'
 559        * 	dbms=csv
 560        * 	replace;
 561        * run;
 562        
-NOTE: PROCEDURE EXPORT used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-NOTE: The SAS System stopped processing this step because of errors.
-563        proc export data=GeoVisits17
-564        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv'
-565        	dbms=csv
-566        	replace;
-567        run;
+563        * proc export data=GeoVisits16
+564        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits16flu_2022-11-16.csv'
+565        * 	dbms=csv
+566        * 	replace;
+567        * run;
 568        
-
-
-NOTE: PROCEDURE EXPORT used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-NOTE: The SAS System stopped processing this step because of errors.
-569        proc export data=GeoVisitsc117
-570        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv'
-571        	dbms=csv
-572        	replace;
-573        run;
+569        * proc export data=GeoCohort16
+570        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16flu_2022-11-16.csv'
+571        * 	dbms=csv
+572        * 	replace;
+573        * run;
 574        
-19                                                         The SAS System                             14:51 Sunday, January 22, 2023
+575        proc export data=GeoVisits17
+19                                                         The SAS System                             15:08 Sunday, January 22, 2023
 
-
-
-NOTE: PROCEDURE EXPORT used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-NOTE: The SAS System stopped processing this step because of errors.
-575        proc export data=GeoVisitsc217
-576        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv'
+576        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv'
 577        	dbms=csv
 578        	replace;
 579        run;
-580        
 
+580         /**********************************************************************
+581         *   PRODUCT:   SAS
+582         *   VERSION:   9.4
+583         *   CREATOR:   External File Interface
+584         *   DATE:      22JAN23
+585         *   DESC:      Generated SAS Datastep Code
+586         *   TEMPLATE SOURCE:  (None Specified.)
+587         ***********************************************************************/
+588            data _null_;
+589            %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
+590            %let _EFIREC_ = 0;     /* clear export record count macro variable */
+591            file '/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv' delimiter=',' DSD DROPOVER
+591      ! lrecl=32767;
+592            if _n_ = 1 then        /* write column names or labels */
+593             do;
+594               put
+595                  "COND2"
+596               ','
+597                  "COND1"
+598               ','
+599                  "MONTH"
+600               ','
+601                  "STATE"
+602               ','
+603                  "SEX"
+604               ','
+605                  "AGEGRP"
+606               ;
+607             end;
+608           set  GEOVISITS17   end=EFIEOD;
+609               format COND2 $100. ;
+610               format COND1 $100. ;
+611               format MONTH best12. ;
+612               format STATE $30. ;
+613               format SEX $1. ;
+614               format AGEGRP $6. ;
+615             do;
+616               EFIOUT + 1;
+617               put COND2 $ @;
+618               put COND1 $ @;
+619               put MONTH @;
+620               put STATE $ @;
+621               put SEX $ @;
+622               put AGEGRP $ ;
+623               ;
+624             end;
+625            if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
+626            if EFIEOD then call symputx('_EFIREC_',EFIOUT);
+627            run;
 
+NOTE: The file '/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv' is:
+      Filename=/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv,
+      Owner Name=kissler,Group Name=users,
+20                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+      Access Permission=-rw-------,
+      Last Modified=22Jan2023:15:08:27
+
+NOTE: 2376214 records were written to the file '/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv'.
+      The minimum record length was 25.
+      The maximum record length was 61.
+NOTE: There were 2376213 observations read from the data set WORK.GEOVISITS17.
+NOTE: DATA statement used (Total process time):
+      real time           2.56 seconds
+      cpu time            1.70 seconds
+      
+
+2376213 records created in /home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv from GEOVISITS17.
+  
+  
+NOTE: "/home/kissler/StrepPharyngitis/output/private/GeoVisits17_2023-01-17.csv" file was successfully created.
 NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           2.62 seconds
+      cpu time            1.75 seconds
+      
+
+628        
+629        proc export data=GeoVisitsc117
+630        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv'
+631        	dbms=csv
+632        	replace;
+633        run;
+
+634         /**********************************************************************
+635         *   PRODUCT:   SAS
+636         *   VERSION:   9.4
+637         *   CREATOR:   External File Interface
+638         *   DATE:      22JAN23
+639         *   DESC:      Generated SAS Datastep Code
+640         *   TEMPLATE SOURCE:  (None Specified.)
+641         ***********************************************************************/
+642            data _null_;
+643            %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
+644            %let _EFIREC_ = 0;     /* clear export record count macro variable */
+645            file '/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv' delimiter=',' DSD DROPOVER
+645      ! lrecl=32767;
+646            if _n_ = 1 then        /* write column names or labels */
+647             do;
+648               put
+649                  "COND1"
+650               ','
+651                  "MONTH"
+652               ','
+653                  "STATE"
+654               ','
+655                  "SEX"
+656               ','
+657                  "AGEGRP"
+658               ','
+659                  "NVISITS"
+660               ;
+661             end;
+662           set  GEOVISITSC117   end=EFIEOD;
+21                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+663               format COND1 $100. ;
+664               format MONTH best12. ;
+665               format STATE $30. ;
+666               format SEX $1. ;
+667               format AGEGRP $6. ;
+668               format NVISITS best12. ;
+669             do;
+670               EFIOUT + 1;
+671               put COND1 $ @;
+672               put MONTH @;
+673               put STATE $ @;
+674               put SEX $ @;
+675               put AGEGRP $ @;
+676               put NVISITS ;
+677               ;
+678             end;
+679            if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
+680            if EFIEOD then call symputx('_EFIREC_',EFIOUT);
+681            run;
+
+NOTE: The file '/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv' is:
+      Filename=/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv,
+      Owner Name=kissler,Group Name=users,
+      Access Permission=-rw-------,
+      Last Modified=22Jan2023:15:08:30
+
+NOTE: 42225 records were written to the file '/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv'.
+      The minimum record length was 21.
+      The maximum record length was 47.
+NOTE: There were 42224 observations read from the data set WORK.GEOVISITSC117.
+NOTE: DATA statement used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+42224 records created in /home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv from GEOVISITSC117.
+  
+  
+NOTE: "/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv" file was successfully created.
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.08 seconds
+      cpu time            0.06 seconds
+      
+
+682        
+683        proc export data=GeoVisitsc217
+684        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv'
+685        	dbms=csv
+686        	replace;
+687        run;
+
+688         /**********************************************************************
+689         *   PRODUCT:   SAS
+690         *   VERSION:   9.4
+691         *   CREATOR:   External File Interface
+692         *   DATE:      22JAN23
+693         *   DESC:      Generated SAS Datastep Code
+694         *   TEMPLATE SOURCE:  (None Specified.)
+22                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+695         ***********************************************************************/
+696            data _null_;
+697            %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
+698            %let _EFIREC_ = 0;     /* clear export record count macro variable */
+699            file '/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv' delimiter=',' DSD DROPOVER
+699      ! lrecl=32767;
+700            if _n_ = 1 then        /* write column names or labels */
+701             do;
+702               put
+703                  "COND2"
+704               ','
+705                  "MONTH"
+706               ','
+707                  "STATE"
+708               ','
+709                  "SEX"
+710               ','
+711                  "AGEGRP"
+712               ','
+713                  "NVISITS"
+714               ;
+715             end;
+716           set  GEOVISITSC217   end=EFIEOD;
+717               format COND2 $100. ;
+718               format MONTH best12. ;
+719               format STATE $30. ;
+720               format SEX $1. ;
+721               format AGEGRP $6. ;
+722               format NVISITS best12. ;
+723             do;
+724               EFIOUT + 1;
+725               put COND2 $ @;
+726               put MONTH @;
+727               put STATE $ @;
+728               put SEX $ @;
+729               put AGEGRP $ @;
+730               put NVISITS ;
+731               ;
+732             end;
+733            if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
+734            if EFIEOD then call symputx('_EFIREC_',EFIOUT);
+735            run;
+
+NOTE: The file '/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv' is:
+      Filename=/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv,
+      Owner Name=kissler,Group Name=users,
+      Access Permission=-rw-------,
+      Last Modified=22Jan2023:15:08:30
+
+NOTE: 25925 records were written to the file '/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv'.
+      The minimum record length was 21.
+      The maximum record length was 47.
+NOTE: There were 25924 observations read from the data set WORK.GEOVISITSC217.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.02 seconds
+      
+
+23                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+25924 records created in /home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv from GEOVISITSC217.
+  
+  
+NOTE: "/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv" file was successfully created.
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.05 seconds
+      
+
+736        
+737        proc export data=GeoCohort17
+738        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv'
+739        	dbms=csv
+740        	replace;
+741        run;
+
+742         /**********************************************************************
+743         *   PRODUCT:   SAS
+744         *   VERSION:   9.4
+745         *   CREATOR:   External File Interface
+746         *   DATE:      22JAN23
+747         *   DESC:      Generated SAS Datastep Code
+748         *   TEMPLATE SOURCE:  (None Specified.)
+749         ***********************************************************************/
+750            data _null_;
+751            %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
+752            %let _EFIREC_ = 0;     /* clear export record count macro variable */
+753            file '/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv' delimiter=',' DSD DROPOVER
+753      ! lrecl=32767;
+754            if _n_ = 1 then        /* write column names or labels */
+755             do;
+756               put
+757                  "STATE"
+758               ','
+759                  "SEX"
+760               ','
+761                  "AGEGRP"
+762               ','
+763                  "NMEMB"
+764               ;
+765             end;
+766           set  GEOCOHORT17   end=EFIEOD;
+767               format STATE $30. ;
+768               format SEX $1. ;
+769               format AGEGRP $6. ;
+770               format NMEMB best12. ;
+771             do;
+772               EFIOUT + 1;
+773               put STATE $ @;
+774               put SEX $ @;
+775               put AGEGRP $ @;
+776               put NMEMB ;
+777               ;
+778             end;
+779            if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
+780            if EFIEOD then call symputx('_EFIREC_',EFIOUT);
+781            run;
+
+24                                                         The SAS System                             15:08 Sunday, January 22, 2023
+
+NOTE: The file '/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv' is:
+      Filename=/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv,
+      Owner Name=kissler,Group Name=users,
+      Access Permission=-rw-------,
+      Last Modified=22Jan2023:15:08:30
+
+NOTE: 812 records were written to the file '/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv'.
+      The minimum record length was 15.
+      The maximum record length was 26.
+NOTE: There were 811 observations read from the data set WORK.GEOCOHORT17.
+NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
       cpu time            0.00 seconds
       
-NOTE: The SAS System stopped processing this step because of errors.
-581        proc export data=GeoCohort17
-582        	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv'
-583        	dbms=csv
-584        	replace;
-585        run;
-586        
-587        * proc export data=GeoVisits18
-588        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits18flu_2022-11-16.csv'
-589        * 	dbms=csv
-590        * 	replace;
-591        * run;
-592        
-593        * proc export data=GeoCohort18
-594        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18flu_2022-11-16.csv'
-595        * 	dbms=csv
-596        * 	replace;
-597        * run;
-598        
 
+811 records created in /home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv from GEOCOHORT17.
+  
+  
+NOTE: "/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv" file was successfully created.
+NOTE: PROCEDURE EXPORT used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.03 seconds
+      
+
+782        
+783        * proc export data=GeoVisits18
+784        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisits18flu_2022-11-16.csv'
+785        * 	dbms=csv
+786        * 	replace;
+787        * run;
+788        
+789        * proc export data=GeoCohort18
+790        * 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18flu_2022-11-16.csv'
+791        * 	dbms=csv
+792        * 	replace;
+793        * run;
+794        
 
