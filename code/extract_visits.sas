@@ -377,9 +377,9 @@ run;
 * ============================================================================;
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=10, yeartag=1sam); *1sam;
-%getvisits_pre15(year=10, yeartag=1sam); *1sam;
-%reducedata(year=10, yeartag=1sam); *1sam;
+%getcohort(year=10, yeartag=1); *1sam;
+%getvisits_pre15(year=10, yeartag=1); *1sam;
+%reducedata(year=10, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc110
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc110_2023-01-17.csv'
@@ -405,9 +405,9 @@ proc delete data=GeoVisitsc210; run;
 proc delete data=GeoCohort10; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=11, yeartag=1sam); *1sam;
-%getvisits_pre15(year=11, yeartag=1sam); *1sam;
-%reducedata(year=11, yeartag=1sam); *1sam;
+%getcohort(year=11, yeartag=1); *1sam;
+%getvisits_pre15(year=11, yeartag=1); *1sam;
+%reducedata(year=11, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc111
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc111_2023-01-17.csv'
@@ -433,9 +433,9 @@ proc delete data=GeoVisitsc211; run;
 proc delete data=GeoCohort11; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=12, yeartag=1sam); *1sam;
-%getvisits_pre15(year=12, yeartag=1sam); *1sam;
-%reducedata(year=12, yeartag=1sam); *1sam;
+%getcohort(year=12, yeartag=1); *1sam;
+%getvisits_pre15(year=12, yeartag=1); *1sam;
+%reducedata(year=12, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc112
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc112_2023-01-17.csv'
@@ -461,9 +461,9 @@ proc delete data=GeoVisitsc212; run;
 proc delete data=GeoCohort12; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=13, yeartag=1sam); *1sam;
-%getvisits_pre15(year=13, yeartag=1sam); *1sam;
-%reducedata(year=13, yeartag=1sam); *1sam;
+%getcohort(year=13, yeartag=1); *1sam;
+%getvisits_pre15(year=13, yeartag=1); *1sam;
+%reducedata(year=13, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc113
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc113_2023-01-17.csv'
@@ -489,9 +489,9 @@ proc delete data=GeoVisitsc213; run;
 proc delete data=GeoCohort13; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=14, yeartag=1sam); *1sam;
-%getvisits_pre15(year=14, yeartag=1sam); *1sam;
-%reducedata(year=14, yeartag=1sam); *1sam;
+%getcohort(year=14, yeartag=1); *1sam;
+%getvisits_pre15(year=14, yeartag=1); *1sam;
+%reducedata(year=14, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc114
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc114_2023-01-17.csv'
@@ -517,9 +517,9 @@ proc delete data=GeoVisitsc214; run;
 proc delete data=GeoCohort14; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=15, yeartag=1sam); *1sam;
-%getvisits(year=15, yeartag=1sam); *1sam;
-%reducedata(year=15, yeartag=1sam); *1sam;
+%getcohort(year=15, yeartag=1); *1sam;
+%getvisits(year=15, yeartag=1); *1sam;
+%reducedata(year=15, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc115
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc115_2023-01-17.csv'
@@ -545,9 +545,9 @@ proc delete data=GeoVisitsc215; run;
 proc delete data=GeoCohort15; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=16, yeartag=1sam); *1sam;
-%getvisits(year=16, yeartag=1sam); *1sam;
-%reducedata(year=16, yeartag=1sam); *1sam;
+%getcohort(year=16, yeartag=1); *1sam;
+%getvisits(year=16, yeartag=1); *1sam;
+%reducedata(year=16, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc116
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc116_2023-01-17.csv'
@@ -573,9 +573,9 @@ proc delete data=GeoVisitsc216; run;
 proc delete data=GeoCohort16; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=17, yeartag=1sam); *1sam;
-%getvisits(year=17, yeartag=1sam); *1sam;
-%reducedata(year=17, yeartag=1sam); *1sam;
+%getcohort(year=17, yeartag=1); *1sam;
+%getvisits(year=17, yeartag=1); *1sam;
+%reducedata(year=17, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc117
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv'
@@ -601,9 +601,9 @@ proc delete data=GeoVisitsc217; run;
 proc delete data=GeoCohort17; run; 
 
 * ---------------------------------------------------------------------------;
-%getcohort(year=18, yeartag=1sam); *1sam;
-%getvisits(year=18, yeartag=1sam); *1sam;
-%reducedata(year=18, yeartag=1sam); *1sam;
+%getcohort(year=18, yeartag=1); *1sam;
+%getvisits(year=18, yeartag=1); *1sam;
+%reducedata(year=18, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc118
 	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc118_2023-01-17.csv'
