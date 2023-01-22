@@ -187,7 +187,7 @@ run;
 		by DX1 ICD;
 	run;
 
-	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD COND1);
 		merge ccs_map (rename=(DX=DX1 COND=COND1) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX1 ICD;
@@ -201,7 +201,7 @@ run;
 		by DX2 ICD;
 	run;
 
-	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD COND1 COND2);
 		merge ccs_map (rename=(DX=DX2 COND=COND2) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX2 ICD;
@@ -215,13 +215,13 @@ run;
 	run;
 
 	* Make sure that a given condition is only counted once per visit;
-	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD COND1 COND2);
 		set GeoVisits&year.;
 		if COND1=COND2 then COND2="Other/None";
 	run;
 
 	* Add a Month column; 
-	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE MONTH COND1 COND2);
 		set GeoVisits&year.;
 		MONTH=month(SVCDATE);
 	run;
@@ -262,7 +262,7 @@ run;
 		by DX1 ICD;
 	run;
 
-	data GeoVisits&year. (keep=DX2 ENROLID SVCDATE ICD COND1);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD COND1);
 		merge ccs_map (rename=(DX=DX1 COND=COND1) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX1 ICD;
@@ -276,7 +276,7 @@ run;
 		by DX2 ICD;
 	run;
 
-	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD COND1 COND2);
 		merge ccs_map (rename=(DX=DX2 COND=COND2) in=inleft)
 		GeoVisits&year. (in=inright);
 		by DX2 ICD;
@@ -290,13 +290,13 @@ run;
 	run;
 
 	* Make sure that a given condition is only counted once per visit;
-	data GeoVisits&year. (keep=ENROLID SVCDATE ICD COND1 COND2);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE ICD COND1 COND2);
 		set GeoVisits&year.;
 		if COND1=COND2 then COND2="Other/None";
 	run;
 
 	* Add a Month column; 
-	data GeoVisits&year. (keep=ENROLID SVCDATE MONTH COND1 COND2);
+	data GeoVisits&year. (keep=DX1 DX2 ENROLID SVCDATE MONTH COND1 COND2);
 		set GeoVisits&year.;
 		MONTH=month(SVCDATE);
 	run;
@@ -312,8 +312,8 @@ run;
 %macro reducedata(year=,yeartag=);
 
 	* Append demographic data to visits;
-	data GeoVisits&year. (keep=STATE AGEGRP SEX MONTH COND1 COND2);
-		merge GeoVisits&year. (keep=ENROLID COND1 COND2 MONTH in=inleft)
+	data GeoVisits&year. (keep=DX1 DX2 STATE AGEGRP SEX MONTH COND1 COND2);
+		merge GeoVisits&year. (keep=DX1 DX2 ENROLID COND1 COND2 MONTH in=inleft)
 		GeoCohort&year. (keep=ENROLID STATE AGEGRP SEX in=inright);
 		by ENROLID;
 		if inleft;
