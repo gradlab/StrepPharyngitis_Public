@@ -1,4 +1,4 @@
-1                                                          The SAS System                             15:08 Sunday, January 22, 2023
+1                                                          The SAS System                             15:44 Sunday, January 22, 2023
 
 NOTE: Copyright (c) 2016 by SAS Institute Inc., Cary, NC, USA. 
 NOTE: SAS (r) Proprietary Software 9.4 (TS1M7) 
@@ -38,7 +38,7 @@ The command line option "-nonews" will prevent this display.
 
 
 NOTE: SAS initialization used:
-      real time           0.05 seconds
+      real time           0.06 seconds
       cpu time            0.03 seconds
       
 1          * ============================================================================;
@@ -51,6 +51,6 @@ NOTE: SAS initialization used:
 
 NOTE: SAS Institute Inc., SAS Campus Drive, Cary, NC USA 27513-2414
 NOTE: The SAS System used:
-      real time           21.71 seconds
-      cpu time            32.74 seconds
+      real time           7:30:27.85
+      cpu time            11:03:45.83
       
