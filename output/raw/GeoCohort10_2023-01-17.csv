@@ -1,0 +1,817 @@
+STATE,SEX,AGEGRP,NMEMB
+Alabama,1,00_04,9855
+Alabama,2,00_04,9401
+Alabama,1,05_09,12284
+Alabama,2,05_09,11859
+Alabama,1,10_19,28608
+Alabama,2,10_19,27619
+Alabama,1,20_29,18669
+Alabama,2,20_29,20648
+Alabama,1,30_39,28085
+Alabama,2,30_39,30770
+Alabama,1,40_49,33641
+Alabama,2,40_49,37771
+Alabama,1,50_59,37294
+Alabama,2,50_59,41450
+Alabama,1,60_69,13140
+Alabama,2,60_69,14043
+Alaska,1,00_04,1090
+Alaska,2,00_04,1005
+Alaska,1,05_09,1156
+Alaska,2,05_09,1061
+Alaska,1,10_19,2661
+Alaska,2,10_19,2500
+Alaska,1,20_29,1946
+Alaska,2,20_29,2380
+Alaska,1,30_39,2245
+Alaska,2,30_39,2749
+Alaska,1,40_49,2777
+Alaska,2,40_49,3303
+Alaska,1,50_59,2959
+Alaska,2,50_59,3286
+Alaska,1,60_69,686
+Alaska,2,60_69,695
+Arizona,1,00_04,16029
+Arizona,2,00_04,15187
+Arizona,1,05_09,17029
+Arizona,2,05_09,15952
+Arizona,1,10_19,33738
+Arizona,2,10_19,32953
+Arizona,1,20_29,24918
+Arizona,2,20_29,28774
+Arizona,1,30_39,33303
+Arizona,2,30_39,35574
+Arizona,1,40_49,34251
+Arizona,2,40_49,36631
+Arizona,1,50_59,30992
+Arizona,2,50_59,36314
+Arizona,1,60_69,12217
+Arizona,2,60_69,13821
+Arkansas,1,00_04,5138
+Arkansas,2,00_04,4789
+Arkansas,1,05_09,6638
+Arkansas,2,05_09,6651
+Arkansas,1,10_19,15587
+Arkansas,2,10_19,15027
+Arkansas,1,20_29,9719
+Arkansas,2,20_29,9856
+Arkansas,1,30_39,14851
+Arkansas,2,30_39,14965
+Arkansas,1,40_49,18763
+Arkansas,2,40_49,18027
+Arkansas,1,50_59,16805
+Arkansas,2,50_59,16882
+Arkansas,1,60_69,5537
+Arkansas,2,60_69,5722
+California,1,00_04,130202
+California,2,00_04,123599
+California,1,05_09,145466
+California,2,05_09,138518
+California,1,10_19,337936
+California,2,10_19,326189
+California,1,20_29,208773
+California,2,20_29,229877
+California,1,30_39,284510
+California,2,30_39,323482
+California,1,40_49,353579
+California,2,40_49,393946
+California,1,50_59,363406
+California,2,50_59,412281
+California,1,60_69,125659
+California,2,60_69,137096
+Colorado,1,00_04,13674
+Colorado,2,00_04,13205
+Colorado,1,05_09,15528
+Colorado,2,05_09,14570
+Colorado,1,10_19,31348
+Colorado,2,10_19,29715
+Colorado,1,20_29,21528
+Colorado,2,20_29,23917
+Colorado,1,30_39,31232
+Colorado,2,30_39,32865
+Colorado,1,40_49,36077
+Colorado,2,40_49,37989
+Colorado,1,50_59,36045
+Colorado,2,50_59,39412
+Colorado,1,60_69,12451
+Colorado,2,60_69,14135
+Connecticut,1,00_04,14485
+Connecticut,2,00_04,13783
+Connecticut,1,05_09,20639
+Connecticut,2,05_09,19647
+Connecticut,1,10_19,55917
+Connecticut,2,10_19,54238
+Connecticut,1,20_29,34762
+Connecticut,2,20_29,37484
+Connecticut,1,30_39,40592
+Connecticut,2,30_39,46502
+Connecticut,1,40_49,62278
+Connecticut,2,40_49,70342
+Connecticut,1,50_59,67498
+Connecticut,2,50_59,75640
+Connecticut,1,60_69,23828
+Connecticut,2,60_69,26037
+Delaware,1,00_04,4141
+Delaware,2,00_04,4007
+Delaware,1,05_09,4836
+Delaware,2,05_09,4628
+Delaware,1,10_19,11450
+Delaware,2,10_19,10824
+Delaware,1,20_29,5604
+Delaware,2,20_29,6719
+Delaware,1,30_39,8362
+Delaware,2,30_39,10460
+Delaware,1,40_49,10805
+Delaware,2,40_49,13479
+Delaware,1,50_59,11568
+Delaware,2,50_59,14483
+Delaware,1,60_69,4721
+Delaware,2,60_69,5431
+Florida,1,00_04,35543
+Florida,2,00_04,33859
+Florida,1,05_09,41069
+Florida,2,05_09,39467
+Florida,1,10_19,92962
+Florida,2,10_19,90512
+Florida,1,20_29,63444
+Florida,2,20_29,73394
+Florida,1,30_39,89217
+Florida,2,30_39,99805
+Florida,1,40_49,113917
+Florida,2,40_49,126544
+Florida,1,50_59,107726
+Florida,2,50_59,126737
+Florida,1,60_69,41121
+Florida,2,60_69,47896
+Georgia,1,00_04,46623
+Georgia,2,00_04,44465
+Georgia,1,05_09,57410
+Georgia,2,05_09,55224
+Georgia,1,10_19,126252
+Georgia,2,10_19,123649
+Georgia,1,20_29,67977
+Georgia,2,20_29,88778
+Georgia,1,30_39,111482
+Georgia,2,30_39,145703
+Georgia,1,40_49,139000
+Georgia,2,40_49,173600
+Georgia,1,50_59,134749
+Georgia,2,50_59,173821
+Georgia,1,60_69,49669
+Georgia,2,60_69,59615
+Hawaii,1,00_04,100
+Hawaii,2,00_04,92
+Hawaii,1,05_09,113
+Hawaii,2,05_09,131
+Hawaii,1,10_19,280
+Hawaii,2,10_19,290
+Hawaii,1,20_29,197
+Hawaii,2,20_29,217
+Hawaii,1,30_39,254
+Hawaii,2,30_39,258
+Hawaii,1,40_49,351
+Hawaii,2,40_49,405
+Hawaii,1,50_59,612
+Hawaii,2,50_59,782
+Hawaii,1,60_69,487
+Hawaii,2,60_69,553
+Idaho,1,00_04,2649
+Idaho,2,00_04,2541
+Idaho,1,05_09,3096
+Idaho,2,05_09,2915
+Idaho,1,10_19,5924
+Idaho,2,10_19,5860
+Idaho,1,20_29,3489
+Idaho,2,20_29,4089
+Idaho,1,30_39,4777
+Idaho,2,30_39,4993
+Idaho,1,40_49,5316
+Idaho,2,40_49,5631
+Idaho,1,50_59,5505
+Idaho,2,50_59,5975
+Idaho,1,60_69,2040
+Idaho,2,60_69,2102
+Illinois,1,00_04,68637
+Illinois,2,00_04,65527
+Illinois,1,05_09,79834
+Illinois,2,05_09,77103
+Illinois,1,10_19,182496
+Illinois,2,10_19,175557
+Illinois,1,20_29,122828
+Illinois,2,20_29,130766
+Illinois,1,30_39,161539
+Illinois,2,30_39,177480
+Illinois,1,40_49,198862
+Illinois,2,40_49,219984
+Illinois,1,50_59,202263
+Illinois,2,50_59,228563
+Illinois,1,60_69,68299
+Illinois,2,60_69,73696
+Indiana,1,00_04,37249
+Indiana,2,00_04,35247
+Indiana,1,05_09,45619
+Indiana,2,05_09,43967
+Indiana,1,10_19,105089
+Indiana,2,10_19,101059
+Indiana,1,20_29,63449
+Indiana,2,20_29,64809
+Indiana,1,30_39,88661
+Indiana,2,30_39,91268
+Indiana,1,40_49,109289
+Indiana,2,40_49,116506
+Indiana,1,50_59,120447
+Indiana,2,50_59,130791
+Indiana,1,60_69,41826
+Indiana,2,60_69,44836
+Iowa,1,00_04,9538
+Iowa,2,00_04,9098
+Iowa,1,05_09,11179
+Iowa,2,05_09,10666
+Iowa,1,10_19,24221
+Iowa,2,10_19,23014
+Iowa,1,20_29,15776
+Iowa,2,20_29,17375
+Iowa,1,30_39,19930
+Iowa,2,30_39,21487
+Iowa,1,40_49,24172
+Iowa,2,40_49,26165
+Iowa,1,50_59,23622
+Iowa,2,50_59,25154
+Iowa,1,60_69,6721
+Iowa,2,60_69,6945
+Kansas,1,00_04,6905
+Kansas,2,00_04,6581
+Kansas,1,05_09,8084
+Kansas,2,05_09,7585
+Kansas,1,10_19,17140
+Kansas,2,10_19,16453
+Kansas,1,20_29,10226
+Kansas,2,20_29,10775
+Kansas,1,30_39,13947
+Kansas,2,30_39,14495
+Kansas,1,40_49,17262
+Kansas,2,40_49,17860
+Kansas,1,50_59,17455
+Kansas,2,50_59,18406
+Kansas,1,60_69,5706
+Kansas,2,60_69,5854
+Kentucky,1,00_04,14385
+Kentucky,2,00_04,13859
+Kentucky,1,05_09,18075
+Kentucky,2,05_09,17197
+Kentucky,1,10_19,40133
+Kentucky,2,10_19,38403
+Kentucky,1,20_29,25346
+Kentucky,2,20_29,26673
+Kentucky,1,30_39,38993
+Kentucky,2,30_39,39557
+Kentucky,1,40_49,48386
+Kentucky,2,40_49,50121
+Kentucky,1,50_59,49076
+Kentucky,2,50_59,50839
+Kentucky,1,60_69,16364
+Kentucky,2,60_69,16021
+Louisiana,1,00_04,7198
+Louisiana,2,00_04,6938
+Louisiana,1,05_09,8736
+Louisiana,2,05_09,8251
+Louisiana,1,10_19,19437
+Louisiana,2,10_19,19006
+Louisiana,1,20_29,14679
+Louisiana,2,20_29,14454
+Louisiana,1,30_39,18417
+Louisiana,2,30_39,18386
+Louisiana,1,40_49,21690
+Louisiana,2,40_49,22283
+Louisiana,1,50_59,24438
+Louisiana,2,50_59,24083
+Louisiana,1,60_69,8282
+Louisiana,2,60_69,7670
+Maine,1,00_04,4634
+Maine,2,00_04,4457
+Maine,1,05_09,6836
+Maine,2,05_09,6492
+Maine,1,10_19,18357
+Maine,2,10_19,17687
+Maine,1,20_29,11182
+Maine,2,20_29,12482
+Maine,1,30_39,14675
+Maine,2,30_39,17022
+Maine,1,40_49,22439
+Maine,2,40_49,26016
+Maine,1,50_59,26419
+Maine,2,50_59,30898
+Maine,1,60_69,9486
+Maine,2,60_69,10224
+Maryland,1,00_04,8432
+Maryland,2,00_04,8118
+Maryland,1,05_09,9990
+Maryland,2,05_09,9369
+Maryland,1,10_19,21590
+Maryland,2,10_19,20896
+Maryland,1,20_29,15547
+Maryland,2,20_29,15167
+Maryland,1,30_39,20178
+Maryland,2,30_39,21150
+Maryland,1,40_49,25467
+Maryland,2,40_49,27656
+Maryland,1,50_59,24328
+Maryland,2,50_59,26097
+Maryland,1,60_69,8294
+Maryland,2,60_69,8880
+Massachusetts,1,00_04,15184
+Massachusetts,2,00_04,14599
+Massachusetts,1,05_09,17456
+Massachusetts,2,05_09,16949
+Massachusetts,1,10_19,37521
+Massachusetts,2,10_19,36237
+Massachusetts,1,20_29,25615
+Massachusetts,2,20_29,28107
+Massachusetts,1,30_39,35200
+Massachusetts,2,30_39,38064
+Massachusetts,1,40_49,45210
+Massachusetts,2,40_49,49155
+Massachusetts,1,50_59,44907
+Massachusetts,2,50_59,51354
+Massachusetts,1,60_69,17042
+Massachusetts,2,60_69,19385
+Michigan,1,00_04,30495
+Michigan,2,00_04,29381
+Michigan,1,05_09,38350
+Michigan,2,05_09,36567
+Michigan,1,10_19,89205
+Michigan,2,10_19,85730
+Michigan,1,20_29,48944
+Michigan,2,20_29,54218
+Michigan,1,30_39,65004
+Michigan,2,30_39,72798
+Michigan,1,40_49,87795
+Michigan,2,40_49,97844
+Michigan,1,50_59,111182
+Michigan,2,50_59,121782
+Michigan,1,60_69,42367
+Michigan,2,60_69,43689
+Minnesota,1,00_04,11198
+Minnesota,2,00_04,10710
+Minnesota,1,05_09,11958
+Minnesota,2,05_09,11721
+Minnesota,1,10_19,23892
+Minnesota,2,10_19,22927
+Minnesota,1,20_29,16604
+Minnesota,2,20_29,17882
+Minnesota,1,30_39,22088
+Minnesota,2,30_39,22482
+Minnesota,1,40_49,26111
+Minnesota,2,40_49,26941
+Minnesota,1,50_59,23965
+Minnesota,2,50_59,24023
+Minnesota,1,60_69,6512
+Minnesota,2,60_69,6376
+Mississippi,1,00_04,8048
+Mississippi,2,00_04,7763
+Mississippi,1,05_09,9207
+Mississippi,2,05_09,8774
+Mississippi,1,10_19,21342
+Mississippi,2,10_19,20688
+Mississippi,1,20_29,14811
+Mississippi,2,20_29,20413
+Mississippi,1,30_39,21162
+Mississippi,2,30_39,31688
+Mississippi,1,40_49,25488
+Mississippi,2,40_49,38119
+Mississippi,1,50_59,28078
+Mississippi,2,50_59,40729
+Mississippi,1,60_69,9940
+Mississippi,2,60_69,12628
+Missouri,1,00_04,19895
+Missouri,2,00_04,18846
+Missouri,1,05_09,23641
+Missouri,2,05_09,22521
+Missouri,1,10_19,54433
+Missouri,2,10_19,52517
+Missouri,1,20_29,34233
+Missouri,2,20_29,39777
+Missouri,1,30_39,42539
+Missouri,2,30_39,50391
+Missouri,1,40_49,53395
+Missouri,2,40_49,63508
+Missouri,1,50_59,57149
+Missouri,2,50_59,68443
+Missouri,1,60_69,19523
+Missouri,2,60_69,22212
+Montana,1,00_04,5494
+Montana,2,00_04,5211
+Montana,1,05_09,6208
+Montana,2,05_09,5870
+Montana,1,10_19,13196
+Montana,2,10_19,12556
+Montana,1,20_29,9066
+Montana,2,20_29,9762
+Montana,1,30_39,10484
+Montana,2,30_39,11055
+Montana,1,40_49,12371
+Montana,2,40_49,13861
+Montana,1,50_59,15678
+Montana,2,50_59,17229
+Montana,1,60_69,5189
+Montana,2,60_69,5577
+Nebraska,1,00_04,4874
+Nebraska,2,00_04,4591
+Nebraska,1,05_09,5340
+Nebraska,2,05_09,5113
+Nebraska,1,10_19,10609
+Nebraska,2,10_19,10208
+Nebraska,1,20_29,7660
+Nebraska,2,20_29,8216
+Nebraska,1,30_39,9315
+Nebraska,2,30_39,9860
+Nebraska,1,40_49,10566
+Nebraska,2,40_49,10726
+Nebraska,1,50_59,10028
+Nebraska,2,50_59,10227
+Nebraska,1,60_69,2580
+Nebraska,2,60_69,2600
+Nevada,1,00_04,7567
+Nevada,2,00_04,7120
+Nevada,1,05_09,8472
+Nevada,2,05_09,8153
+Nevada,1,10_19,17645
+Nevada,2,10_19,16939
+Nevada,1,20_29,10363
+Nevada,2,20_29,12295
+Nevada,1,30_39,17101
+Nevada,2,30_39,18102
+Nevada,1,40_49,19773
+Nevada,2,40_49,20162
+Nevada,1,50_59,18615
+Nevada,2,50_59,21167
+Nevada,1,60_69,7660
+Nevada,2,60_69,8892
+New Hampshire,1,00_04,4590
+New Hampshire,2,00_04,4295
+New Hampshire,1,05_09,6216
+New Hampshire,2,05_09,5998
+New Hampshire,1,10_19,15604
+New Hampshire,2,10_19,15122
+New Hampshire,1,20_29,9562
+New Hampshire,2,20_29,10940
+New Hampshire,1,30_39,12882
+New Hampshire,2,30_39,14691
+New Hampshire,1,40_49,19207
+New Hampshire,2,40_49,21489
+New Hampshire,1,50_59,20809
+New Hampshire,2,50_59,23531
+New Hampshire,1,60_69,7352
+New Hampshire,2,60_69,7984
+New Jersey,1,00_04,22219
+New Jersey,2,00_04,21115
+New Jersey,1,05_09,25868
+New Jersey,2,05_09,24736
+New Jersey,1,10_19,53758
+New Jersey,2,10_19,51820
+New Jersey,1,20_29,30718
+New Jersey,2,20_29,30839
+New Jersey,1,30_39,46902
+New Jersey,2,30_39,50751
+New Jersey,1,40_49,63492
+New Jersey,2,40_49,66836
+New Jersey,1,50_59,55478
+New Jersey,2,50_59,58263
+New Jersey,1,60_69,18006
+New Jersey,2,60_69,18936
+New Mexico,1,00_04,9698
+New Mexico,2,00_04,9262
+New Mexico,1,05_09,11950
+New Mexico,2,05_09,11590
+New Mexico,1,10_19,28761
+New Mexico,2,10_19,27813
+New Mexico,1,20_29,22149
+New Mexico,2,20_29,23267
+New Mexico,1,30_39,25325
+New Mexico,2,30_39,28182
+New Mexico,1,40_49,31900
+New Mexico,2,40_49,36431
+New Mexico,1,50_59,37824
+New Mexico,2,50_59,44558
+New Mexico,1,60_69,14182
+New Mexico,2,60_69,16334
+New York,1,00_04,48716
+New York,2,00_04,46470
+New York,1,05_09,55200
+New York,2,05_09,53316
+New York,1,10_19,125461
+New York,2,10_19,121970
+New York,1,20_29,86044
+New York,2,20_29,90905
+New York,1,30_39,123146
+New York,2,30_39,128868
+New York,1,40_49,158002
+New York,2,40_49,162273
+New York,1,50_59,153049
+New York,2,50_59,157998
+New York,1,60_69,51782
+New York,2,60_69,53952
+North Carolina,1,00_04,20444
+North Carolina,2,00_04,19334
+North Carolina,1,05_09,24882
+North Carolina,2,05_09,23821
+North Carolina,1,10_19,51731
+North Carolina,2,10_19,49975
+North Carolina,1,20_29,30654
+North Carolina,2,20_29,35776
+North Carolina,1,30_39,52789
+North Carolina,2,30_39,60571
+North Carolina,1,40_49,64180
+North Carolina,2,40_49,70722
+North Carolina,1,50_59,57316
+North Carolina,2,50_59,64512
+North Carolina,1,60_69,19848
+North Carolina,2,60_69,21527
+North Dakota,1,00_04,867
+North Dakota,2,00_04,843
+North Dakota,1,05_09,822
+North Dakota,2,05_09,806
+North Dakota,1,10_19,1727
+North Dakota,2,10_19,1685
+North Dakota,1,20_29,1708
+North Dakota,2,20_29,1406
+North Dakota,1,30_39,1756
+North Dakota,2,30_39,1524
+North Dakota,1,40_49,1932
+North Dakota,2,40_49,1746
+North Dakota,1,50_59,1996
+North Dakota,2,50_59,1820
+North Dakota,1,60_69,460
+North Dakota,2,60_69,435
+Ohio,1,00_04,45873
+Ohio,2,00_04,43727
+Ohio,1,05_09,55781
+Ohio,2,05_09,53390
+Ohio,1,10_19,129230
+Ohio,2,10_19,124926
+Ohio,1,20_29,73824
+Ohio,2,20_29,81554
+Ohio,1,30_39,105206
+Ohio,2,30_39,114963
+Ohio,1,40_49,135757
+Ohio,2,40_49,149331
+Ohio,1,50_59,149577
+Ohio,2,50_59,164563
+Ohio,1,60_69,52081
+Ohio,2,60_69,54313
+Oklahoma,1,00_04,17420
+Oklahoma,2,00_04,16413
+Oklahoma,1,05_09,20299
+Oklahoma,2,05_09,19524
+Oklahoma,1,10_19,44421
+Oklahoma,2,10_19,42790
+Oklahoma,1,20_29,33588
+Oklahoma,2,20_29,33310
+Oklahoma,1,30_39,40693
+Oklahoma,2,30_39,41214
+Oklahoma,1,40_49,47077
+Oklahoma,2,40_49,48966
+Oklahoma,1,50_59,52323
+Oklahoma,2,50_59,55974
+Oklahoma,1,60_69,17792
+Oklahoma,2,60_69,18884
+Oregon,1,00_04,9361
+Oregon,2,00_04,8861
+Oregon,1,05_09,10630
+Oregon,2,05_09,10063
+Oregon,1,10_19,24999
+Oregon,2,10_19,24330
+Oregon,1,20_29,15644
+Oregon,2,20_29,18592
+Oregon,1,30_39,19981
+Oregon,2,30_39,23616
+Oregon,1,40_49,23273
+Oregon,2,40_49,27995
+Oregon,1,50_59,28105
+Oregon,2,50_59,34637
+Oregon,1,60_69,10759
+Oregon,2,60_69,12080
+Pennsylvania,1,00_04,27434
+Pennsylvania,2,00_04,25938
+Pennsylvania,1,05_09,32443
+Pennsylvania,2,05_09,31707
+Pennsylvania,1,10_19,74285
+Pennsylvania,2,10_19,71904
+Pennsylvania,1,20_29,48789
+Pennsylvania,2,20_29,48424
+Pennsylvania,1,30_39,66198
+Pennsylvania,2,30_39,69632
+Pennsylvania,1,40_49,90416
+Pennsylvania,2,40_49,96226
+Pennsylvania,1,50_59,94095
+Pennsylvania,2,50_59,100506
+Pennsylvania,1,60_69,31971
+Pennsylvania,2,60_69,34023
+Rhode Island,1,00_04,1767
+Rhode Island,2,00_04,1628
+Rhode Island,1,05_09,2116
+Rhode Island,2,05_09,1979
+Rhode Island,1,10_19,4481
+Rhode Island,2,10_19,4278
+Rhode Island,1,20_29,3280
+Rhode Island,2,20_29,3155
+Rhode Island,1,30_39,4255
+Rhode Island,2,30_39,4329
+Rhode Island,1,40_49,5673
+Rhode Island,2,40_49,5922
+Rhode Island,1,50_59,5637
+Rhode Island,2,50_59,5809
+Rhode Island,1,60_69,1949
+Rhode Island,2,60_69,1982
+South Carolina,1,00_04,27542
+South Carolina,2,00_04,26661
+South Carolina,1,05_09,33817
+South Carolina,2,05_09,32515
+South Carolina,1,10_19,74164
+South Carolina,2,10_19,71989
+South Carolina,1,20_29,48368
+South Carolina,2,20_29,56968
+South Carolina,1,30_39,69748
+South Carolina,2,30_39,83773
+South Carolina,1,40_49,86129
+South Carolina,2,40_49,104034
+South Carolina,1,50_59,90701
+South Carolina,2,50_59,114530
+South Carolina,1,60_69,33345
+South Carolina,2,60_69,40542
+South Dakota,1,00_04,1467
+South Dakota,2,00_04,1376
+South Dakota,1,05_09,1510
+South Dakota,2,05_09,1453
+South Dakota,1,10_19,2892
+South Dakota,2,10_19,2950
+South Dakota,1,20_29,2095
+South Dakota,2,20_29,2363
+South Dakota,1,30_39,2687
+South Dakota,2,30_39,2868
+South Dakota,1,40_49,2945
+South Dakota,2,40_49,3087
+South Dakota,1,50_59,2853
+South Dakota,2,50_59,2977
+South Dakota,1,60_69,969
+South Dakota,2,60_69,972
+Tennessee,1,00_04,19578
+Tennessee,2,00_04,18517
+Tennessee,1,05_09,24197
+Tennessee,2,05_09,23127
+Tennessee,1,10_19,54903
+Tennessee,2,10_19,52963
+Tennessee,1,20_29,32016
+Tennessee,2,20_29,37895
+Tennessee,1,30_39,48629
+Tennessee,2,30_39,57437
+Tennessee,1,40_49,60210
+Tennessee,2,40_49,71629
+Tennessee,1,50_59,66282
+Tennessee,2,50_59,80633
+Tennessee,1,60_69,24906
+Tennessee,2,60_69,28990
+Texas,1,00_04,110904
+Texas,2,00_04,106163
+Texas,1,05_09,129729
+Texas,2,05_09,124265
+Texas,1,10_19,285811
+Texas,2,10_19,274028
+Texas,1,20_29,203874
+Texas,2,20_29,236271
+Texas,1,30_39,261772
+Texas,2,30_39,311487
+Texas,1,40_49,303968
+Texas,2,40_49,357352
+Texas,1,50_59,306451
+Texas,2,50_59,359170
+Texas,1,60_69,96937
+Texas,2,60_69,105939
+Utah,1,00_04,6207
+Utah,2,00_04,5847
+Utah,1,05_09,6451
+Utah,2,05_09,6186
+Utah,1,10_19,11438
+Utah,2,10_19,11014
+Utah,1,20_29,7786
+Utah,2,20_29,8046
+Utah,1,30_39,9968
+Utah,2,30_39,9971
+Utah,1,40_49,8722
+Utah,2,40_49,8715
+Utah,1,50_59,7913
+Utah,2,50_59,7860
+Utah,1,60_69,2298
+Utah,2,60_69,2555
+Vermont,1,00_04,564
+Vermont,2,00_04,508
+Vermont,1,05_09,814
+Vermont,2,05_09,737
+Vermont,1,10_19,2097
+Vermont,2,10_19,1956
+Vermont,1,20_29,1396
+Vermont,2,20_29,1355
+Vermont,1,30_39,1729
+Vermont,2,30_39,1806
+Vermont,1,40_49,2678
+Vermont,2,40_49,2920
+Vermont,1,50_59,3287
+Vermont,2,50_59,3354
+Vermont,1,60_69,1199
+Vermont,2,60_69,1128
+Virginia,1,00_04,32418
+Virginia,2,00_04,30826
+Virginia,1,05_09,38055
+Virginia,2,05_09,36979
+Virginia,1,10_19,85393
+Virginia,2,10_19,82347
+Virginia,1,20_29,63266
+Virginia,2,20_29,64861
+Virginia,1,30_39,83201
+Virginia,2,30_39,90244
+Virginia,1,40_49,104106
+Virginia,2,40_49,116532
+Virginia,1,50_59,102314
+Virginia,2,50_59,118650
+Virginia,1,60_69,33485
+Virginia,2,60_69,37450
+Washington,1,00_04,12716
+Washington,2,00_04,11860
+Washington,1,05_09,15059
+Washington,2,05_09,14399
+Washington,1,10_19,38647
+Washington,2,10_19,36690
+Washington,1,20_29,26520
+Washington,2,20_29,26278
+Washington,1,30_39,29386
+Washington,2,30_39,30927
+Washington,1,40_49,43722
+Washington,2,40_49,44448
+Washington,1,50_59,47298
+Washington,2,50_59,46447
+Washington,1,60_69,14052
+Washington,2,60_69,14642
+Washington DC,1,00_04,478
+Washington DC,2,00_04,394
+Washington DC,1,05_09,345
+Washington DC,2,05_09,323
+Washington DC,1,10_19,536
+Washington DC,2,10_19,624
+Washington DC,1,20_29,1360
+Washington DC,2,20_29,1530
+Washington DC,1,30_39,1872
+Washington DC,2,30_39,1837
+Washington DC,1,40_49,1465
+Washington DC,2,40_49,1241
+Washington DC,1,50_59,1049
+Washington DC,2,50_59,1156
+Washington DC,1,60_69,380
+Washington DC,2,60_69,463
+West Virginia,1,00_04,3922
+West Virginia,2,00_04,3685
+West Virginia,1,05_09,4677
+West Virginia,2,05_09,4519
+West Virginia,1,10_19,9852
+West Virginia,2,10_19,9734
+West Virginia,1,20_29,6988
+West Virginia,2,20_29,6601
+West Virginia,1,30_39,10996
+West Virginia,2,30_39,10086
+West Virginia,1,40_49,12058
+West Virginia,2,40_49,11824
+West Virginia,1,50_59,14007
+West Virginia,2,50_59,13714
+West Virginia,1,60_69,5042
+West Virginia,2,60_69,5002
+Wisconsin,1,00_04,17028
+Wisconsin,2,00_04,16198
+Wisconsin,1,05_09,19430
+Wisconsin,2,05_09,18685
+Wisconsin,1,10_19,43078
+Wisconsin,2,10_19,41863
+Wisconsin,1,20_29,26093
+Wisconsin,2,20_29,30695
+Wisconsin,1,30_39,35230
+Wisconsin,2,30_39,39411
+Wisconsin,1,40_49,47729
+Wisconsin,2,40_49,53155
+Wisconsin,1,50_59,49400
+Wisconsin,2,50_59,54944
+Wisconsin,1,60_69,15160
+Wisconsin,2,60_69,15758
+Wyoming,1,00_04,1236
+Wyoming,2,00_04,1164
+Wyoming,1,05_09,1347
+Wyoming,2,05_09,1287
+Wyoming,1,10_19,2800
+Wyoming,2,10_19,2646
+Wyoming,1,20_29,2196
+Wyoming,2,20_29,2127
+Wyoming,1,30_39,2558
+Wyoming,2,30_39,2281
+Wyoming,1,40_49,2651
+Wyoming,2,40_49,2697
+Wyoming,1,50_59,3225
+Wyoming,2,50_59,3058
+Wyoming,1,60_69,929
+Wyoming,2,60_69,847
