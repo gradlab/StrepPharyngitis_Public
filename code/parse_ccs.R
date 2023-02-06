@@ -33,7 +33,6 @@ library(tidyverse)
 gsubv <- Vectorize(gsub)
 
 ccs9 <- read_tsv("data/dxref2015tsv.txt", 
-	# quote="\'", 
 	col_types=list(
 		col_character(),
 		col_character(),
