@@ -382,19 +382,19 @@ run;
 %reducedata(year=10, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc110
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc110_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc110_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc210
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc210_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc210_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort10
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort10_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -410,19 +410,19 @@ proc delete data=GeoCohort10; run;
 %reducedata(year=11, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc111
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc111_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc111_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc211
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc211_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc211_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort11
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort11_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -438,19 +438,19 @@ proc delete data=GeoCohort11; run;
 %reducedata(year=12, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc112
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc112_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc112_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc212
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc212_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc212_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort12
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort12_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -466,19 +466,19 @@ proc delete data=GeoCohort12; run;
 %reducedata(year=13, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc113
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc113_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc113_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc213
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc213_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc213_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort13
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort13_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -494,19 +494,19 @@ proc delete data=GeoCohort13; run;
 %reducedata(year=14, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc114
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc114_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc114_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc214
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc214_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc214_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort14
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort14_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -522,19 +522,19 @@ proc delete data=GeoCohort14; run;
 %reducedata(year=15, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc115
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc115_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc115_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc215
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc215_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc215_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort15
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort15_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -550,19 +550,19 @@ proc delete data=GeoCohort15; run;
 %reducedata(year=16, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc116
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc116_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc116_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc216
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc216_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc216_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort16
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort16_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -578,19 +578,19 @@ proc delete data=GeoCohort16; run;
 %reducedata(year=17, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc117
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc117_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc217
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc217_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort17
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort17_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
@@ -606,19 +606,19 @@ proc delete data=GeoCohort17; run;
 %reducedata(year=18, yeartag=1); *1sam;
 
 proc export data=GeoVisitsc118
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc118_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc118_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoVisitsc218
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc218_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoVisitsc218_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
 
 proc export data=GeoCohort18
-	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18_2023-01-17.csv'
+	outfile='/home/kissler/StrepPharyngitis/output/private/GeoCohort18_2023-02-06.csv'
 	dbms=csv
 	replace;
 run;
