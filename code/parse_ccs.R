@@ -18,18 +18,38 @@
 
 library(tidyverse)
 
-ccs9 <- read_csv("data/dxref2015formatted.csv", 
-	quote="\'", 
+# ccs9 <- read_csv("data/dxref2015formatted.csv", 
+# 	quote="\'", 
+# 	col_types=list(
+# 		col_character(),
+# 		col_double(),
+# 		col_character(),
+# 		col_character(),
+# 		col_character(),
+# 		col_character()
+# 		))
+# names(ccs9) <- c("ICD9","CCS","CCSDESC","ICD9DESC","CCSOPT","CCSOPTDESC")
+
+gsubv <- Vectorize(gsub)
+
+ccs9 <- read_tsv("data/dxref2015tsv.txt", 
+	# quote="\'", 
 	col_types=list(
 		col_character(),
-		col_double(),
+		col_character(),
 		col_character(),
 		col_character(),
 		col_character(),
 		col_character()
-		))
+		)) 
 names(ccs9) <- c("ICD9","CCS","CCSDESC","ICD9DESC","CCSOPT","CCSOPTDESC")
-
+ccs9 <- ccs9 %>% 
+	# Note both CCS and ICD all have 7 characters, of which the first and the last are apostrophes: 
+	mutate(CCS=substr(CCS,2,6)) %>% 
+	mutate(CCS=gsubv(" ","",CCS)) %>% 
+	mutate(CCS=as.numeric(CCS)) %>% 
+	mutate(ICD9=substr(ICD9,2,6)) %>% 
+	mutate(ICD9=gsubv(" ","",ICD9))
 
 ccs10 <- read_csv("data/DXCCSR_v2023-1formatted.csv",
 	quote="\'", 
@@ -66,13 +86,13 @@ ccs9 <- ccs9 %>%
 		CCS==126 & ICD9=="460" ~ "Other pharyngitis",
 		CCS==126 & ICD9=="462" ~ "Other pharyngitis",
 		CCS==126 & ICD9=="4650" ~ "Other pharyngitis",
-		CCS==126 & ICD9=="340" ~ "Strep pharyngitis",
+		CCS==126 & ICD9=="0340" ~ "Strep pharyngitis",
 		CCS==123 & !(ICD9=="4870") ~ "Influenza",
 		CCS==92 & grepl("^382",ICD9) & !(ICD9 %in% c("3821","3822","3823")) ~ "Otitis media",
 		CCS==122 & (ICD9%in%c("1124","1140","1144","1145","11505","11515","11595","1363","4846","4847")) ~ "Fungal pneumonia",
-		CCS==122 & (ICD9%in%c("521","551","4800","4801","4802","4803","4808","4809","4841")) ~ "Viral pneumonia",
+		CCS==122 & (ICD9%in%c("0521","0551","4800","4801","4802","4803","4808","4809","4841")) ~ "Viral pneumonia",
 		CCS==123 & ICD9=="4870" ~ "Viral pneumonia",
-		CCS==122 & !(ICD9%in%c("1124","1140","1144","1145","11505","11515","11595","1363","4846","4847")) & !(ICD9%in%c("521","551","4800","4801","4802","4803","4808","4809","4841")) & !(ICD9%in%c("5171","1304")) ~ "Bacterial pneumonia",
+		CCS==122 & !(ICD9%in%c("1124","1140","1144","1145","11505","11515","11595","1363","4846","4847")) & !(ICD9%in%c("0521","0551","4800","4801","4802","4803","4808","4809","4841")) & !(ICD9%in%c("5171","1304")) ~ "Bacterial pneumonia",
 		CCS==197 & !(ICD9%in%c("68601","6861")) ~ "SSTIs",
 		CCS==159 & !(ICD9%in%c("5952","59581","59582")) ~ "UTIs",
 		CCS==135 ~ "GI infections"
