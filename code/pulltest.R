@@ -10,3 +10,9 @@ GeoVisits %>%
 	group_by(MONTH) %>% 
 	summarise(VPKP=mean(VPKP))
 
+GeoVisits %>% 
+	filter(COND=="GI infections") %>% 
+	left_join(GeoCohort, by=c("STATE","SEX","AGEGRP","YEAR")) %>% 
+	mutate(VPKP=NVISITS/NMEMB*1000) %>% 
+	group_by(MONTH, YEAR) %>% 
+	summarise(VPKP=mean(VPKP))
