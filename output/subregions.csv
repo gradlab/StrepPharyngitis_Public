@@ -1,0 +1,52 @@
+STATE,part
+Connecticut,New England
+Maine,New England
+Massachusetts,New England
+New Hampshire,New England
+Rhode Island,New England
+Vermont,New England
+New Jersey,Middle Atlantic
+New York,Middle Atlantic
+Pennsylvania,Middle Atlantic
+Indiana,East North Central
+Illinois,East North Central
+Michigan,East North Central
+Ohio,East North Central
+Wisconsin,East North Central
+Iowa,West North Central
+Kansas,West North Central
+Minnesota,West North Central
+Missouri,West North Central
+Nebraska,West North Central
+North Dakota,West North Central
+South Dakota,West North Central
+Delaware,South Atlantic
+Washington DC,South Atlantic
+Florida,South Atlantic
+Georgia,South Atlantic
+Maryland,South Atlantic
+North Carolina,South Atlantic
+South Carolina,South Atlantic
+Virginia,South Atlantic
+West Virginia,South Atlantic
+Alabama,East South Central
+Kentucky,East South Central
+Mississippi,East South Central
+Tennessee,East South Central
+Arkansas,West South Central
+Louisiana,West South Central
+Oklahoma,West South Central
+Texas,West South Central
+Arizona,Mountain West
+Colorado,Mountain West
+Idaho,Mountain West
+New Mexico,Mountain West
+Montana,Mountain West
+Utah,Mountain West
+Nevada,Mountain West
+Wyoming,Mountain West
+Alaska,Pacific West
+California,Pacific West
+Hawaii,Pacific West
+Oregon,Pacific West
+Washington,Pacific West
