@@ -25,6 +25,9 @@ __Note:__ These data have not yet been validated; no checks for consistency or p
 
 __Other data sources:__
 
-Data census population data was derived from the American Community Survey (ACS) from 2011-2015 and obtained through the tidycensus R package (source 15). Data on US population centroids by state according to the 2010 U.S. census was obtained through the USpopcenters R package (source 16). Data on school start times in 2019 were obtained from Pew Research Foundation (source 17). A summarized version of these data can be found in `output/school_start_summary.csv'.
+Data census population data was derived from the American Community Survey (ACS) from 2011-2015 and obtained through the tidycensus R package (source 15). Data on US population centroids by state according to the 2010 U.S. census was obtained through the USpopcenters R package (source 16). Data on school start times in 2019 were obtained from Pew Research Foundation (source 17). A summarized version of these data can be found in `output/school_start_summary.csv`.
+
+__Code:__
+All code used to perform analysis and generate figures can be found in the `code/MK_analysis.Rmd.` Additional R helper files that run in this main analysis file can also be found in the `code` folder. 
 
  
