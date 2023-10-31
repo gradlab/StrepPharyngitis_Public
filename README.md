@@ -17,11 +17,9 @@ These counts pertain to individuals in the dataset who are followed continuously
 - Age group (decile, except 0-4 and 5-9 are separated out) 
 - Year 
 
-To estimate monthly strep pharyngitis case rates by population group, divide __NVISITS__ in `GeoVisits.R` by __NMEMB__ in `GeoCohort.R`, matching by the appropriate year. 
-
 The extraction scripts are saved as `code/extract_visits.sas` and `code/reduce_visits.R`. These scripts should be run (in this order) to get the datasets saved in `output/`. Note that the initial SAS extraction takes about six hours to run! 
 
-__Note:__ These data have not yet been validated; no checks for consistency or plausibility have yet been done. Proceed with caution!
+Note that GeoVisits.csv and GeoCohort.csv are not publicly available. 
 
 __Other data sources:__
 
