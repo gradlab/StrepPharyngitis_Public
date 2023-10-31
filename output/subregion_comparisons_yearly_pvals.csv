@@ -1,0 +1,37 @@
+Comparison,pvals,diff
+West North Central-South Atlantic,0.533,1.27
+South Atlantic-Middle Atlantic,0.428,1.36
+Mountain West-East North Central,0.378,1.38
+East South Central-West South Central,0.367,3.1
+West North Central-Middle Atlantic,0.235,2.62
+Middle Atlantic-Mountain West,0.175,2.13
+East North Central-New England,0.0804,3.15
+Middle Atlantic-East North Central,0.0751,3.51
+West North Central-Mountain West,0.025,4.75
+South Atlantic-Mountain West,0.0161,3.49
+West North Central-East North Central,0.0115,6.13
+South Atlantic-East North Central,0.011,4.86
+Mountain West-New England,0.00324,4.53
+Middle Atlantic-New England,0.00112,6.66
+West South Central-West North Central,7.24e-4,11.59
+West North Central-New England,3.9e-4,9.28
+East South Central-West North Central,2.78e-4,14.7
+West South Central-South Atlantic,2.01e-4,12.86
+East South Central-South Atlantic,1.35e-4,15.96
+West South Central-Middle Atlantic,8.07e-5,14.21
+South Atlantic-New England,5.95e-5,8.02
+East South Central-Middle Atlantic,5.83e-5,17.32
+East South Central-Mountain West,3.6e-5,19.45
+West South Central-Mountain West,3.48e-5,16.35
+East South Central-East North Central,9.85e-6,20.83
+West South Central-East North Central,8.81e-6,17.72
+East South Central-New England,3.56e-6,23.98
+West South Central-New England,2.13e-6,20.88
+East North Central-Pacific West,9.34e-7,15.16
+New England-Pacific West,6.38e-7,12.01
+West North Central-Pacific West,6.24e-7,21.29
+East South Central-Pacific West,4.02e-7,35.99
+West South Central-Pacific West,1.95e-7,32.88
+Middle Atlantic-Pacific West,1.15e-7,18.67
+South Atlantic-Pacific West,3.62e-9,20.02
+Mountain West-Pacific West,6.71e-11,16.54

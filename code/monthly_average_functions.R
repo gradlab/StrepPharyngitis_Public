@@ -11,7 +11,7 @@ calculate_averages <- function(states_to_leave_out, regions){
     summarize(region_total = sum(POPSIZE))
   
   regions_weighted_allyears <- coh_dat_pop |> 
-    filter(!STATE %in% states_to_leave_out) |>
+     filter(!STATE %in% states_to_leave_out) |>
     mutate(region = tolower(STATE)) |>
     left_join(regions) |>
     left_join(region_totals) |> 

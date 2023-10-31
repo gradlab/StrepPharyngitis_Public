@@ -6,7 +6,7 @@ library(gridExtra)
 set.seed(2023)
 
 #load in full data
-ss_dat <- read_excel("/Users/madeleinekline/Dropbox (Harvard University)/G1/GradLab/Strep_project/R code/pew_school_start data_for_MKline.xlsx")
+ss_dat <- read_excel("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/Strep_project/private_data/pew_school_start data_for_MKline.xlsx")
 ss_dat <- ss_dat |> mutate(date = as_date(as.numeric(ss_dat$`Start date, 2019-20`) - 1))
 #adjust dates to match spreadsheet
 
@@ -84,22 +84,21 @@ ss_dat_trim[which(ss_dat_trim$`Census Division` == "Mountain"),4] <- "Mountain W
 ss_dat_trim[which(ss_dat_trim$`Census Division` == "Pacific"),4] <- "Pacific West"
 
 #don't write this to CSV because this should be kept private
+#write this to a CSV but do not share it on the public github
+
+#write_csv(ss_dat_trim, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/Strep_project/private_data/ss_dat_trim.csv")
 
 start_date_summary <- ss_dat_trim |> mutate(Subregion = `Census Division`) |> group_by(Subregion) |>
   summarize(Date = mean(date), lower_date = min(date), upper_date= max(date)) |> mutate(cat = "SchoolStart")
 
-#write_csv(start_date_summary, "/Users/madeleinekline/Dropbox (Harvard University)/G1/GradLab/StrepPharyngitis/output/school_starts_summary.csv")
+start_date_summary_state <- ss_dat_trim |> group_by(State) |>
+  summarize(Date = mean(date), lower_date = min(date), upper_date= max(date)) |> mutate(cat = "SchoolStart")
 
-#do bootstrapping because it also needs the original data in it's unsummarized form
-subregions_vec <- c("West South Central", "East South Central", "Mountain West",
-                    "West North Central", "South Atlantic", "East North Central", 
-                    "Pacific West", "Middle Atlantic", "New England")
-booted_school <- data.frame(samp = 1:1000)
-for(i in 1:9){
-  tmp <- ss_dat_trim |> filter(`Census Division` == subregions_vec[i]) |> pull(date)
-  booted_school <- cbind(booted_school, tmp = sample(tmp, 1000, replace = TRUE))
-}
-colnames(booted_school) <- c("samp", subregions_vec)
-#write_csv(booted_school, "/Users/madeleinekline/Dropbox (Harvard University)/G1/GradLab/StrepPharyngitis/output/school_boots.csv")
-saveRDS(booted_school, file = "/Users/madeleinekline/Dropbox (Harvard University)/G1/GradLab/StrepPharyngitis/output/booted_school.RDS")
+#write_csv(start_date_summary, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/school_starts_summary.csv")
+
+#write_csv(start_date_summary_state, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/school_starts_summary_state.csv")
+
+
+
+
 
