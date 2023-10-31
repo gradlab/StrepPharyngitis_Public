@@ -29,6 +29,6 @@ Data census population data was derived from the American Community Survey (ACS)
 
 __Code:__
 
-All code used to perform analysis and generate figures can be found in the `code/MK_analysis.Rmd.` Additional R helper files that run in this main analysis file can also be found in the `code` folder. 
+All code used to perform analysis and generate figures can be found in the `code/MK_analysis_final.Rmd.` Additional R helper files that run in this main analysis file can also be found in the `code` folder. 
 
  
