@@ -3,12 +3,21 @@ coh_dat_pop <- left_join(dat, coh) |> left_join(pop_sizes)
 #basic age group analytics
 
 #need to also look at the age distribution by region in the membership population by region
+#THINK THIS IS WRONG
 total_memb_byregion_age <- coh |> left_join(regions) |> filter(!STATE %in% c("Hawaii", "Alaska")) |> 
   group_by(AGEGRP, part) |>
-  summarize(avg_memb_peryear = mean(NMEMB))
+  summarize(avg_memb_peryear = mean(NMEMB), sd = sd(NMEMB), n = n()) |>
+  mutate(lower = avg_memb_peryear - 1.96*sd/sqrt(n), upper = avg_memb_peryear + 1.96*sd/sqrt(n))
 
-#calculate overall membership by region
-total_memb_byregion <-total_memb_byregion_age |> group_by(part) |> summarize(total_memb = sum(avg_memb_peryear))
+#calculate yearly membership in each region and age group
+total_membership_byyear_region_age <-coh |> left_join(regions) |> filter(!STATE %in% c("Hawaii", "Alaska")) |>
+  group_by(part, AGEGRP, YEAR) |> summarize(sum_membs = sum(NMEMB))
+
+#calculate overall membership by region in each year
+total_memb_byregion_year <- coh |> left_join(regions) |> filter(!STATE %in% c("Hawaii", "Alaska")) |>
+  group_by(part, YEAR) |> summarize(total_memb = sum(NMEMB))
+
+#divide sum membs by total membs to get membership proportion
 
 #weighted visits by age group
 #calculate the total population in each age stratum based on the census
