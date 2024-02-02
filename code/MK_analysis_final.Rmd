@@ -1,7 +1,7 @@
 ---
 title: "Analysis"
 author: "Maddy Kline"
-date: "2023-11-16"
+date: "2024-2-1"
 output:
   pdf_document: default
   html_document: default
@@ -67,12 +67,12 @@ source("age_analyses.R")
 
 
 
-
 Calculate the proportion of the population represented in the dataset for calculation in methods
 ```{r pop proportion}
 total_us_pop_years_df <- data.frame(YEAR = c(2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018), 
                                     pop = c(309414110, 311580009, 313874218, 316057727, 318386421,
                                             320742673, 323071342, 325147121, 327167434))
+#us pop numbers from https://www.census.gov/library/visualizations/interactive/population-increase-2018.html 
 yearly_memb <- coh |> group_by(YEAR) |>
   summarize(yearly_memb = sum(NMEMB))
 #percentage of population represented by the database
@@ -177,6 +177,7 @@ continental_state_membership_noSC <- coh |>
 Calculate the total visits per 1000 members across all years by region. Because Figure S3a.
 ```{r Figure S3a}
 vis_year <- dat |> group_by(STATE, SEX, AGEGRP, YEAR) |> summarize(yearly_visits = sum(NVISITS))
+#note: here, regions_weighted_allyears is yearly visits
 regions_weighted_allyears <- get_yearly_differences(regions) |> mutate(Region = str_to_title(part)) |> 
   left_join(colors_df) |> mutate(Region = factor(Region, levels = c("South", "Midwest", "Northeast", "West")))
 #plot 
@@ -241,6 +242,7 @@ region_comparisons <- ttest_table_reg |>
 
 Total visits per 1000 members across all years by subregion as well as calculation of average visits per year in each region and statistical comparison. Becomes Supplementary Figure 4.
 ```{r Supplementary Figure 4}
+#note: subregions_weighted_allyears here is yearly average visits
 subregions_weighted_allyears <- get_yearly_differences(subregions) |> mutate(Region = str_to_title(part)) |> 
   left_join(subcolors_df) |> mutate(Region = factor(Region, levels = subcolors_df$Region))
 
@@ -265,8 +267,6 @@ avg_yearly_subregions <- subregions_weighted_allyears |>
 order <- avg_yearly_subregions |> pull(Region)  
 avg_yearly_subregions <- avg_yearly_subregions |>
   mutate(Region = factor(Region, levels = order))
-
-#write_csv(avg_yearly_subregions, "year_subregions_sd.csv")
 
 subregion_table <- avg_yearly_subregions |>
   mutate("95%CI" = paste0("(", round(lower,2), "-", round(upper,2), ")")) |>
@@ -334,6 +334,7 @@ ttest_table_sub <- ttest_table_sub |> mutate(diff = round(diff, 2), pvals = sign
 # Average monthly regional and subregional differences 
 Calculate average monthly visits by region, becomes Figure 1.
 ```{r Figure 1}
+#note: regions_weighted_allyears here is REDEFINED and now is monthly average visits
 regions_weighted_allyears <- calculate_averages(c("Hawaii", "Alaska"), regions)[[2]] |> 
   mutate(Region = str_to_title(part)) |> 
   left_join(colors_df) |> mutate(Region = factor(Region, levels = c("South", "Midwest", "Northeast", "West")))
@@ -363,6 +364,7 @@ region_table_month <- region_table_month[,2:4] |> pivot_wider(names_from = Regio
 
 Average subregional differences over the course of the year. Becomes Supplementary Figure 6.
 ```{r supplementary figure 6}
+#note: subregions_weighted_allyears is redefined and is now monthly average visits
 subregions_weighted_allyears <- calculate_averages(c("Hawaii", "Alaska"), subregions)[[2]] |> 
   mutate(Region = factor(str_to_title(part), levels = c("East South Central", "West South Central",
                                       "West North Central", "South Atlantic", "Middle Atlantic",
@@ -571,9 +573,9 @@ subregion_heatmap_significance_noredund <- subregion_US_cont2 |>
 
 # Sinusoidal Fitting
 Fitting state visit trends to sinusoids
-```{r state phases, supplementary table 5}
+```{r state phases, supplementary table 7}
 #state_sinusoids_parameters and state_sinusoids called from get_state_sinusoids.R helper file
-#make a table of all state phases (Supplementary Table 5)
+#make a table of all state phases (Supplementary Table 7)
 phase_table <- state_sinusoids_parameters |> mutate(Phase_corrected = Phase %% 12) |>
   mutate(Phase_lower = Phase_corrected - 1.96*Phase_SE,
          Phase_upper = Phase_corrected + 1.96*Phase_SE) |>
@@ -588,7 +590,7 @@ phase_table <- state_sinusoids_parameters |> mutate(Phase_corrected = Phase %% 1
 Plot state phases on a map of the U.S., becomes Figure 2.
 ```{r figure 2}
 #load US shapefile
-my_spdf <- readOGR(dsn = "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/Strep_project/R code/plots/More_final_figures/mapping/cb_2018_us_state_500k",
+my_spdf <- readOGR(dsn = "../data/cb_2018_us_state_500k",
                    layer = "cb_2018_us_state_500k")
 # https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html
 spdf_fortified <- tidy(my_spdf)
@@ -633,8 +635,33 @@ state_phases_map_noSC <- ggplot() +
   theme(plot.title = element_text(hjust = 0.5, size = 25),
         plot.subtitle = element_text(hjust = 0.5, size = 23),
         legend.position = 'bottom')
+
+#repeat this plot with log model phases 
+state_sinusoids_parameters_tojoin_log <- state_sinusoids_parameters_log |> mutate(Phase_corrected = Phase %% 12, 
+                                                                          id = State) |> select(id, Phase_corrected)
+continental_phases_log <- left_join(continental_fortified_tojoin, state_sinusoids_parameters_tojoin_log) 
+continental_phases_noSC_log <- continental_phases_log
+continental_phases_noSC_log[which(continental_phases_noSC_log$id == "South Carolina"),8] = NA
+
+#becomes supplementary figure 24
+state_phase_map_noSC_log <- ggplot() + 
+  geom_polygon(data = continental_phases_noSC_log, aes(x = long, y = lat, group = group, fill = Phase_corrected), color="black") +
+  geom_polygon_pattern(data = sc, aes(x = long, y = lat, group= group), fill = "gray", pattern = 'stripe', 
+                       pattern_spacing = 0.005, pattern_alpha = 0.5) +
+  theme_void() + ggtitle("") + scale_fill_gradient(low = "#30239B", high =  "#FFFFFF", breaks = c(0, 1, 2, 3), 
+                                                   labels = c("Dec", "Jan", "Feb", "Mar"),
+                                                   limits = range(0,3)) + 
+  labs(fill = "Peak Month") +
+  theme(plot.title = element_text(hjust = 0.5, size = 25),
+        plot.subtitle = element_text(hjust = 0.5, size = 23),
+        legend.position = 'bottom')
+
+
+
+
 ```
-Plot state sinusoids with confidence intervals, becomes Supplementary Figure 9
+
+Plot state sinusoids with confidence intervals, becomes Supplementary Figure 10
 ```{r supplementary figure 9}
 state_sinusoids_subregions <- ggplot() + 
   geom_point(aes(x = MONTH, y = mean_weighted_cases_per_thousand, color = Region), data = state_sinusoids_withCIs_cont_sub, size = 0.5) + 
@@ -651,6 +678,23 @@ state_sinusoids_subregions <- ggplot() +
   theme_minimal() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         plot.title = element_text(hjust = 0.5, size = 20)) 
+
+state_sinusoids_subregions_log <- ggplot() + 
+  geom_point(aes(x = MONTH, y = log_mean_weighted_cases_per_thousand, color = Region), data = state_sinusoids_withCIs_cont_sub_log, size = 0.5) + 
+  geom_ribbon(aes(x = MONTH, ymin = lower, ymax = upper, fill = Region), data = state_sinusoids_withCIs_cont_sub_log, alpha = 0.2) +
+  geom_line(aes(x = MONTH, y = prediction, color = Region), data = state_sinusoids_withCIs_cont_sub_log, linetype = 2) +
+  scale_color_manual(values= subcolors_df$region_color, labels=gsub("_", " ",subcolors_df$Region , fixed=TRUE)) +
+  scale_fill_manual(values = subcolors_df$region_color, labels=gsub("_", " ",subcolors_df$Region , fixed=TRUE)) +
+  facet_wrap(~STATE) +
+  # ggtitle("Streptococcal Pharyngitis Visits State Sinusoidal Fits") +
+  labs(color = "Subregion", fill = "Subregion") + 
+  xlab("Month") +
+  ylab("Visits per 1,000 People") +
+  scale_x_discrete(limits = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT","OCT", "NOV", "DEC")) +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        plot.title = element_text(hjust = 0.5, size = 20)) 
+
 
 #only in the <19 population
 state_sinusoids_subregions_under19 <- ggplot() + 
@@ -685,30 +729,9 @@ state_sinusoids_subregions_over19 <- ggplot() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         plot.title = element_text(hjust = 0.5, size = 20)) 
 
-#plot these together on the same plot but with diff
-state_sinusoids_withCIs_cont_sub_over19_tojoin <- state_sinusoids_withCIs_cont_sub_over19 |> mutate(age = "over19")
-state_sinusoids_withCIs_cont_sub_under19_tojoin <- state_sinusoids_withCIs_cont_sub_under19 |> mutate(age = "under19")
-
-joint_agesep_sinusoids <- rbind(state_sinusoids_withCIs_cont_sub_over19_tojoin, state_sinusoids_withCIs_cont_sub_under19_tojoin)
-
-joint_sinusoids <- joint_agesep_sinusoids |>
-  ggplot() + 
-  geom_point(aes(x = MONTH, y = mean_weighted_cases_per_thousand, color = Region, group = age, shape = age), size = 0.5) + 
-   geom_ribbon(aes(x = MONTH, ymin = lower, ymax = upper, fill = Region, group = age), alpha = 0.2) +
-   geom_line(aes(x = MONTH, y = prediction, color = Region, group = age), linetype = 2) +
-   scale_color_manual(values= subcolors_df$region_color, labels=gsub("_", " ",subcolors_df$Region , fixed=TRUE)) +
-   scale_fill_manual(values = subcolors_df$region_color, labels=gsub("_", " ",subcolors_df$Region , fixed=TRUE)) +
-  facet_wrap(~STATE) + 
-  labs(color = "Subregion", fill = "Subregion", shape = "Age") + 
-  xlab("Month") +
-  ylab("Visits per 1,000 People") +
-  scale_x_discrete(limits = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT","OCT", "NOV", "DEC")) +
-  theme_minimal() + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-        plot.title = element_text(hjust = 0.5, size = 20)) 
 ```
 
-Fit sinusoids to region trends and plot. Becomes Supplementary Figure 11. 
+Fit sinusoids to region trends and plot. Becomes Supplementary Figure 12. 
 ```{r regional sinusoids plot, supplementary figure 11}
 #get_regions_sinusoids() from "region_subregion_sinusoid_functions.R"
 region_sinusoids <- get_region_sinusoids(c("Hawaii", "Alaska"))[[1]] |>
@@ -731,7 +754,7 @@ region_sinusoids_CIs_plot_points <- region_sinusoids |>
         plot.title = element_text(hjust = 0.5, size = 20)) 
 ```
 
-Plot regional sinusoid phases. Becomes Supplementary Figure 11.
+Plot regional sinusoid phases. Becomes Supplementary Figure 12.
 ```{r plot reginoal sinusoid phases, supplementary figure 8b}
 region_sinusoids_parameters <- get_region_sinusoids(c("Hawaii", "Alaska"))[[2]]
 order <- region_sinusoids_parameters |> arrange(-Phase) |> pull(Region)
@@ -752,8 +775,8 @@ region_phase_plot <- region_sinusoids_parameters |>
 ```
 
 
-Fit sinusoids to subregional data and plot. Becomes Supplementary Figure 10a.
-```{r supplementary figure 10a}
+Fit sinusoids to subregional data and plot. Becomes Supplementary Figure 11.
+```{r supplementary figure 11a}
 subregion_sinusoids <- get_subregion_sinusoids(c("Hawaii", "Alaska"))[[1]] |>
   mutate(Region = factor(part, c("East South Central", "West South Central",
                                       "West North Central", "South Atlantic", "Middle Atlantic",
@@ -774,8 +797,8 @@ subregion_sinusoids_CIs_plot_points <- subregion_sinusoids |>
         plot.title = element_text(hjust = 0.5, size = 20))
 ```
 
-Plot subregion phases. Becomes Supplementary Figure 10b.
-```{r subregion phases, supplementary figure 10b}
+Plot subregion phases. Becomes Supplementary Figure 11b.
+```{r subregion phases, supplementary figure 11b}
 subregion_sinusoids_parameters <- get_subregion_sinusoids(c("Hawaii", "Alaska"))[[2]]
 order <- subregion_sinusoids_parameters |> arrange(-Phase) |> pull(Region)
 order_df <- data.frame(Region = order, num = 1:9)
@@ -816,9 +839,7 @@ region_sinusoids_phase_table <- region_sinusoids_parameters |>
 
 ```
 
-
-
-Calculate subregion centroids. Becomes Supplementary Figure 12. 
+Calculate subregion centroids. Becomes Supplementary Figure 13. 
 ```{r centroid analysis figure S12}
 #load state centroid data from 2010 from USpopcenters package
 state_centroid <- state2010 |>
@@ -900,6 +921,7 @@ continental_fortified_tojoin_regions <- continental_fortified_tojoin_subregions 
 continental_fortified_tojoin_regions[which(continental_fortified_tojoin_regions$STATE == "District of Columbia"), 10] <- "South"
 continental_fortified_tojoin_regions <- continental_fortified_tojoin_regions |> mutate(part = factor(part, levels = c("South", "Midwest", "Northeast", "West")))
 
+#for slides
 region_map <- ggplot() +
   geom_polygon(data = continental_fortified_tojoin_regions, aes(x = long, y = lat, group = group, fill = part), color = "black", alpha = 0.5) +
   theme_void() + ggtitle("") +
@@ -974,10 +996,10 @@ state_distance_correlation_plot <- total_state_df |>
 ```
 
 
-Load in trimmed school start data, calculate uptick points and plot. Becomes Supplementary Figure 14 and Figure 3.
+Load in trimmed school start data, calculate uptick points and plot. Becomes Supplementary Figure 15 and Figure 3.
 ```{r school start date,fig 3, figS14}
 #summarize school start data
-start_date_summary <- read_csv("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/school_starts_summary.csv")
+start_date_summary <- read_csv("../output/school_starts_summary.csv")
 
 subcolors_df_ordering <- data.frame(Subregion = c("East South Central", "West South Central",
                                       "West North Central", "South Atlantic", "Middle Atlantic",
@@ -1086,7 +1108,7 @@ corplot_labeled_points <- df_toplot |>
   theme_minimal() + geom_smooth(method = 'lm', color = 'black', linewidth = 0.3,linetype = 2, alpha = 0.2) + 
   xlab("Average School Start Date") + ylab("Minimum Visit Date")  + theme(legend.position = "none")
 
-cor(as.numeric(df_toplot$Date_SchoolStart), as.numeric(df_toplot$`Date_Min Visit Date`)) #raw correlation 0.88
+cor(as.numeric(df_toplot$Date_SchoolStart), as.numeric(df_toplot$`Date_Min Visit Date`)) #raw correlation 0.88 (use bootstrapped)
 
 ```
 Bootstrap correlation 
@@ -1135,6 +1157,7 @@ for(i in 1:1000){
 quantile(cor_vec, c(0.025, 0.5, 0.975))
 
 ```
+
 ```{r, subregion uptick correlations with school start by age group}
 over19_comb <- start_date |> mutate(Subregion = reg) |> left_join(avg_month_mins_over19)
 cor(as.numeric(over19_comb$DateSS), over19_comb$mean_min) #0.928
@@ -1157,8 +1180,8 @@ for(i in 1:1000){
   cor_vec_over19 <- append(cor_vec_over19, tmp)
 }
 quantile(cor_vec_over19, c(0.025, 0.5, 0.975))
-#      2.5%       50%     97.5% 
-# 0.7618782 0.8929987 0.9700739 
+#  2.5%       50%     97.5% 
+# 0.7492371 0.8891342 0.9641204
 
 under19_comb <- start_date |> mutate(Subregion = reg) |> left_join(avg_month_mins_under19)
 cor(as.numeric(under19_comb$DateSS), under19_comb$mean_min) #0.826
@@ -1182,13 +1205,14 @@ for(i in 1:1000){
   cor_vec_under19 <- append(cor_vec_under19, tmp)
 }
 quantile(cor_vec_under19, c(0.025, 0.5, 0.975))
-#      2.5%       50%     97.5% 
-# 0.7162034 0.8184663 0.8836837 
+#   2.5%       50%     97.5% 
+# 0.7292878 0.8187446 0.8848669 
 ```
 Age analyses, becomes figure S2
 ```{r, age, figure S2}
 #want to look at the visits per person by age group, by region 
 #get the total visits per person in each region in each year for the visit frequencies
+#using regiosn_weighted_allyears that is monthly visits
 avg_yearly_regions_tojoin <- regions_weighted_allyears |> group_by(part, YEAR) |> summarize(vis_per_thous_peryear = sum(sum_region_cases_per_thousand))
 region_totals_cont <- pop_sizes |> 
   left_join(regions) |> 
@@ -1238,7 +1262,7 @@ age_month_plot <- ggplot() +
   geom_line(aes(MONTH, avg_vis_per_thous, group = AGEGRP, color = AGEGRP), data = weighted_age_groups_permonth) +
   geom_ribbon(aes(MONTH, ymin = avg_vis_per_thous - 1.96*sd/3, ymax = avg_vis_per_thous + 1.96*sd/3, fill = AGEGRP), alpha = 0.3, data = weighted_age_groups_permonth) + scale_fill_manual(name = "Age Group", values = brewer.pal(n= 8, name= "Set2"), labels = c("0-4", "5-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69")) + scale_color_manual(name = "Age Group", values = brewer.pal(n= 8, name= "Set2"), labels = c("0-4", "5-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69")) + scale_x_discrete(limits = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT","OCT", "NOV", "DEC")) + xlab("Month") + ylab("Visits per 1000 People") +
   theme_minimal()  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
- 
+
 #create table with age groups by region and their membership and visit proportions
 memb_vis_prop_table <- left_join(age_group_breakdown_table_polished,membership_table) 
 
@@ -1248,13 +1272,117 @@ age_group_breakdown_table |> filter(AGEGRP %in% c("00_04", "05_09", "10_19")) |>
 
 membership_byage |> filter(AGEGRP %in% c("00_04", "05_09", "10_19")) |> group_by(part) |>
   summarize(under_19_memb_prop = sum(avg_age_freq))
+
+#age standardization to show that the age distribution of the population in each region is not different enough to explain the differences
+midwest_ageprops <- left_join(total_membership_byyear_region_age, total_memb_byregion_year) |> mutate(age_freq = sum_membs / total_memb) |> filter(part == "Midwest") |> ungroup() |> select(AGEGRP, YEAR, age_freq, -part)
+
+#need to calculate visit rates by age group and by region, which I think I have in the age analysis file
+#using the denominator 
+alldat_region |> 
+  filter(!STATE %in% c("Hawaii", "Alaska")) |>
+  left_join(region_totals_cont) |> 
+  mutate(pop_frac = POPSIZE/region_total) |>
+  mutate(group_weight = pop_frac/NMEMB) |>
+  mutate(weighted_cases = yearly_visits*group_weight) |>
+  group_by(part, AGEGRP, YEAR) |>
+  summarize(sum_region_cases = sum(weighted_cases)) |>
+  mutate(sum_region_cases_per_thousand = sum_region_cases*1000)
+
+
+#do this without weighting to make sure the numbers look the same 
+memb_denom <- coh |> filter(!STATE %in% c("Hawaii", "Alaska")) |> left_join(regions)|> group_by(AGEGRP, YEAR, part) |> summarize(sum_memb = sum(NMEMB))
+dat |> filter(!STATE %in% c("Hawaii", "Alaska")) |> left_join(regions) |> group_by(AGEGRP, YEAR, part) |> summarize(sum_vis = sum(NVISITS)) |> left_join(memb_denom) |>
+  mutate(vis_per_thous = sum_vis / sum_memb * 1000) |>
+  left_join(midwest_ageprops) |> mutate(vis_per_thous_props = vis_per_thous *age_freq) |>
+  group_by(YEAR, part) |> summarize(sum_vis_per_thous = sum(vis_per_thous_props)) |>
+  group_by(part) |> summarize(avg_vis_per_thous = mean(sum_vis_per_thous)) #compare this with the non-age-standardized version
+
+coh_denom <- coh |> filter(!STATE %in% c("Hawaii", "Alaska")) |> left_join(regions) |> group_by(YEAR, part) |> summarize(sum_memb = sum(NMEMB))
+dat |> filter(!STATE %in% c("Hawaii", "Alaska")) |> left_join(regions) |> group_by(YEAR, part) |> summarize(sum_vis = sum(NVISITS)) |>
+  left_join(coh_denom) |> mutate(vis_per_thous = sum_vis / sum_memb* 1000) |> group_by(part) |> summarize(avg_vis_per_thous = mean(vis_per_thous))
+
+#try getting the rates for the individual regions and age groups first without weighting, then with to check 
+region_year_agegrp_rates_unweighted <- dat |> filter(!STATE %in% c("Hawaii", "Alaska")) |> left_join(regions) |> group_by(AGEGRP, YEAR, part) |> summarize(sum_vis = sum(NVISITS)) |> left_join(memb_denom) |>
+  mutate(vis_per_thous = sum_vis / sum_memb * 1000) 
+
+#trying with weighting; need region totals per age group for weighting
+region_agegrp_totals <- pop_sizes |> left_join(regions) |> group_by(AGEGRP, part) |> summarize(total_pop = sum(POPSIZE))
+
+mw_stan_weighted_regionvis <- alldat_region |> left_join(region_agegrp_totals) |>
+  mutate(pop_frac = POPSIZE / total_pop) |>
+  mutate(group_weight = pop_frac / NMEMB) |>
+  mutate(weighted_vis = yearly_visits * group_weight) |>
+  group_by(part, AGEGRP, YEAR) |>
+  summarize(sum_region_vis_per_thous = sum(weighted_vis)*1000) |> #this looks right so far so then I need to multiply those by the membership proportion in the midwest 
+  left_join(midwest_ageprops) |>
+  mutate(vis_per_thous_freqs = sum_region_vis_per_thous*age_freq) |>
+  group_by(part, YEAR) |>
+  summarize(vis_per_thous = sum(vis_per_thous_freqs)) |>
+  group_by(part) |>
+  summarize(avg_vis_per_thous = mean(vis_per_thous), sd = sd(vis_per_thous)) #ok this looks right
+
+#standardized visits from all years:
+mw_stan_vis_allyears <- alldat_region |> left_join(region_agegrp_totals) |>
+  mutate(pop_frac = POPSIZE / total_pop) |>
+  mutate(group_weight = pop_frac / NMEMB) |>
+  mutate(weighted_vis = yearly_visits * group_weight) |>
+  group_by(part, AGEGRP, YEAR) |>
+  summarize(sum_region_vis_per_thous = sum(weighted_vis)*1000) |> #this looks right so far so then I need to multiply those by the membership proportion in the midwest 
+  left_join(midwest_ageprops) |>
+  mutate(vis_per_thous_freqs = sum_region_vis_per_thous*age_freq) |>
+  group_by(part, YEAR) |>
+  summarize(vis_per_thous = sum(vis_per_thous_freqs)) |>
+  mutate(Region = part)
+
+##remake panels b&c of figure S3 but now with the age standardized values.##
+avg_yearly_regions_stan <- mw_stan_weighted_regionvis |>
+  mutate(lower = avg_vis_per_thous - 1.96*sd/sqrt(9), upper = avg_vis_per_thous + 1.96*sd/sqrt(9)) |>
+  mutate(Region = factor(part, levels = c("South", "Midwest", "Northeast", "West"))) |>
+  arrange(Region)
+
+region_table_stan <- avg_yearly_regions_stan |>
+  mutate("95%CI" = paste0("(", round(lower,2), "-", round(upper,2), ")")) |>
+  select(Region, avg_vis_per_thous, `95%CI`)
+#write this to a file at the bottom
+
+year_averages_plot_stan <- avg_yearly_regions_stan |> 
+  ggplot(aes(Region, avg_vis_per_thous, color = Region)) + 
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.2) +
+  scale_color_manual(values= colors_df$region_color, labels = colors_df$Region) +
+  ylab("Visits per 1000") +
+  # ggtitle("Streptococcal Pharyngitis Average Visits by Region") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=0.5))
+
+#make dataframe and perform each t-test
+ttest_table_reg_stan <- expand_grid(region1 = c("South", "Midwest", "Northeast", "West"), 
+            region2 = c("South", "Midwest", "Northeast", "West")) |>
+  filter(region1 != region2) |>
+  mutate(Comparison = paste0(region1, "-", region2)) |>
+  filter(!Comparison %in% c("Midwest-South", "Northeast-South", "Northeast-Midwest",
+                            "West-South", "West-Midwest", "West-Northeast"))
+
+ttest_table_reg_stan <- fill_table_stan(ttest_table_reg_stan, mw_stan_vis_allyears, avg_yearly_regions_stan)
+
+region_comparisons_stan <- ttest_table_reg_stan |> 
+  ggplot(aes(x = -log(pvals), y = diff, shape = Comparison)) +
+  geom_point() +
+  geom_vline(xintercept = -log(0.05/6), linetype = 2, color = "red") +
+  xlab("Negative Log P-value") +
+  ylab("Difference in Visits per 1000") + 
+  # ggtitle("Streptococcal Pharyngitis Average Yearly Region Comparisons") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 18))
+
+
 ```
 
 State-level school start analysis. Supplemental figures 15-16. 
 ```{r, figures S15, S16}
 #school start correlation at the state label
 #can see if I really need to pull this in or can summarize from ss_dat_trim
-start_date_summary_state <- read_csv("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/school_starts_summary_state.csv")
+start_date_summary_state <- read_csv("../output/school_starts_summary_state.csv")
 
 state_weighted_vis_allyears_cont <- state_weighted_vis_allyears |> filter(!STATE %in% c('Hawaii', 'Alaska')) |> group_by(STATE, MONTH, YEAR) |> select(-part) |> left_join(subregions)
 
@@ -1371,8 +1499,8 @@ for(i in 1:1000){
 mean(corvec) #0.837, very similar
 
 quantile(corvec, probs = c(0.025, 0.5, 0.975))
-#      2.5%       50%     97.5% 
-# 0.8169280 0.8381871 0.8563717 
+#    2.5%       50%     97.5% 
+# 0.8184016 0.8376598 0.8538440 
 
 
 #make plots of the states with error bars 
@@ -1389,6 +1517,7 @@ school_state <- total_comb |> select(STATE, State, Date, lower_date, upper_date,
 
 comb_long <- rbind(uptickdate_state, school_state) |> 
   mutate(STATE = factor(STATE, levels = state_order_uptick)) |>
+  filter(STATE != "South Carolina") |>
   arrange(desc(STATE))
 state_errorbars <- comb_long |> ggplot(aes(x= Date,y = STATE, group = cat, color = cat)) + geom_point() +
   geom_errorbar(aes(xmin = lower_date, xmax = upper_date)) + theme_minimal() + 
@@ -1452,190 +1581,250 @@ threeagegroup_plot <- threeages |> ggplot(aes(x = Date, y = Subregion, color = a
 ```
 
 
-```{r eval= FALSE}
+```{r eval= T}
 #write all tables
-write_csv(table1, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/study_population_table_table1.csv")
-write_csv(region_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/Average_region_year.csv")
-write_csv(subregion_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/Average_subregion_year.csv")
-write_csv(region_table_month, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/Average_region_month.csv")
-write_csv(subregion_table_month, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/Average_subregion_month.csv")
-write_csv(region_quarters_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/region_quarters_table.csv")
-write_csv(subregion_quarters_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/subregion_quarters_table.csv")
-write_csv(quarter_diffs_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/quarter_diffs_region_table_S4.csv")
-write_csv(wide_table_regions, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/continental_US_regions_table_wide.csv")
-write_csv(wide_table_subregions, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/continental_US_subregions_table_wide.csv")
-write_csv(phase_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/State_phase_table_S5.csv")
-write_csv(subregion_sinusoids_parameters, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/subregion_sinusoids_parameters.csv")
-write_csv(region_sinusoids_parameters, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/region_sinusoids_parameters.csv")
-write_csv(subregion_sinusoids_phase_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/subregion_phase_table.csv")
-write_csv(region_sinusoids_phase_table, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/region_phase_table.csv")
-write_csv(ttest_table_sub, "/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/subregion_comparisons_yearly_pvals.csv")
-write_csv(state_month_mins_date, '/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/state_month_mins_table.csv')
-write_csv(memb_vis_prop_table, '/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/output/agegroup_breakdown.csv')
+write_csv(table1, "../output/study_population_table_table1.csv")
+write_csv(region_table, "../output/Average_region_year.csv")
+write_csv(region_table_stan, "../output/Average_region_year_age_standardized.csv")
+write_csv(ttest_table_reg_stan, "../output/region_ttests_standardized.csv")
+write_csv(ttest_table_reg, "../output/region_ttests.csv")
+write_csv(subregion_table, "../output/Average_subregion_year.csv")
+write_csv(region_table_month, "../output/Average_region_month.csv")
+write_csv(subregion_table_month, "../output/Average_subregion_month.csv")
+write_csv(region_quarters_table, "../output/region_quarters_table.csv")
+write_csv(subregion_quarters_table, "../output/subregion_quarters_table.csv")
+write_csv(quarter_diffs_table, "../output/quarter_diffs_region_table_S4.csv")
+write_csv(wide_table_regions, "../output/continental_US_regions_table_wide.csv")
+write_csv(wide_table_subregions, "../output/continental_US_subregions_table_wide.csv")
+write_csv(phase_table, "../output/State_phase_table_S5.csv")
+write_csv(phase_table_log, "../output/State_phase_table_log.csv")
+write_csv(subregion_sinusoids_parameters, "../output/subregion_sinusoids_parameters.csv")
+write_csv(region_sinusoids_parameters, "../output/region_sinusoids_parameters.csv")
+write_csv(subregion_sinusoids_phase_table, "../output/subregion_phase_table.csv")
+write_csv(region_sinusoids_phase_table, "../output/region_phase_table.csv")
+write_csv(ttest_table_sub, "../output/subregion_comparisons_yearly_pvals.csv")
+write_csv(state_month_mins_date, '../output/state_month_mins_table.csv')
+write_csv(memb_vis_prop_table, '../output/agegroup_breakdown.csv')
 
 
 #save all figures as pngs and pdfs
 ##main figures
 #fig 1
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig1.png", points_region_plot, width = 7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig1.pdf", points_region_plot, width = 7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig1.tiff", points_region_plot, width = 7, height =5, dpi = 300)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig1_hr.tiff", points_region_plot, width = 7, height =5, dpi = 1000)
+ggsave("../figures/fig1.png", points_region_plot, width = 7, height =5)
+ggsave("../figures/fig1.pdf", points_region_plot, width = 7, height =5)
+ggsave("../figures/fig1.tiff", points_region_plot, width = 7, height =5, dpi = 300)
+ggsave("../figures/fig1_hr.tiff", points_region_plot, width = 7, height =5, dpi = 1000)
+ggsave("../figures/fig1.eps", points_region_plot, width = 7, height =5, dpi = 1000)
 
 #fig 2
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig2.png", state_phases_map_noSC, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig2.pdf", state_phases_map_noSC, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig2.tiff", state_phases_map_noSC, width = 7, height = 5, dpi = 300)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig2_hr.tiff", state_phases_map_noSC, width = 7, height = 5, dpi = 1000)
+ggsave("../figures/fig2.png", state_phases_map_noSC, width = 7, height = 5)
+ggsave("../figures/fig2.pdf", state_phases_map_noSC, width = 7, height = 5)
+ggsave("../figures/fig2.tiff", state_phases_map_noSC, width = 7, height = 5, dpi = 300)
+ggsave("../figures/fig2_hr.tiff", state_phases_map_noSC, width = 7, height = 5, dpi = 1000)
+ggsave("../figures/fig2.eps", state_phases_map_noSC, width = 7, height = 5, dpi = 1000)
 
 #fig 3
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig3.png", uptickdates_plot, width =7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig3.pdf", uptickdates_plot, width =7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig3.tiff", uptickdates_plot, width =7, height =5, dpi = 300)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/fig3_hr.tiff", uptickdates_plot, width =7, height =5, dpi = 1000)
+ggsave("../figures/fig3.png", uptickdates_plot, width =7, height =5)
+ggsave("../figures/fig3.pdf", uptickdates_plot, width =7, height =5)
+ggsave("../figures/fig3.tiff", uptickdates_plot, width =7, height =5, dpi = 300)
+ggsave("../figures/fig3_hr.tiff", uptickdates_plot, width =7, height =5, dpi = 1000)
+ggsave("../figures/fig3_hr.eps", uptickdates_plot, width =7, height =5, dpi = 1000)
+
+
 ##supplemental figures
 #fig S1
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS1.png", continental_state_membership_noSC, width = 6, height = 3)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS1.pdf", continental_state_membership_noSC, width = 6, height = 3)
+ggsave("../figures/figS1.png", continental_state_membership_noSC, width = 6, height = 3)
+ggsave("../figures/figS1.pdf", continental_state_membership_noSC, width = 6, height = 3)
 
 #fig S2
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2a.pdf", membership_freq_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2a.png", membership_freq_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2b.pdf", age_breakdown_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2b.png", age_breakdown_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2c.pdf", age_month_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2c.png", age_month_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2.pdf", grid.arrange(membership_freq_plot, age_breakdown_plot, age_month_plot, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2.png", grid.arrange(membership_freq_plot, age_breakdown_plot, age_month_plot, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS2.tiff", grid.arrange(membership_freq_plot, age_breakdown_plot, age_month_plot, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6, dpi = 300)
+ggsave("../figures/figS2a.pdf", membership_freq_plot, width = 5, height = 3.5)
+ggsave("../figures/figS2a.png", membership_freq_plot, width = 5, height = 3.5)
+ggsave("../figures/figS2b.pdf", age_breakdown_plot, width = 5, height = 3.5)
+ggsave("../figures/figS2b.png", age_breakdown_plot, width = 5, height = 3.5)
+ggsave("../figures/figS2c.pdf", age_month_plot, width = 5, height = 3.5)
+ggsave("../figures/figS2c.png", age_month_plot, width = 5, height = 3.5)
+ggsave("../figures/figS2.pdf", grid.arrange(membership_freq_plot, age_breakdown_plot, age_month_plot, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
+ggsave("../figures/figS2.png", grid.arrange(membership_freq_plot, age_breakdown_plot, age_month_plot, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
+ggsave("../figures/figS2.tiff", grid.arrange(membership_freq_plot, age_breakdown_plot, age_month_plot, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6, dpi = 300)
 
 #fig S3
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3a.png", region_differences_byyear, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3a.pdf", region_differences_byyear, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3b.png", year_averages_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3b.pdf", year_averages_plot, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3c.png", region_comparisons, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3c.pdf", region_comparisons, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3.pdf", grid.arrange(region_differences_byyear_forfig, year_averages_plot, region_comparisons, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3.png", grid.arrange(region_differences_byyear_forfig, year_averages_plot, region_comparisons, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS3.tiff", grid.arrange(region_differences_byyear_forfig, year_averages_plot, region_comparisons, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6, dpi = 300)
+ggsave("../figures/figS3a.png", region_differences_byyear, width = 5, height = 3.5)
+ggsave("../figures/figS3a.pdf", region_differences_byyear, width = 5, height = 3.5)
+ggsave("../figures/figS3b.png", year_averages_plot, width = 5, height = 3.5)
+ggsave("../figures/figS3b.pdf", year_averages_plot, width = 5, height = 3.5)
+ggsave("../figures/figS3c.png", region_comparisons, width = 5, height = 3.5)
+ggsave("../figures/figS3c.pdf", region_comparisons, width = 5, height = 3.5)
+ggsave("../figures/figS3.pdf", grid.arrange(region_differences_byyear_forfig, year_averages_plot, region_comparisons, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
+ggsave("../figures/figS3.png", grid.arrange(region_differences_byyear_forfig, year_averages_plot, region_comparisons, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6)
+ggsave("../figures/figS3.tiff", grid.arrange(region_differences_byyear_forfig, year_averages_plot, region_comparisons, layout_matrix = rbind(c(1,1,1,2,2,2),c(1,1,1,2,2,2), c(4,3,3,3,3,4),c(4,3,3,3,3,4))), width = 7, height = 6, dpi = 300)
 
 #fig S4
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS4a.png", subregion_differences_byyear, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS4a.pdf", subregion_differences_byyear, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS4b.png", year_averages_plot_subregions, width =5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS4b.pdf", year_averages_plot_subregions, width =5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS4.pdf", grid.arrange(subregion_differences_byyear_forfig, year_averages_plot_subregions, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS4.png", grid.arrange(subregion_differences_byyear_forfig, year_averages_plot_subregions, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS4.tiff", grid.arrange(subregion_differences_byyear_forfig, year_averages_plot_subregions, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4, dpi = 300)
+ggsave("../figures/figS4a.png", subregion_differences_byyear, width = 5, height = 3.5)
+ggsave("../figures/figS4a.pdf", subregion_differences_byyear, width = 5, height = 3.5)
+ggsave("../figures/figS4b.png", year_averages_plot_subregions, width =5, height = 3.5)
+ggsave("../figures/figS4b.pdf", year_averages_plot_subregions, width =5, height = 3.5)
+ggsave("../figures/figS4.pdf", grid.arrange(subregion_differences_byyear_forfig, year_averages_plot_subregions, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4)
+ggsave("../figures/figS4.png", grid.arrange(subregion_differences_byyear_forfig, year_averages_plot_subregions, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4)
+ggsave("../figures/figS4.tiff", grid.arrange(subregion_differences_byyear_forfig, year_averages_plot_subregions, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4, dpi = 300)
+
 #fig S5
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS5a.png", region_quarters_plot, width = 5, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS5a.pdf", region_quarters_plot, width = 5, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS5b.png", subregion_quarters_plot, width = 5, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS5b.pdf", subregion_quarters_plot, width = 5, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS5.pdf", grid.arrange(region_quarters_plot, subregion_quarters_plot), width = 7, height = 10)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS5.png", grid.arrange(region_quarters_plot, subregion_quarters_plot), width = 7, height = 10)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS5.tiff", grid.arrange(region_quarters_plot, subregion_quarters_plot), width = 7, height = 10, dpi = 300)
+ggsave("../figures/figS5a.pdf", year_averages_plot_stan, width =5, height =3.5)
+ggsave("../figures/figS5a.png", year_averages_plot_stan, width =5, height =3.5)
+ggsave("../figures/figS5b.pdf", region_comparisons_stan, width =5, height =3.5)
+ggsave("../figures/figS5b.png", region_comparisons_stan, width =5, height =3.5)
+ggsave("../figures/figS5.pdf", grid.arrange(year_averages_plot_stan, region_comparisons_stan, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4, dpi = 300)
+ggsave("../figures/figS5.png", grid.arrange(year_averages_plot_stan, region_comparisons_stan, ncol = 2, layout_matrix = rbind(c(1,1,1,2,2,2,2))),  width = 8, height = 4, dpi = 300)
 #fig S6
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS6.png", points_subregion_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS6.pdf", points_subregion_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS6.tiff", points_subregion_plot, width = 7, height = 5, dpi = 300)
-
-
+ggsave("../figures/figS6a.png", region_quarters_plot, width = 5, height = 4)
+ggsave("../figures/figS6a.pdf", region_quarters_plot, width = 5, height = 4)
+ggsave("../figures/figS6b.png", subregion_quarters_plot, width = 5, height = 4)
+ggsave("../figures/figS6b.pdf", subregion_quarters_plot, width = 5, height = 4)
+ggsave("../figures/figS6.pdf", grid.arrange(region_quarters_plot, subregion_quarters_plot), width = 7, height = 10)
+ggsave("../figures/figS6.png", grid.arrange(region_quarters_plot, subregion_quarters_plot), width = 7, height = 10)
+ggsave("../figures/figS6.tiff", grid.arrange(region_quarters_plot, subregion_quarters_plot), width = 7, height = 10, dpi = 300)
 #fig S7
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS7a.png", region_heatmap_significance_noredund, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS7a.pdf", region_heatmap_significance_noredund, width = 5, height = 3.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS7b.png", subregion_heatmap_significance_noredund, width = 6.5, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS7b.pdf", subregion_heatmap_significance_noredund, width = 6.5, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS7.pdf", grid.arrange(region_heatmap_significance_noredund, subregion_heatmap_significance_noredund), width = 7, height = 11)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS7.png", grid.arrange(region_heatmap_significance_noredund, subregion_heatmap_significance_noredund), width = 7, height = 11)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS7.tiff", grid.arrange(region_heatmap_significance_noredund, subregion_heatmap_significance_noredund), width = 7, height = 11, dpi = 300)
-
-#fig s8
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS8a.pdf", under_19_monthly_vis_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS8a.png", under_19_monthly_vis_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS8b.pdf", over_19_monthly_vis_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS8b.png", over_19_monthly_vis_plot, width = 7, height = 5)
+ggsave("../figures/figS7.png", points_subregion_plot, width = 7, height = 5)
+ggsave("../figures/figS7.pdf", points_subregion_plot, width = 7, height = 5)
+ggsave("../figures/figS7.tiff", points_subregion_plot, width = 7, height = 5, dpi = 300)
+#fig S8
+ggsave("../figures/figS8a.png", region_heatmap_significance_noredund, width = 5, height = 3.5)
+ggsave("../figures/figS8a.pdf", region_heatmap_significance_noredund, width = 5, height = 3.5)
+ggsave("../figures/figS8b.png", subregion_heatmap_significance_noredund, width = 6.5, height = 6.5)
+ggsave("../figures/figS8b.pdf", subregion_heatmap_significance_noredund, width = 6.5, height = 6.5)
+ggsave("../figures/figS8.pdf", grid.arrange(region_heatmap_significance_noredund, subregion_heatmap_significance_noredund), width = 7, height = 11)
+ggsave("../figures/figS8.png", grid.arrange(region_heatmap_significance_noredund, subregion_heatmap_significance_noredund), width = 7, height = 11)
+ggsave("../figures/figS8.tiff", grid.arrange(region_heatmap_significance_noredund, subregion_heatmap_significance_noredund), width = 7, height = 11, dpi = 300)
+#fig s9
+ggsave("../figures/figS9a.pdf", under_19_monthly_vis_plot, width = 7, height = 5)
+ggsave("../figures/figS9a.png", under_19_monthly_vis_plot, width = 7, height = 5)
+ggsave("../figures/figS9b.pdf", over_19_monthly_vis_plot, width = 7, height = 5) #over_19_monthly_vis_plot in age_analyses.R
+ggsave("../figures/figS9b.png", over_19_monthly_vis_plot, width = 7, height = 5)
 under_19_monthly_vis_plot_nolegend <- under_19_monthly_vis_plot + theme(legend.position = "none")
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS8.pdf",
+ggsave("../figures/figS9.pdf",
+       grid.arrange(under_19_monthly_vis_plot_nolegend, over_19_monthly_vis_plot, ncol =2, layout_matrix =rbind(c(1,1,1,1,2,2,2,2,2,2))), width =8, height = 4) #under_19_monthly_vis_plot in age_analysis.R
+ggsave("../figures/figS9.png",
        grid.arrange(under_19_monthly_vis_plot_nolegend, over_19_monthly_vis_plot, ncol =2, layout_matrix =rbind(c(1,1,1,1,2,2,2,2,2,2))), width =8, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS8.png",
-       grid.arrange(under_19_monthly_vis_plot_nolegend, over_19_monthly_vis_plot, ncol =2, layout_matrix =rbind(c(1,1,1,1,2,2,2,2,2,2))), width =8, height = 4)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS8.tiff",
+ggsave("../figures/figS9.tiff",
        grid.arrange(under_19_monthly_vis_plot_nolegend, over_19_monthly_vis_plot, ncol =2, layout_matrix =rbind(c(1,1,1,1,2,2,2,2,2,2))), width =8, height = 4, dpi = 300)
-
-#fig S9
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS9.pdf", state_sinusoids_subregions +theme(axis.text.x = element_blank()), width =8.5, height =6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS9.png", state_sinusoids_subregions  + theme(axis.text.x = element_blank()), width =8.5, height =6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS9.tiff", state_sinusoids_subregions  + theme(axis.text.x = element_blank()), width =8.5, height =6, dpi = 300)
-
 #fig S10
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS10a.png", subregion_sinusoids_CIs_plot_points, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS10a.pdf", subregion_sinusoids_CIs_plot_points, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS10b.png",subregion_phase_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS10b.pdf",subregion_phase_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS10.pdf", grid.arrange(subregion_sinusoids_CIs_plot_points, subregion_phase_plot), width = 7, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS10.png", grid.arrange(subregion_sinusoids_CIs_plot_points, subregion_phase_plot), width = 7, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS10.tiff", grid.arrange(subregion_sinusoids_CIs_plot_points, subregion_phase_plot), width = 7, height = 9, dpi = 300)
-
+ggsave("../figures/figS10.pdf", state_sinusoids_subregions +theme(axis.text.x = element_blank()), width =8.5, height =6)
+ggsave("../figures/figS10.png", state_sinusoids_subregions  + theme(axis.text.x = element_blank()), width =8.5, height =6)
+ggsave("../figures/figS10.tiff", state_sinusoids_subregions  + theme(axis.text.x = element_blank()), width =8.5, height =6, dpi = 300)
 #fig S11
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS11a.png", region_sinusoids_CIs_plot_points, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS11a.pdf", region_sinusoids_CIs_plot_points, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS11b.png", region_phase_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS11b.pdf", region_phase_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS11.pdf", grid.arrange(region_sinusoids_CIs_plot_points, region_phase_plot), width = 7, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS11.png", grid.arrange(region_sinusoids_CIs_plot_points, region_phase_plot), width = 7, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS11.tiff", grid.arrange(region_sinusoids_CIs_plot_points, region_phase_plot), width = 7, height = 9, dpi = 300)
-
+ggsave("../figures/figS11a.png", subregion_sinusoids_CIs_plot_points, width = 7, height = 5)
+ggsave("../figures/figS11a.pdf", subregion_sinusoids_CIs_plot_points, width = 7, height = 5)
+ggsave("../figures/figS11b.png",subregion_phase_plot, width = 7, height = 5)
+ggsave("../figures/figS11b.pdf",subregion_phase_plot, width = 7, height = 5)
+ggsave("../figures/figS11.pdf", grid.arrange(subregion_sinusoids_CIs_plot_points, subregion_phase_plot), width = 7, height = 9)
+ggsave("../figures/figS11.png", grid.arrange(subregion_sinusoids_CIs_plot_points, subregion_phase_plot), width = 7, height = 9)
+ggsave("../figures/figS11.tiff", grid.arrange(subregion_sinusoids_CIs_plot_points, subregion_phase_plot), width = 7, height = 9, dpi = 300)
 #fig S12
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS12a.png", subregion_centroids_plot, width = 9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS12a.pdf", subregion_centroids_plot, width = 9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS12b.png", subregion_phase_dist_correlation, width = 9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS12b.pdf", subregion_phase_dist_correlation, width = 9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS12.png", grid.arrange(subregion_centroids_plot, subregion_phase_dist_correlation_forfig, ncol = 1), width = 7.5, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS12.pdf", grid.arrange(subregion_centroids_plot, subregion_phase_dist_correlation_forfig, ncol = 1), width = 7.5, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS12.tiff", grid.arrange(subregion_centroids_plot, subregion_phase_dist_correlation_forfig, ncol = 1), width = 7.5, height = 9, dpi = 300)
-
+ggsave("../figures/figS12a.png", region_sinusoids_CIs_plot_points, width = 7, height = 5)
+ggsave("../figures/figS12a.pdf", region_sinusoids_CIs_plot_points, width = 7, height = 5)
+ggsave("../figures/figS12b.png", region_phase_plot, width = 7, height = 5)
+ggsave("../figures/figS12b.pdf", region_phase_plot, width = 7, height = 5)
+ggsave("../figures/figS12.pdf", grid.arrange(region_sinusoids_CIs_plot_points, region_phase_plot), width = 7, height = 9)
+ggsave("../figures/figS12.png", grid.arrange(region_sinusoids_CIs_plot_points, region_phase_plot), width = 7, height = 9)
+ggsave("../figures/figS12.tiff", grid.arrange(region_sinusoids_CIs_plot_points, region_phase_plot), width = 7, height = 9, dpi = 300)
 #fig S13
-#state level distance plots
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS13a.pdf", state_centroid_map, width =9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS13a.png", state_centroid_map, width =9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS13b.pdf", state_distance_correlation_plot, width = 9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS13b.png", state_distance_correlation_plot, width = 9, height = 6.5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS13.pdf", grid.arrange(state_centroid_map, state_distance_correlation_plot), width = 7.5, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS13.png", grid.arrange(state_centroid_map, state_distance_correlation_plot), width = 7.5, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS13.tiff", grid.arrange(state_centroid_map, state_distance_correlation_plot), width = 7.5, height = 9, dpi = 300)
-
+ggsave("../figures/figS13a.png", subregion_centroids_plot, width = 9, height = 6.5)
+ggsave("../figures/figS13a.pdf", subregion_centroids_plot, width = 9, height = 6.5)
+ggsave("../figures/figS13b.png", subregion_phase_dist_correlation, width = 9, height = 6.5)
+ggsave("../figures/figS13b.pdf", subregion_phase_dist_correlation, width = 9, height = 6.5)
+ggsave("../figures/figS13.png", grid.arrange(subregion_centroids_plot, subregion_phase_dist_correlation_forfig, ncol = 1), width = 7.5, height = 9)
+ggsave("../figures/figS13.pdf", grid.arrange(subregion_centroids_plot, subregion_phase_dist_correlation_forfig, ncol = 1), width = 7.5, height = 9)
+ggsave("../figures/figS13.tiff", grid.arrange(subregion_centroids_plot, subregion_phase_dist_correlation_forfig, ncol = 1), width = 7.5, height = 9, dpi = 300)
 #fig S14
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS14a.png", subregion_uptick_plot, width =7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS14a.pdf", subregion_uptick_plot, width =7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS14b.png", corrplot_schoolstart, width =7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS14b.pdf", corrplot_schoolstart, width =7, height =5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS14_unedited.pdf", grid.arrange(subregion_uptick_plot, corrplot_schoolstart, ncol = 1), width = 7, height = 9)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS14_unedited.tiff", grid.arrange(subregion_uptick_plot, corrplot_schoolstart, ncol = 1), width = 7, height = 9, dpi = 300)
+#state level distance plots
+ggsave("../figures/figS14a.pdf", state_centroid_map, width =9, height = 6.5)
+ggsave("../figures/figS14a.png", state_centroid_map, width =9, height = 6.5)
+ggsave("../figures/figS14b.pdf", state_distance_correlation_plot, width = 9, height = 6.5)
+ggsave("../figures/figS14b.png", state_distance_correlation_plot, width = 9, height = 6.5)
+ggsave("../figures/figS14.pdf", grid.arrange(state_centroid_map, state_distance_correlation_plot), width = 7.5, height = 9)
+ggsave("../figures/figS14.png", grid.arrange(state_centroid_map, state_distance_correlation_plot), width = 7.5, height = 9)
+ggsave("../figures/figS14.tiff", grid.arrange(state_centroid_map, state_distance_correlation_plot), width = 7.5, height = 9, dpi = 300)
 
 #fig S15
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS15.png", state_uptick_plot, width = 8.5, height = 6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS15.pdf", state_uptick_plot, width = 8.5, height = 6)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS15.tiff", state_uptick_plot, width = 8.5, height = 6, dpi = 300)
+ggsave("../figures/figS15a.png", subregion_uptick_plot, width =7, height =5)
+ggsave("../figures/figS15a.pdf", subregion_uptick_plot, width =7, height =5)
+ggsave("../figures/figS15b.png", corrplot_schoolstart, width =7, height =5)
+ggsave("../figures/figS15b.pdf", corrplot_schoolstart, width =7, height =5)
+ggsave("../figures/figS15_unedited.pdf", grid.arrange(subregion_uptick_plot, corrplot_schoolstart, ncol = 1), width = 7, height = 9)
+ggsave("../figures/figS15_unedited.tiff", grid.arrange(subregion_uptick_plot, corrplot_schoolstart, ncol = 1), width = 7, height = 9, dpi = 300)
+
 #fig S16
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS16a.pdf", state_correlation_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS16a.png", state_correlation_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS16b.pdf", state_errorbars, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS16b.png", state_errorbars, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS16.pdf", grid.arrange(state_correlation_plot, state_errorbars, ncol = 1), width = 7, height = 10)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS16.png", grid.arrange(state_correlation_plot, state_errorbars, ncol = 1), width = 7, height = 10)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS16.tiff", grid.arrange(state_correlation_plot, state_errorbars, ncol = 1), width = 7, height = 10, dpi = 300)
+ggsave("../figures/figS16.png", state_uptick_plot, width = 8.5, height = 6)
+ggsave("../figures/figS16.pdf", state_uptick_plot, width = 8.5, height = 6)
+ggsave("../figures/figS16.tiff", state_uptick_plot, width = 8.5, height = 6, dpi = 300)
 
 #fig S17
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS17.pdf",threeagegroup_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS17.png",threeagegroup_plot, width = 7, height = 5)
-ggsave("/Users/madeleinekline/Dropbox (Harvard University)/GradLab/StrepPharyngitis/figures/figS17.tiff",threeagegroup_plot, width = 7, height = 5, dpi = 300)
+ggsave("../figures/figS17a.pdf", state_correlation_plot, width = 7, height = 5)
+ggsave("../figures/figS17a.png", state_correlation_plot, width = 7, height = 5)
+ggsave("../figures/figS17b.pdf", state_errorbars, width = 7, height = 5)
+ggsave("../figures/figS17b.png", state_errorbars, width = 7, height = 5)
+ggsave("../figures/figS17.pdf", grid.arrange(state_correlation_plot, state_errorbars, ncol = 1), width = 7, height = 10)
+ggsave("../figures/figS17.png", grid.arrange(state_correlation_plot, state_errorbars, ncol = 1), width = 7, height = 10)
+ggsave("../figures/figS17.tiff", grid.arrange(state_correlation_plot, state_errorbars, ncol = 1), width = 7, height = 10, dpi = 300)
+
+#fig S18
+ggsave("../figures/figS18.pdf",threeagegroup_plot, width = 7, height = 5)
+ggsave("../figures/figS18.png",threeagegroup_plot, width = 7, height = 5)
+ggsave("../figures/figS18.tiff",threeagegroup_plot, width = 7, height = 5, dpi = 300)
+
+#figS19
+ggsave("../figures/figS19.pdf",residuals_plot_notlogged,
+       width = 8.5, height = 6)
+ggsave("../figures/figS19.png",residuals_plot_notlogged,
+       width = 8.5, height = 6)
+ggsave("../figures/figS19.tiff",residuals_plot_notlogged,
+       width = 8.5, height = 6, dpi = 300)
+#figS20 below (base R plot)
+
+#figS21
+ggsave("../figures/figS21.pdf", state_sinusoids_subregions_log +theme(axis.text.x = element_blank()), width =8.5, height =6)
+ggsave("../figures/figS21.png", state_sinusoids_subregions_log  + theme(axis.text.x = element_blank()), width =8.5, height =6)
+ggsave("../figures/figS21.tiff", state_sinusoids_subregions_log  + theme(axis.text.x = element_blank()), width =8.5, height =6, dpi = 300)
+
+#these next 2 plots are in the get_state_sinusoids.R file
+#figS22
+ggsave("../figures/figS22.pdf", qqplot_sinusoids, width =8.5, height =6)
+ggsave("../figures/figS22.png", qqplot_sinusoids, width =8.5, height =6)
+ggsave("../figures/figS22.tiff", qqplot_sinusoids, width =8.5, height =6, dpi = 300)
+
+#figS23
+ggsave("../figures/figS23.pdf", qqplot_sinusoids_log, width =8.5, height =6)
+ggsave("../figures/figS23.png", qqplot_sinusoids_log, width =8.5, height =6)
+ggsave("../figures/figS23.tiff", qqplot_sinusoids_log, width =8.5, height =6, dpi = 300)
+
+#figS24
+ggsave("../figures/figS24.pdf", state_phase_map_noSC_log, width =7, height =5)
+ggsave("../figures/figS24.png", state_phase_map_noSC_log, width =7, height =5)
+ggsave("../figures/figS24.tiff", state_phase_map_noSC_log, width =7, height =5, dpi = 300)
+
 
 ```
 
 make gif, this step takes a while
 ```{r}
-source('make_gif.R')
+source('../code/make_gif.R')
 ```
+
+make acf plots, which are in base R plotting
+```{r}
+pdf("../figures/figS20.pdf", width = 15, height = 10)
+par(mfrow =c(7,7))
+par(mar = c(2.5,2.5,2.5,2.5), ps = 9, cex = 0.9)
+state_sinusoids_f <- state_sinusoids |> filter(!STATE %in% c("Hawaii", "Alaska", "South Carolina"))
+for(i in 1:length(unique(state_sinusoids_f$STATE))){
+  state = unique(state_sinusoids_f$STATE)[i]
+  state_sinusoids_f |> filter(STATE == state) |> mutate(resid = mean_weighted_cases_per_thousand - prediction) |>
+    pull(resid) |>
+    acf(main = state)
+}
+dev.off()
+```
+ 
+
+
+
 

@@ -2,13 +2,6 @@ coh_dat_pop <- left_join(dat, coh) |> left_join(pop_sizes)
 
 #basic age group analytics
 
-#need to also look at the age distribution by region in the membership population by region
-#THINK THIS IS WRONG
-total_memb_byregion_age <- coh |> left_join(regions) |> filter(!STATE %in% c("Hawaii", "Alaska")) |> 
-  group_by(AGEGRP, part) |>
-  summarize(avg_memb_peryear = mean(NMEMB), sd = sd(NMEMB), n = n()) |>
-  mutate(lower = avg_memb_peryear - 1.96*sd/sqrt(n), upper = avg_memb_peryear + 1.96*sd/sqrt(n))
-
 #calculate yearly membership in each region and age group
 total_membership_byyear_region_age <-coh |> left_join(regions) |> filter(!STATE %in% c("Hawaii", "Alaska")) |>
   group_by(part, AGEGRP, YEAR) |> summarize(sum_membs = sum(NMEMB))
@@ -52,7 +45,7 @@ tentonineteen_pop <- coh_dat_pop |> filter(AGEGRP  == "10_19") |> left_join(subr
 fivetonineteen_pop <- coh_dat_pop |> filter(AGEGRP %in% c("05_09", "10_19")) |> left_join(subregions)
 over_19_pop <- coh_dat_pop |> filter(!AGEGRP %in% c("00_04", "05_09", "10_19")) |> left_join(subregions)
 
-#need to make these by subregion instead
+#calculate total populations in each age group and subregion
 total_subregions_pops_under19 <- pop_sizes |> filter(AGEGRP %in% c("00_04", "05_09", "10_19")) |>
   filter(!STATE %in% c("Hawaii", "Alaska")) |>
   left_join(subregions) |> group_by(part) |>
@@ -255,8 +248,6 @@ over_19_monthly_vis_plot <- over19_subregion_monthly_vis_avg |>
   scale_x_discrete(limits = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT","OCT", "NOV", "DEC")) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
   
-
-#really is in chidlren that this differences play out
 
 #calculate uptick dates in each region in each agegroup over 19
 month_mins_under19 <- expand_grid(YEAR = c(2010:2018), part = c("East South Central", "West South Central",

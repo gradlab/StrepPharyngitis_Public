@@ -30,6 +30,17 @@ region_ttest_yearly <- function(region1, region2, regions_weighted_allyears){
          df_r2$sum_region_cases_per_thousand)
 }
 
+region_ttest_yearly_stan <- function(region1, region2, mw_stan_vis_allyears){
+  df_r1 <- mw_stan_vis_allyears |>
+    filter(Region == region1) 
+  
+  df_r2 <- mw_stan_vis_allyears |>
+    filter(Region == region2)
+  
+  t.test(df_r1$vis_per_thous, 
+         df_r2$vis_per_thous)
+}
+
 
 #make dataframe and perform each t-test
 # ttest_table <- expand_grid(region1 = c("South", "Midwest", "Northeast", "West"),
@@ -45,6 +56,26 @@ fill_table <- function(ttest_table, regions_weighted_allyears, avg_yearly_region
   pvals = c()
   for(i in 1:nrow(ttest_table)){
     pval <- region_ttest_yearly(ttest_table$region1[i], ttest_table$region2[i],
+                                regions_weighted_allyears)$p.value
+    pvals <- append(pvals, pval)
+    
+  }
+  ttest_table["pvals"] <- pvals
+  diff <- c()
+  for (i in 1:nrow(ttest_table)){
+    d <- as.numeric(avg_yearly_regions[which(avg_yearly_regions$Region == ttest_table$region1[i]),2] -
+                      avg_yearly_regions[which(avg_yearly_regions$Region == ttest_table$region2[i]),2])
+    diff <- append(diff, d)
+  }
+  
+  ttest_table["diff"] <- diff
+  return(ttest_table)
+}
+
+fill_table_stan <- function(ttest_table, regions_weighted_allyears, avg_yearly_regions){
+  pvals = c()
+  for(i in 1:nrow(ttest_table)){
+    pval <- region_ttest_yearly_stan(ttest_table$region1[i], ttest_table$region2[i],
                                 regions_weighted_allyears)$p.value
     pvals <- append(pvals, pval)
     

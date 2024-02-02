@@ -1,0 +1,7 @@
+region1,region2,Comparison,pvals,diff
+South,Midwest,South-Midwest,3.161855265595333e-4,8.57236362984009
+South,Northeast,South-Northeast,9.603473189933927e-4,7.090407714743343
+South,West,South-West,8.027951875727205e-8,20.320128003962083
+Midwest,Northeast,Midwest-Northeast,0.4053662826471619,-1.4819559150967478
+Midwest,West,Midwest-West,9.119852493418243e-6,11.747764374121992
+Northeast,West,Northeast-West,5.650006778539202e-7,13.22972028921874

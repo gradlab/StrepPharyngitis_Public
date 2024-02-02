@@ -30,7 +30,7 @@ weight_states_all_years <- weight_states_all_years |>
   mutate(TIME = MONTH + 12*(YEAR-2010))
 
 #loading in map components
-my_spdf <- readOGR(dsn = "/Users/madeleinekline/Dropbox (Harvard University)/G1/GradLab/Strep_project/R code/plots/More_final_figures/mapping/cb_2018_us_state_500k",
+my_spdf <- readOGR(dsn = "../data/cb_2018_us_state_500k",
                    layer = "cb_2018_us_state_500k")
 spdf_fortified <- tidy(my_spdf)
 non_continental_ids <- which(!(my_spdf$NAME %in% c("American Samoa" , 
@@ -113,6 +113,6 @@ saveGIF({
     
     print(p)
   }
-}, movie.name = "/Users/madeleinekline/Dropbox (Harvard University)/G1/GradLab/StrepPharyngitis/figures/finalgif.gif", interval = 0.25, width = 9, height = 6.5)
+}, movie.name = "finalgif.gif", interval = 0.25, width = 9, height = 6.5)
 
 
